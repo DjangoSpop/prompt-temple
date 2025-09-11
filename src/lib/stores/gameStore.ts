@@ -93,7 +93,7 @@ export interface GameState {
   // Notifications
   notifications: {
     id: string;
-    type: 'achievement' | 'level-up' | 'streak' | 'challenge' | 'points';
+    type: 'achievement' | 'level-up' | 'streak' | 'challenge' | 'points' | 'info';
     title: string;
     description: string;
     icon: string;
