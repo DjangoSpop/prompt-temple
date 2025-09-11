@@ -76,7 +76,8 @@
     "tailwindcss": "^3.4.17",
     "tailwindcss-animate": "^1.0.7",
     "ws": "^8.18.3",
-    "zod": "^3.25.76"
+    "zod": "^3.25.76",
+    "zustand": "^4.5.4"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
