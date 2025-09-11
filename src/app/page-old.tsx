@@ -1,0 +1,294 @@
+'use client';
+
+import { useEffect } from 'react';
+import { useAuth } from '@/providers/AuthProvider';
+import { useEventTracker } from '@/providers/AnalyticsProvider';
+import { useDashboard } from '@/lib/hooks';
+import { GamificationDashboard } from '@/components/GamificationDashboard';
+import { HeroSection } from '@/components/HeroSection';
+import { 
+  TrendingUp, 
+  Zap, 
+  Star,
+  ArrowRight,
+  Play,
+  BookOpen,
+  BarChart3,
+  Crown,
+  Sparkles
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import Link from 'next/link';
+
+export default function HomePage() {
+  const { user, isAuthenticated, isLoading } = useAuth();
+  const { data: dashboardData, isLoading: dashboardLoading } = useDashboard();
+  const { trackPageView } = useEventTracker();
+
+  useEffect(() => {
+    trackPageView('home');
+  }, [trackPageView]);
+
+  if (isLoading || dashboardLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-desert-sand-50 to-desert-sand-200">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-lapis-blue-500"></div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <HeroSection />;
+  }
+
+  // Authenticated dashboard view
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-desert-sand-50 to-desert-sand-200">
+      <div className="container mx-auto px-4 py-8">
+        <div className="text-center max-w-4xl mx-auto mb-12">
+          <h1 className="text-5xl font-display font-display-bold text-lapis-blue-900 mb-6">
+            Welcome back to the Temple, {user?.first_name || 'Devotee'}
+          </h1>
+          <p className="text-xl text-obsidian-700 mb-8">
+            Your sacred workspace awaits. Continue your journey of prompt mastery.
+          </p>
+        </div>
+            
+            <div className="flex justify-center space-x-4 mb-12">
+              <Link href="/auth/login">
+                <Button size="lg" className="flex items-center space-x-2">
+                  <Play className="h-5 w-5" />
+                  <span>Get Started</span>
+                </Button>
+              </Link>
+              <Link href="/templates">
+                <Button size="lg" variant="outline" className="flex items-center space-x-2">
+                  <BookOpen className="h-5 w-5" />
+                  <span>Browse Templates</span>
+                </Button>
+              </Link>
+            </div>
+
+            {/* Feature Cards */}
+            <div className="grid md:grid-cols-3 gap-8 mb-16">
+              <Card className="temple-card p-6 text-center pyramid-elevation">
+                <div className="w-12 h-12 bg-oasis/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                  <BookOpen className="h-6 w-6 text-oasis" />
+                </div>
+                <h3 className="text-lg font-semibold mb-2 text-hieroglyph">Temple Library</h3>
+                <p className="text-muted-foreground">
+                  Access thousands of tested prompt templates for every use case
+                </p>
+              </Card>
+              
+              <Card className="temple-card p-6 text-center pyramid-elevation">
+                <div className="w-12 h-12 bg-pharaoh/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                  <BarChart3 className="h-6 w-6 text-pharaoh" />
+                </div>
+                <h3 className="text-lg font-semibold mb-2 text-hieroglyph">Sacred Analysis</h3>
+                <p className="text-muted-foreground">
+                  Upload your chat exports and discover your most effective prompts
+                </p>
+              </Card>
+              
+              <Card className="temple-card p-6 text-center pyramid-elevation">
+                <div className="w-12 h-12 bg-primary/20 rounded-lg flex items-center justify-center mx-auto mb-4">
+                  <Zap className="h-6 w-6 text-primary" />
+                </div>
+                <h3 className="text-lg font-semibold mb-2 text-hieroglyph">Divine Enhancement</h3>
+                <p className="text-muted-foreground">
+                  Get AI-powered suggestions to improve your prompts and templates
+                </p>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen temple-background">
+      <div className="container mx-auto px-4 py-8">
+      {/* Welcome Header */}
+      <div className="mb-8">
+        <div className="flex items-center space-x-3 mb-2">
+          <div className="w-12 h-12 pharaoh-badge rounded-full flex items-center justify-center">
+            <Crown className="h-6 w-6 text-white" />
+          </div>
+          <h1 className="text-4xl font-bold text-hieroglyph text-glow-lg">
+            Welcome back to the Temple, {user?.first_name || user?.username}!
+          </h1>
+        </div>
+        <p className="text-muted-foreground mt-2 text-lg">
+          Your journey through the sacred halls of prompt mastery continues. Here's your current progress.
+        </p>
+      </div>
+
+      {/* Temple Progress Stats */}
+      {dashboardData && (
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+          <Card className="temple-card p-6 text-center pyramid-elevation pharaoh-glow">
+            <div className="w-12 h-12 bg-oasis rounded-full flex items-center justify-center mx-auto mb-3">
+              <BookOpen className="h-6 w-6 text-white" />
+            </div>
+            <div className="text-3xl font-bold text-oasis mb-1">
+              {dashboardData?.total_templates_used || 0}
+            </div>
+            <div className="text-sm text-muted-foreground font-medium">Sacred Templates Used</div>
+          </Card>
+          
+          <Card className="temple-card p-6 text-center pyramid-elevation pharaoh-glow">
+            <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mx-auto mb-3">
+              <Zap className="h-6 w-6 text-white" />
+            </div>
+            <div className="text-3xl font-bold text-primary mb-1">
+              {dashboardData?.total_renders || 0}
+            </div>
+            <div className="text-sm text-muted-foreground font-medium">Prompts Forged</div>
+          </Card>
+          
+          <Card className="temple-card p-6 text-center pyramid-elevation pharaoh-glow">
+            <div className="w-12 h-12 pharaoh-badge rounded-full flex items-center justify-center mx-auto mb-3">
+              <Crown className="h-6 w-6 text-white" />
+            </div>
+            <div className="text-3xl font-bold text-pharaoh mb-1">
+              {dashboardData?.gamification?.level || 1}
+            </div>
+            <div className="text-sm text-muted-foreground font-medium">Temple Rank</div>
+          </Card>
+          
+          <Card className="temple-card p-6 text-center pyramid-elevation pharaoh-glow">
+            <div className="w-12 h-12 bg-destructive rounded-full flex items-center justify-center mx-auto mb-3">
+              <Star className="h-6 w-6 text-white" />
+            </div>
+            <div className="text-3xl font-bold text-destructive mb-1">
+              {dashboardData?.gamification?.daily_streak || 0}
+            </div>
+            <div className="text-sm text-muted-foreground font-medium">Devotion Streak</div>
+          </Card>
+        </div>
+      )}
+
+      {/* Sacred Chambers Access */}
+      <Card className="temple-card p-8 mb-8 pyramid-elevation-lg">
+        <div className="flex items-center space-x-3 mb-6">
+          <div className="w-8 h-8 pharaoh-badge rounded-full flex items-center justify-center">
+            <Sparkles className="h-4 w-4 text-white" />
+          </div>
+          <h2 className="text-2xl font-bold text-hieroglyph text-glow">Enter the Sacred Chambers</h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <Link href="/templates" className="group">
+            <Button variant="outline" className="w-full h-16 flex flex-col items-center justify-center space-y-2 border-2 hover:border-oasis hover:bg-oasis/10 transition-all duration-300 group-hover:scale-105">
+              <BookOpen className="h-5 w-5 text-oasis" />
+              <span className="text-sm font-medium">The Archive</span>
+            </Button>
+          </Link>
+          
+          <Link href="/templates/create" className="group">
+            <Button variant="outline" className="w-full h-16 flex flex-col items-center justify-center space-y-2 border-2 hover:border-primary hover:bg-primary/10 transition-all duration-300 group-hover:scale-105">
+              <Zap className="h-5 w-5 text-primary" />
+              <span className="text-sm font-medium">The Forge</span>
+            </Button>
+          </Link>
+          
+          <Link href="/history" className="group">
+            <Button variant="outline" className="w-full h-16 flex flex-col items-center justify-center space-y-2 border-2 hover:border-pharaoh hover:bg-pharaoh/10 transition-all duration-300 group-hover:scale-105">
+              <TrendingUp className="h-5 w-5 text-pharaoh" />
+              <span className="text-sm font-medium">The Chronicle</span>
+            </Button>
+          </Link>
+          
+          <Link href="/analysis" className="group">
+            <Button variant="outline" className="w-full h-16 flex flex-col items-center justify-center space-y-2 border-2 hover:border-destructive hover:bg-destructive/10 transition-all duration-300 group-hover:scale-105">
+              <BarChart3 className="h-5 w-5 text-destructive" />
+              <span className="text-sm font-medium">The Observatory</span>
+            </Button>
+          </Link>
+        </div>
+      </Card>
+
+      <div className="grid lg:grid-cols-3 gap-8">
+        {/* Sacred Journey Log */}
+        <div className="lg:col-span-2">
+          <Card className="temple-card p-6 pyramid-elevation-lg">
+            <div className="flex items-center space-x-3 mb-4">
+              <div className="w-6 h-6 pharaoh-badge rounded-full flex items-center justify-center">
+                <BookOpen className="h-3 w-3 text-white" />
+              </div>
+              <h2 className="text-xl font-semibold text-hieroglyph text-glow">Sacred Journey Log</h2>
+            </div>
+            {dashboardData?.recent_activity && dashboardData.recent_activity.length > 0 ? (
+              <div className="space-y-4">
+                {dashboardData.recent_activity.map((activity: { template_name: string; category: string; used_at: string }, index: number) => (
+                  <div key={index} className="flex items-center space-x-3 p-4 sandstone-gradient rounded-lg border border-primary/20 hover:shadow-md transition-shadow">
+                    <div className="w-10 h-10 pharaoh-badge rounded-full flex items-center justify-center">
+                      <Sparkles className="h-5 w-5 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="font-semibold text-hieroglyph">{activity.template_name}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {activity.category} • {new Date(activity.used_at).toLocaleDateString()}
+                      </p>
+                    </div>
+                    <ArrowRight className="h-5 w-5 text-primary" />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-8">
+                <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <BookOpen className="h-8 w-8 text-gray-400" />
+                </div>
+                <p className="text-gray-600">
+                  Your sacred journey awaits. Begin by exploring templates to see your path unfold here.
+                </p>
+              </div>
+            )}
+          </Card>
+        </div>
+
+        {/* Sacred Affinities */}
+        <div>
+          <Card className="p-6 bg-white/70 backdrop-blur-sm border-0 shadow-xl">
+            <div className="flex items-center space-x-3 mb-4">
+              <div className="w-6 h-6 bg-gradient-to-br from-orange-500 to-red-500 rounded-full flex items-center justify-center">
+                <Star className="h-3 w-3 text-white" />
+              </div>
+              <h2 className="text-xl font-semibold text-gray-900">Sacred Affinities</h2>
+            </div>
+            {dashboardData?.favorite_categories && dashboardData.favorite_categories.length > 0 ? (
+              <div className="space-y-3">
+                {dashboardData.favorite_categories.slice(0, 5).map((category: string, index: number) => (
+                  <div key={index} className="flex items-center justify-between p-3 bg-gradient-to-r from-yellow-50 to-orange-50 rounded-lg border border-yellow-100">
+                    <span className="text-gray-900 font-medium">{category}</span>
+                    <div className="flex items-center space-x-1">
+                      <Star className="h-5 w-5 text-yellow-500 fill-current" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-6">
+                <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <Star className="h-6 w-6 text-gray-400" />
+                </div>
+                <p className="text-gray-600">
+                  Explore templates to discover your sacred affinities!
+                </p>
+              </div>
+            )}
+          </Card>
+        </div>
+      </div>
+
+      {/* Gamification Dashboard */}
+      <div className="mt-8">
+        <GamificationDashboard />
+      </div>
+      </div>
+    </div>
+  );
+}

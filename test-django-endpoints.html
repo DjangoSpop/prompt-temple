@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Django Endpoints</title>
+</head>
+<body>
+    <h1>Django API Endpoint Test</h1>
+    <div id="results"></div>
+    
+    <script>
+        async function testEndpoints() {
+            const results = document.getElementById('results');
+            const baseUrl = 'http://127.0.0.1:8000';
+            
+            // Get token from localStorage (assuming user is logged in)
+            const token = localStorage.getItem('access_token');
+            
+            if (!token) {
+                results.innerHTML = '<p style="color: red;">No access token found. Please log in first.</p>';
+                return;
+            }
+            
+            const endpoints = [
+                '/api/v2/chat/health/',
+                '/api/v2/chat/completions/',
+                '/api/v1/ai/deepseek/chat/',
+                '/api/v1/ai/deepseek/stream/'
+            ];
+            
+            results.innerHTML = '<h2>Testing endpoints...</h2>';
+            
+            for (const endpoint of endpoints) {
+                const url = baseUrl + endpoint;
+                results.innerHTML += `<h3>Testing: ${endpoint}</h3>`;
+                
+                try {
+                    // Test OPTIONS request first
+                    const optionsResponse = await fetch(url, {
+                        method: 'OPTIONS',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                        }
+                    });
+                    
+                    results.innerHTML += `<p>OPTIONS ${endpoint}: ${optionsResponse.status} ${optionsResponse.statusText}</p>`;
+                    
+                    // Test GET request
+                    if (endpoint.includes('health')) {
+                        const getResponse = await fetch(url, {
+                            method: 'GET',
+                            headers: {
+                                'Authorization': `Bearer ${token}`,
+                                'Content-Type': 'application/json'
+                            }
+                        });
+                        
+                        results.innerHTML += `<p>GET ${endpoint}: ${getResponse.status} ${getResponse.statusText}</p>`;
+                        
+                        if (getResponse.ok) {
+                            const data = await getResponse.json();
+                            results.innerHTML += `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+                        }
+                    }
+                    
+                    // Test POST request for chat endpoints
+                    if (endpoint.includes('chat') || endpoint.includes('completions')) {
+                        const testPayload = {
+                            messages: [{ role: 'user', content: 'Hello' }],
+                            model: 'deepseek-chat',
+                            stream: false,
+                            temperature: 0.7,
+                            max_tokens: 100
+                        };
+                        
+                        const postResponse = await fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'Authorization': `Bearer ${token}`,
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(testPayload)
+                        });
+                        
+                        results.innerHTML += `<p>POST ${endpoint}: ${postResponse.status} ${postResponse.statusText}</p>`;
+                        
+                        if (!postResponse.ok) {
+                            const errorText = await postResponse.text();
+                            results.innerHTML += `<pre style="color: red;">Error: ${errorText}</pre>`;
+                        }
+                    }
+                    
+                } catch (error) {
+                    results.innerHTML += `<p style="color: red;">Error testing ${endpoint}: ${error.message}</p>`;
+                }
+                
+                results.innerHTML += '<hr>';
+            }
+        }
+        
+        // Run tests when page loads
+        document.addEventListener('DOMContentLoaded', testEndpoints);
+    </script>
+</body>
+</html>

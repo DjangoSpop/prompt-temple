@@ -1,0 +1,203 @@
+import type { Config } from "tailwindcss";
+import tailwindcssAnimate from "tailwindcss-animate";
+
+const config: Config = {
+  darkMode: ["class"],
+  content: [
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+  ],
+  prefix: "",
+  theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
+    extend: {
+      colors: {
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        
+        // Egyptian Pharaonic Palette
+        'lapis-blue': {
+          DEFAULT: '#1E3A8A',
+          50: '#EBF0FF',
+          100: '#D6E2FF',
+          200: '#B3CCFF',
+          300: '#80B0FF',
+          400: '#4D8AFF',
+          500: '#1E3A8A',
+          600: '#1A3078',
+          700: '#152666',
+          800: '#111C54',
+          900: '#0D1342',
+        },
+        'nile-teal': {
+          DEFAULT: '#0E7490',
+          50: '#E6F7F9',
+          100: '#CCF0F3',
+          200: '#99E1E7',
+          300: '#66D2DB',
+          400: '#33C3CF',
+          500: '#0E7490',
+          600: '#0B5D73',
+          700: '#084656',
+          800: '#062F39',
+          900: '#03171C',
+        },
+        'desert-sand': {
+          DEFAULT: '#EBD5A7',
+          50: '#FEFCF7',
+          100: '#FDF9EF',
+          200: '#F8F0D7',
+          300: '#F3E7BF',
+          400: '#EFDEA7',
+          500: '#EBD5A7',
+          600: '#E0C68A',
+          700: '#D5B76D',
+          800: '#CAA850',
+          900: '#BF9933',
+        },
+        'royal-gold': {
+          DEFAULT: '#CBA135',
+          50: '#FBF8ED',
+          100: '#F7F1DB',
+          200: '#EFE3B7',
+          300: '#E7D593',
+          400: '#DFC76F',
+          500: '#CBA135',
+          600: '#B8912F',
+          700: '#A58129',
+          800: '#927123',
+          900: '#7F611D',
+        },
+        'obsidian': {
+          DEFAULT: '#0E0E10',
+          50: '#F7F7F8',
+          100: '#EFEFEF',
+          200: '#DFDFDF',
+          300: '#CFCFCF',
+          400: '#BFBFBF',
+          500: '#9F9F9F',
+          600: '#7F7F7F',
+          700: '#5F5F5F',
+          800: '#3F3F3F',
+          900: '#0E0E10',
+        },
+        
+        // shadcn/ui color mappings to Egyptian palette
+        primary: {
+          DEFAULT: '#1E3A8A', // Lapis Blue
+          foreground: '#FFFFFF',
+        },
+        secondary: {
+          DEFAULT: '#EBD5A7', // Desert Sand
+          foreground: '#0E0E10',
+        },
+        muted: {
+          DEFAULT: '#F8F0D7',
+          foreground: '#5F5F5F',
+        },
+        accent: {
+          DEFAULT: '#0E7490', // Nile Teal
+          foreground: '#FFFFFF',
+        },
+        destructive: {
+          DEFAULT: '#DC2626',
+          foreground: '#FFFFFF',
+        },
+        card: {
+          DEFAULT: '#FEFCF7',
+          foreground: '#0E0E10',
+        },
+        popover: {
+          DEFAULT: '#FFFFFF',
+          foreground: '#0E0E10',
+        },
+      },
+      fontFamily: {
+        'display': ['Cairo', 'Manrope', 'sans-serif'],
+        'body': ['Inter', 'Cairo', 'sans-serif'],
+        'sans': ['Inter', 'Cairo', 'system-ui', 'sans-serif'],
+      },
+      fontWeight: {
+        'display': '700',
+        'display-bold': '800',
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
+        'temple': '16px',
+        'pyramid': '24px',
+      },
+      spacing: {
+        '18': '4.5rem',
+        '88': '22rem',
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+        "pyramid-glow": "pyramid-glow 3s ease-in-out infinite alternate",
+        "papyrus-shimmer": "papyrus-shimmer 2s ease-in-out infinite",
+        "nefertiti-draw": "nefertiti-draw 1.2s ease-out forwards",
+        "sun-arc": "sun-arc 20s linear infinite",
+      },
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+        "pyramid-glow": {
+          "0%": { boxShadow: "0 0 20px rgba(203, 161, 53, 0.3)" },
+          "100%": { boxShadow: "0 0 40px rgba(203, 161, 53, 0.6)" },
+        },
+        "papyrus-shimmer": {
+          "0%": { backgroundPosition: "200% 0" },
+          "100%": { backgroundPosition: "-200% 0" },
+        },
+        "nefertiti-draw": {
+          "0%": { strokeDasharray: "0 1000" },
+          "100%": { strokeDasharray: "1000 0" },
+        },
+        "sun-arc": {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
+      },
+      backgroundImage: {
+        'papyrus-texture': `linear-gradient(45deg, 
+          transparent 25%, 
+          rgba(235, 213, 167, 0.1) 25%, 
+          rgba(235, 213, 167, 0.1) 50%, 
+          transparent 50%, 
+          transparent 75%, 
+          rgba(235, 213, 167, 0.1) 75%)`,
+        'pyramid-gradient': 'linear-gradient(135deg, #CBA135 0%, #A58129 50%, #7F611D 100%)',
+        'nile-gradient': 'linear-gradient(135deg, #0E7490 0%, #0B5D73 50%, #084656 100%)',
+        'desert-gradient': 'linear-gradient(135deg, #EBD5A7 0%, #E0C68A 50%, #D5B76D 100%)',
+      },
+      boxShadow: {
+        'pyramid': '0 4px 20px rgba(203, 161, 53, 0.15)',
+        'pyramid-lg': '0 8px 40px rgba(203, 161, 53, 0.2)',
+        'nile': '0 4px 20px rgba(14, 116, 144, 0.15)',
+        'temple': '0 2px 10px rgba(14, 14, 16, 0.1)',
+      },
+    },
+  },
+  plugins: [tailwindcssAnimate],
+};
+
+export default config;
