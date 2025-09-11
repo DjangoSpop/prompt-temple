@@ -47,7 +47,7 @@ import {
   ChevronRight,
   ExternalLink,
   RefreshCw,
-  Share,
+  Share2,
 } from "lucide-react";
 import { toast } from "react-hot-toast";
 
@@ -687,7 +687,7 @@ export default function BillingPage() {
                       </p>
                     </div>
                     <Button>
-                      <Share className="h-4 w-4 mr-1" />
+                      <Share2 className="h-4 w-4 mr-1" />
                       Share Link
                     </Button>
                   </div>

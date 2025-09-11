@@ -32,7 +32,18 @@ import {
   Rows3,
   Filter,
   Search,
+  Bookmark,
+  ChevronDown as ChevronDownIcon,
+  Crown,
+  Download,
+  Eye,
+  Play,
+  Share2,
+  Star,
+  Zap,
 } from "lucide-react";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
 
 interface Template {
   id: string;
@@ -230,6 +241,7 @@ export default function LibraryPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedDifficulty, setSelectedDifficulty] = useState("all");
+  
   const [selectedRarity, setSelectedRarity] = useState("all");
   const [sortBy, setSortBy] = useState("popular");
   const [showFilters, setShowFilters] = useState(false);
@@ -238,7 +250,7 @@ export default function LibraryPage() {
   const { addExperience, addNotification } = useGameStore();
 
   const filteredTemplates = useMemo(() => {
-    let filtered = mockTemplates.filter(template => {
+    const filtered = mockTemplates.filter(template => {
       const matchesSearch = template.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                            template.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
                            template.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
@@ -364,7 +376,7 @@ export default function LibraryPage() {
               >
                 <SlidersHorizontal className="h-4 w-4 mr-1" />
                 Filters
-                <ChevronDown className={`h-4 w-4 ml-1 transition-transform ${showFilters ? 'rotate-180' : ''}`} />
+                <ChevronDownIcon className={`h-4 w-4 ml-1 transition-transform ${showFilters ? 'rotate-180' : ''}`} />
               </Button>
             </div>
           </div>
