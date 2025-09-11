@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 const envSchema = z.object({
   // API Configuration
-  NEXT_PUBLIC_API_BASE_URL: z.string().url().default('http://127.0.0.1:8000'),
+  NEXT_PUBLIC_API_BASE_URL: z.string().url().default('https://api.prompt-temple.com'),
   NEXT_PUBLIC_APP_NAME: z.string().default('PromptCraft'),
   NEXT_PUBLIC_APP_VERSION: z.string().default('1.0.0'),
   
@@ -53,7 +53,7 @@ function validateEnv(): EnvConfig {
       // On client side, use defaults for missing variables
       console.warn('Environment validation failed, using defaults:', error);
       return {
-        NEXT_PUBLIC_API_BASE_URL: 'http://127.0.0.1:8000',
+        NEXT_PUBLIC_API_BASE_URL: 'https://api.prompt-temple.com',
         NEXT_PUBLIC_APP_NAME: 'PromptCraft',
         NEXT_PUBLIC_APP_VERSION: '1.0.0',
         NODE_ENV: 'development' as const,

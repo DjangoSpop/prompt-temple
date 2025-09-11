@@ -9,7 +9,9 @@
       "Read(//mnt/c/Users/**)",
       "Bash(npm run build:*)",
       "Bash(npx next:*)",
-      "Bash(cd:*)"
+      "Bash(cd:*)",
+      "Bash(npm run generate-types:*)",
+      "Bash(npm run lint)"
     ],
     "deny": [],
     "ask": []

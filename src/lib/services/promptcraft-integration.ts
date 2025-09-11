@@ -1,9 +1,9 @@
 'use client';
 
 import React from 'react';
-import { apiClient } from '@/lib/api-client';
+import { promptTempleApi } from '@/lib/api/prompt-temple';
 import { webSocketChatService } from './websocket-chat';
-import type { components } from '@/types/api';
+import type { components } from '../types/api';
 
 type TemplateList = components['schemas']['TemplateList'];
 
@@ -189,7 +189,7 @@ export class PromptCraftIntegrationService {
 
     try {
       // Search for relevant templates
-      const searchResponse = await apiClient.getTemplates({
+      const searchResponse = await promptTempleApi.getTemplates({
         search: prompt,
         is_public: true,
         ordering: '-created_at',
@@ -267,10 +267,10 @@ export class PromptCraftIntegrationService {
 
     try {
       const [profileResponse, _statsResponse, _gamificationResponse] = await Promise.all([
-        apiClient.getProfile(),
-        this.makeApiRequest('auth.stats', {}),
+        promptTempleApi.getProfile(),
+        promptTempleApi.getAnalytics(),
         this.config.enableGamification 
-          ? this.makeApiRequest('gamification.achievements', {})
+          ? promptTempleApi.getUserAchievements()
           : Promise.resolve(null),
       ]);
 
@@ -321,7 +321,7 @@ export class PromptCraftIntegrationService {
     offset?: number;
   }): Promise<{ templates: TemplateList[]; total: number }> {
     try {
-      const response = await apiClient.getTemplates({
+      const response = await promptTempleApi.getTemplates({
         search: options.query,
         category: options.category ? parseInt(options.category) : undefined,
         author: options.author,
@@ -414,28 +414,23 @@ export class PromptCraftIntegrationService {
     }
   }
 
-  private async executeApiRequest(endpoint: string, _data: unknown): Promise<unknown> {
+  private async executeApiRequest(endpoint: string, data: unknown): Promise<unknown> {
     // Map endpoints to actual API calls
     switch (endpoint) {
       case 'orchestrator.assess':
-        // Would call the actual assess endpoint
-        return { score: 85, improvements: [] };
+        return promptTempleApi.assessPrompt(data as components['schemas']['PromptAssessmentRequest']);
       
       case 'orchestrator.render':
-        // Would call the actual render endpoint
-        return { rendered: 'Rendered template content' };
-      
-      case 'auth.stats':
-        // Would call the actual stats endpoint
-        return {};
-      
-      case 'gamification.achievements':
-        // Would call the actual achievements endpoint
-        return { achievements: [] };
+        const renderData = data as { templateId: string; variables: Record<string, string> };
+        return promptTempleApi.renderTemplate(renderData.templateId, renderData.variables);
       
       case 'analytics.track':
-        // Would call the actual track endpoint
-        return { success: true };
+        const trackData = data as { event: string; data: Record<string, unknown> };
+        return promptTempleApi.trackEvent({
+          event: trackData.event,
+          properties: trackData.data,
+          timestamp: new Date().toISOString(),
+        });
       
       default:
         throw new Error(`Unknown endpoint: ${endpoint}`);

@@ -7,6 +7,7 @@ import { useTemplatesStore } from "@/store/templatesStore";
 import { useI18nStore } from "@/store/i18nStore";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import { SearchBar } from "@/components/ui/search-bar";
 import { FacetedFilter } from "@/components/ui/faceted-filter";
 import { TemplateCard } from "@/components/ui/template-card";
