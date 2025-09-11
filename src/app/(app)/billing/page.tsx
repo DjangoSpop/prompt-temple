@@ -47,6 +47,7 @@ import {
   ChevronRight,
   ExternalLink,
   RefreshCw,
+  Share,
 } from "lucide-react";
 import { toast } from "react-hot-toast";
 
