@@ -30,6 +30,7 @@ import {
   LayoutGrid,
   Rows3,
   Filter,
+  Search,
 } from "lucide-react";
 
 interface Template {
