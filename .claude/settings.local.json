@@ -5,7 +5,9 @@
       "Bash(npm install:*)",
       "Bash(npm ci:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Read(//mnt/c/Users/**)",
+      "Bash(npm run build:*)"
     ],
     "deny": [],
     "ask": []

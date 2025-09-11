@@ -234,12 +234,10 @@ export default function BillingPage() {
       toast.success(`Successfully upgraded to ${plan.name}!`);
       addExperience(200);
       addNotification({
-        id: Date.now().toString(),
         type: 'achievement',
         title: 'Plan Upgraded!',
-        message: `Welcome to ${plan.name}! You earned 200 XP bonus.`,
-        read: false,
-        timestamp: new Date()
+        description: `Welcome to ${plan.name}! You earned 200 XP bonus.`,
+        icon: '🎉'
       });
     }
     
