@@ -277,12 +277,10 @@ export default function LibraryPage() {
   const handleTemplateUse = (template: Template) => {
     addExperience(template.xpReward);
     addNotification({
-      id: Date.now().toString(),
       type: 'achievement',
       title: 'Template Used!',
-      message: `You earned ${template.xpReward} XP from "${template.title}"`,
-      read: false,
-      timestamp: new Date()
+      description: `You earned ${template.xpReward} XP from "${template.title}"`,
+      icon: '🎯'
     });
   };
 
