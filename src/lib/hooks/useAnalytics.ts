@@ -38,7 +38,7 @@ export const useUserInsights = () => {
   });
 };
 
-export const useTemplateAnalytics = () => {
+export const useAllTemplateAnalytics = () => {
   return useQuery({
     queryKey: ['analytics', 'templates'],
     queryFn: () => analyticsService.getAllTemplateAnalytics(),

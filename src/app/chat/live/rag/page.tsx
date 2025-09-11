@@ -279,7 +279,7 @@ const AnalyticsPanel = ({
   </div>
 );
 
-export function NextGenChatInterface() {
+function NextGenChatInterface() {
   // User ID and session management
   const getOrCreateUserId = useCallback(() => {
     if (typeof window === 'undefined') return 'server_user';

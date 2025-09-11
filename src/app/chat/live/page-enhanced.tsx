@@ -76,7 +76,7 @@ const getToken = () => {
   return null;
 };
 
-export function EnhancedChatInterface() {
+function EnhancedChatInterface() {
   // User ID management for WebSocket sessions
   const getOrCreateUserId = useCallback(() => {
     if (typeof window === 'undefined') return 'server_user';
