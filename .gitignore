@@ -19,9 +19,11 @@
 
 # production
 /build
+/dist
 
 # misc
 .DS_Store
+Thumbs.db
 *.pem
 
 # debug
@@ -29,8 +31,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
-
-
+*.log
 
 # vercel
 .vercel
@@ -38,31 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-# Node.js
-node_modules/
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Build output
-.next/
-out/
-dist/
-
-# TypeScript
-*.tsbuildinfo
-
-# Logs
-*.log
-
-# OS
-.DS_Store
-Thumbs.db
-
- 
-
-# Vercel
-.vercel/
 
 # IDE
 .vscode/
@@ -71,9 +47,6 @@ Thumbs.db
 # Misc
 *.swp
 *.swo
-
-# Coverage
-coverage/
 
 # Docker
 *.pid
@@ -95,3 +68,9 @@ __pycache__/
 
 # Public uploads
 public/uploads/
+
+# Environment variables
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
