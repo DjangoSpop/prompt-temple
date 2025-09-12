@@ -54,7 +54,7 @@ Create `.env.local`:
 
 ```bash
 # API Configuration
-NEXT_PUBLIC_API_BASE_URL=http://127.0.0.1:8000
+NEXT_PUBLIC_API_URL=http://127.0.0.1:8000
 NEXT_PUBLIC_APP_NAME=PromptCraft
 NEXT_PUBLIC_APP_VERSION=1.0.0
 
@@ -229,7 +229,7 @@ Recommended hosting options:
 
 ```bash
 # Frontend (.env.production)
-NEXT_PUBLIC_API_BASE_URL=https://your-api-domain.com
+NEXT_PUBLIC_API_URL=https://your-api-domain.com
 NEXTAUTH_URL=https://your-app-domain.com
 NEXTAUTH_SECRET=secure-production-secret
 
@@ -335,3 +335,4 @@ For technical support or questions:
 **Happy Coding! 🎉**
 
 This setup provides a production-ready foundation for your PromptCraft application with modern best practices and comprehensive API integration.
+

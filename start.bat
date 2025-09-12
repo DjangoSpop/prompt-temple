@@ -37,7 +37,7 @@ if not exist ".env.local" (
     echo [WARNING] .env.local not found. Creating from template...
     (
         echo # Frontend Environment Variables
-        echo NEXT_PUBLIC_API_BASE_URL=http://localhost:8000
+        echo NEXT_PUBLIC_API_URL=http://localhost:8000
         echo NEXT_PUBLIC_WS_URL=ws://localhost:8001
         echo.
         echo # Optional: Authentication
@@ -157,3 +157,4 @@ echo [INFO] Close this window or press Ctrl+C to continue.
 echo.
 
 pause
+

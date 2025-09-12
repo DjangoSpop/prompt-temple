@@ -22,10 +22,10 @@ export interface AppTemplate {
   category: AppCategory;
   rating?: number;
   is_premium?: boolean;
-  tags?: any[];
+  tags?: unknown[];
   fields?: PromptField[];
-  variables?: any;
-  author?: any;
+  variables?: Record<string, unknown>;
+  author?: unknown;
   created_at: string;
   updated_at: string;
   is_public?: boolean;
@@ -36,7 +36,7 @@ export interface AppTemplate {
   is_featured?: boolean;
   difficulty_level?: string;
   version?: string;
-  localizations?: any;
+  localizations?: Record<string, unknown>;
 }
 
 export interface AppCategory {
@@ -57,7 +57,7 @@ export interface PromptField {
   field_type: "text" | "textarea" | "number" | "checkbox" | "radio" | "dropdown";
   is_required: boolean;
   order: number; // required, not optional
-  options?: any;
+  options?: unknown;
   placeholder?: string;
   default_value?: string;
   validation_pattern?: string;

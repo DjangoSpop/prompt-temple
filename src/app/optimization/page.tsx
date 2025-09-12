@@ -44,6 +44,11 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
+import { RAGModeToggle } from '@/components/rag/RAGModeToggle';
+import { BudgetDisplay } from '@/components/rag/BudgetDisplay';
+import { CitationsPanel } from '@/components/rag/CitationsPanel';
+import { DiffSummary } from '@/components/rag/DiffSummary';
+import { useRAGOptimize, useCredits, useRAGMode } from '@/lib/hooks/useRAG';
 
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '') || 'http://127.0.0.1:8000';
@@ -179,9 +184,7 @@ const useOptimizationStore = create<OptimizationStore>()(
         connectionError: error || null
       }),
       setPrompt: (prompt) => set({ prompt }),
-      setStreamingOutput: (output: string | ((prev: string) => string)) => set((state) => ({
-      streamingOutput: typeof output === 'function' ? (output as (prev: string) => string)(state.streamingOutput) : output
-      })),
+      setStreamingOutput: (output: any) => set((state) => ({ streamingOutput: typeof output === 'function' ? output(state.streamingOutput) : output })),
       setIsStreaming: (streaming) => set({ isStreaming: streaming }),
       setSearchQuery: (query) => set({ searchQuery: query }),
       setSelectedCategory: (category) => set({ selectedCategory: category }),
@@ -571,9 +574,9 @@ const PromptEditor: React.FC<{
 
   return (
     <div className="flex h-full flex-col">
-      {/* Header with Model Config */}
+      {/* Header with Model Config and RAG Mode */}
       <div className="border-b border-slate-200 dark:border-slate-700 p-4">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold text-slate-900 dark:text-white">Prompt Editor</h2>
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
@@ -585,6 +588,11 @@ const PromptEditor: React.FC<{
               <span>~{estimatedLatency}ms</span>
             </div>
           </div>
+        </div>
+        
+        {/* RAG Mode Selection */}
+        <div className="mb-4">
+          <RAGModeToggle />
         </div>
         
         {/* Model Configuration */}
@@ -1221,7 +1229,8 @@ export default function OptimizationPlayground() {
       };
       
       sseClient.current.onStreamToken = (chunk) => {
-        store.setStreamingOutput(prev => prev + chunk.content);
+        const currentOutput = useOptimizationStore.getState().streamingOutput;
+        store.setStreamingOutput(currentOutput + chunk.content);
       };
       
       sseClient.current.onStreamComplete = (data) => {
@@ -1633,7 +1642,7 @@ export default function OptimizationPlayground() {
       
       {/* Right Panel - Output & Suggestions */}
       <div className="flex w-1/2 flex-col bg-slate-50 dark:bg-slate-900">
-        {/* Connection Status */}
+        {/* Connection Status and Budget Display */}
         <div className="border-b border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -1652,38 +1661,79 @@ export default function OptimizationPlayground() {
                 <span className="text-xs text-red-600 dark:text-red-400">{store.connectionError}</span>
               )}
             </div>
+            <div className="w-64">
+              <BudgetDisplay onManageBilling={() => console.log('Manage billing')} />
+            </div>
           </div>
         </div>
         
         {/* Output and Suggestions Tabs */}
-        <div className="flex-1 flex">
+        <div className="flex-1 flex flex-col">
           {/* Output Pane */}
-          <div className="flex-1 border-r border-slate-200 dark:border-slate-700">
-            <StreamingPane
-              output={store.streamingOutput}
-              isStreaming={store.isStreaming}
-              onCopy={() => {
-                // keep prop callback semantic - actual copy UX is handled inside StreamingPane
-                toast.success('Copied to clipboard');
-              }}
-              onSave={saveAsTemplate}
-              onFork={forkVersion}
-            />
+          <div className="flex-1 flex">
+            <div className="flex-1 border-r border-slate-200 dark:border-slate-700">
+              <StreamingPane
+                output={store.streamingOutput}
+                isStreaming={store.isStreaming}
+                onCopy={() => {
+                  // keep prop callback semantic - actual copy UX is handled inside StreamingPane
+                  toast.success('Copied to clipboard');
+                }}
+                onSave={saveAsTemplate}
+                onFork={forkVersion}
+              />
+            </div>
+            
+            {/* Suggestions Pane */}
+            <div className="w-80">
+              <SuggestionsPanel
+                suggestions={[...store.suggestions, ...store.inlineSuggestions]}
+                onApplySuggestion={applySuggestion}
+                searchQuery={store.searchQuery}
+                onSearchChange={store.setSearchQuery}
+                selectedCategory={store.selectedCategory}
+                onCategoryChange={store.setSelectedCategory}
+                templates={store.templates}
+                isLoadingTemplates={store.isLoadingTemplates}
+                onSearchTemplates={() => { searchTemplates(); searchPrompts(); }}
+              />
+            </div>
           </div>
           
-          {/* Suggestions Pane */}
-          <div className="w-80">
-            <SuggestionsPanel
-              suggestions={[...store.suggestions, ...store.inlineSuggestions]}
-              onApplySuggestion={applySuggestion}
-              searchQuery={store.searchQuery}
-              onSearchChange={store.setSearchQuery}
-              selectedCategory={store.selectedCategory}
-              onCategoryChange={store.setSelectedCategory}
-              templates={store.templates}
-              isLoadingTemplates={store.isLoadingTemplates}
-              onSearchTemplates={() => { searchTemplates(); searchPrompts(); }}
-            />
+          {/* RAG Results Section */}
+          <div className="border-t border-slate-200 dark:border-slate-700">
+            <div className="flex h-64">
+              {/* Citations Panel */}
+              <div className="flex-1 border-r border-slate-200 dark:border-slate-700">
+                <CitationsPanel 
+                  citations={[]} 
+                  onCitationClick={(citation) => console.log('Citation clicked:', citation)}
+                  onCopySource={(source) => {
+                    navigator.clipboard.writeText(source);
+                    toast.success('Source copied to clipboard');
+                  }}
+                />
+              </div>
+              
+              {/* Diff Summary Panel */}
+              <div className="flex-1">
+                <DiffSummary 
+                  originalPrompt={store.prompt}
+                  optimizedPrompt={store.streamingOutput}
+                  improvements={store.optimizationHistory[0]?.improvements || []}
+                  qualityMetrics={{
+                    clarity: 0.85,
+                    specificity: 0.92,
+                    effectiveness: 0.88
+                  }}
+                  onAcceptPrompt={() => {
+                    store.setPrompt(store.streamingOutput);
+                    store.setStreamingOutput('');
+                    toast.success('Prompt accepted as new version');
+                  }}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>

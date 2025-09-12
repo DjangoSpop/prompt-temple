@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { useGameStore } from "@/lib/stores/gameStore";
-import { apiClient } from "@/lib/api-client";
+
 import { formatNumber, formatRelativeTime } from "@/lib/utils";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -17,24 +17,20 @@ import {
   Flame,
   Star,
   Zap,
-  Target,
   Users,
   Calendar,
   Download,
   Smartphone,
   Monitor,
-  Tablet,
   Globe,
   Share,
   BookOpen,
   Plus,
   TrendingUp,
-  Award,
   Gift,
   Clock,
   Eye,
   Heart,
-  MessageSquare,
   Sparkles,
   Building2,
   Coins,
@@ -63,7 +59,7 @@ export default function TempleDashboard() {
     addExperience,
   } = useGameStore();
 
-  const [templeStats, setTempleStats] = useState<TempleStats>({
+  const [templeStats] = useState<TempleStats>({
     totalTemplates: 1247,
     templatesCreated: stats.templatesCreated,
     templatesUsed: stats.templatesUsed,
@@ -247,7 +243,7 @@ export default function TempleDashboard() {
               bgColor: "from-experience/20 to-experience/5",
               change: "+5%",
             },
-          ].map((stat, index) => (
+          ].map((stat, _) => (
             <motion.div
               key={stat.title}
               variants={itemVariants}
@@ -308,7 +304,7 @@ export default function TempleDashboard() {
                 <CardContent>
                   <div className="space-y-4">
                     {recentNotifications.length > 0 ? (
-                      recentNotifications.map((notification, index) => (
+                      recentNotifications.map((notification, _) => (
                         <motion.div
                           key={notification.id}
                           initial={{ opacity: 0, x: -20 }}
@@ -324,7 +320,7 @@ export default function TempleDashboard() {
                               {(() => {
                                 try {
                                   return formatRelativeTime(notification.timestamp);
-                                } catch (error) {
+                                } catch (_) {
                                   console.warn('Invalid timestamp for notification:', notification.id, notification.timestamp);
                                   return 'recently';
                                 }

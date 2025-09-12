@@ -84,9 +84,9 @@ export class BaseApiClient {
     const token = BaseApiClient.sharedAccessToken;
     if (token && token !== 'undefined' && !this.isTokenExpired(token)) {
       headers['Authorization'] = `Bearer ${token}`;
-      console.log('🔑 Setting initial auth header on axios instance:', token.substring(0, 20) + '...');
+      if (process.env.NEXT_PUBLIC_DEBUG === 'true') console.log('🔑 Setting initial auth header on axios instance:', token.substring(0, 20) + '...');
     } else {
-      console.log('ℹ️ No valid token available during axios setup');
+      if (process.env.NEXT_PUBLIC_DEBUG === 'true') console.log('ℹ️ No valid token available during axios setup');
     }
     
     this.axiosInstance = axios.create({
@@ -99,7 +99,7 @@ export class BaseApiClient {
       validateStatus: (status) => status < 500, // Don't throw on 4xx errors
     });
     
-    console.log('🌐 Axios instance configured for baseURL:', this.baseURL);
+    if (process.env.NEXT_PUBLIC_DEBUG === 'true') console.log('🌐 Axios instance configured for baseURL:', this.baseURL);
   }
 
   private static loadTokensFromStorage() {
@@ -123,7 +123,7 @@ export class BaseApiClient {
       localStorage.setItem('refresh_token', tokenPair.refresh);
     }
     
-    console.log('✅ Shared tokens saved to storage:', {
+    if (process.env.NEXT_PUBLIC_DEBUG === 'true') console.log('✅ Shared tokens saved to storage:', {
       hasAccess: !!BaseApiClient.sharedAccessToken,
       hasRefresh: !!BaseApiClient.sharedRefreshToken,
       accessLength: BaseApiClient.sharedAccessToken?.length,
@@ -144,7 +144,7 @@ export class BaseApiClient {
     
     BaseApiClient.emitStaticEvent('logout');
     
-    console.log('🧹 Shared tokens cleared');
+    if (process.env.NEXT_PUBLIC_DEBUG === 'true') console.log('🧹 Shared tokens cleared');
   }
 
   static emitStaticEvent(event: AuthEventType, data?: any) {
@@ -172,10 +172,10 @@ export class BaseApiClient {
     const token = BaseApiClient.sharedAccessToken;
     if (token && token !== 'undefined' && !this.isTokenExpired(token)) {
       this.axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      console.log('🔄 Updated axios headers for instance with token:', token.substring(0, 20) + '...');
+      if (process.env.NEXT_PUBLIC_DEBUG === 'true') console.log('🔄 Updated axios headers for instance with token:', token.substring(0, 20) + '...');
     } else {
       delete this.axiosInstance.defaults.headers.common['Authorization'];
-      console.log('🧹 Cleared axios headers for instance');
+      if (process.env.NEXT_PUBLIC_DEBUG === 'true') console.log('🧹 Cleared axios headers for instance');
     }
   }
 
@@ -210,7 +210,7 @@ export class BaseApiClient {
           // Force set the Authorization header for this request
           config.headers = config.headers || {};
           config.headers['Authorization'] = `Bearer ${currentToken}`;
-          console.log('🔑 Setting auth header for request:', {
+          if (process.env.NEXT_PUBLIC_DEBUG === 'true') console.log('🔑 Setting auth header for request:', {
             url: config.url,
             method: config.method?.toUpperCase(),
             hasAuth: !!config.headers['Authorization'],
@@ -221,7 +221,7 @@ export class BaseApiClient {
           delete config.headers?.['Authorization'];
           BaseApiClient.clearTokens();
         } else if (!currentToken) {
-          console.log('ℹ️ No access token for request:', {
+          if (process.env.NEXT_PUBLIC_DEBUG === 'true') console.log('ℹ️ No access token for request:', {
             url: config.url,
             method: config.method?.toUpperCase()
           });
@@ -306,7 +306,7 @@ export class BaseApiClient {
       this.axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${access}`;
       
       this.emitEvent('token_refresh', { access });
-      console.log('🔄 Token refreshed and axios headers updated:', access.substring(0, 20) + '...');
+      if (process.env.NEXT_PUBLIC_DEBUG === 'true') console.log('🔄 Token refreshed and axios headers updated:', access.substring(0, 20) + '...');
       return access;
     } catch (error) {
       console.error('Token refresh failed:', error);
@@ -410,7 +410,7 @@ export class BaseApiClient {
 
   // Debug method to check auth status
   debugAuthStatus() {
-    console.log('🔍 Auth Status Debug:', {
+    if (process.env.NEXT_PUBLIC_DEBUG === 'true') console.log('🔍 Auth Status Debug:', {
       hasAccessToken: !!BaseApiClient.sharedAccessToken,
       hasRefreshToken: !!BaseApiClient.sharedRefreshToken,
       isTokenExpired: BaseApiClient.sharedAccessToken ? this.isTokenExpired(BaseApiClient.sharedAccessToken) : 'N/A',
@@ -424,7 +424,7 @@ export class BaseApiClient {
 
   // Global debug method to check all instances
   static debugGlobalAuthStatus() {
-    console.log('🌍 Global Auth Status:', {
+    if (process.env.NEXT_PUBLIC_DEBUG === 'true') console.log('🌍 Global Auth Status:', {
       sharedAccessToken: !!BaseApiClient.sharedAccessToken,
       sharedRefreshToken: !!BaseApiClient.sharedRefreshToken,
       accessTokenPreview: BaseApiClient.sharedAccessToken?.substring(0, 20) + '...',

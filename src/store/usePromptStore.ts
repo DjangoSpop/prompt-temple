@@ -78,7 +78,10 @@ interface PromptStoreState {
 function extractVariables(content: string): TemplateVariable[] {
   const variableRegex = /\{\{(\w+)\}\}/g;
   const matches = [...content.matchAll(variableRegex)];
-  const uniqueNames = [...new Set(matches.map(match => match[1]))];
+  const names = matches
+    .map(match => match[1])
+    .filter((n): n is string => typeof n === 'string');
+  const uniqueNames = [...new Set(names)];
   
   return uniqueNames.map(name => ({
     name,
@@ -98,6 +101,8 @@ function renderTemplate(content: string, variables: Record<string, string | numb
     
     for (const match of matches) {
       const varName = match[1];
+      if (!varName) continue;
+      
       const value = variables[varName];
       
       if (value !== undefined && value !== null) {
@@ -337,9 +342,9 @@ export const usePromptStore = create<PromptStoreState>()(
               ? templateData.variables 
               : extractVariables(templateData.content),
             tags: templateData.tags,
-            description: templateData.description,
-            author: templateData.author,
-            isPublic: templateData.isPublic,
+            ...(templateData.description !== undefined ? { description: templateData.description } : {}),
+            ...(templateData.author !== undefined ? { author: templateData.author } : {}),
+            ...(templateData.isPublic !== undefined ? { isPublic: templateData.isPublic } : {}),
             isPinned: false,
             usageCount: 0,
             createdAt: new Date(),
@@ -363,18 +368,21 @@ export const usePromptStore = create<PromptStoreState>()(
           await templateApi.updateTemplate(id, updates);
           
           set(state => ({
-            templates: state.templates.map(template =>
-              template.id === id 
-                ? { 
-                    ...template, 
-                    ...updates, 
-                    updatedAt: new Date(),
-                    variables: updates.content 
-                      ? extractVariables(updates.content) 
-                      : template.variables
-                  } 
-                : template
-            ),
+            templates: state.templates.map(template => {
+              if (template.id !== id) return template;
+              // remove undefined keys from updates to satisfy exactOptionalPropertyTypes
+              const sanitizedUpdates = Object.fromEntries(
+                Object.entries(updates).filter(([, v]) => v !== undefined)
+              ) as Partial<PromptTemplate>;
+              return {
+                ...template,
+                ...sanitizedUpdates,
+                updatedAt: new Date(),
+                variables: sanitizedUpdates.content
+                  ? extractVariables(sanitizedUpdates.content)
+                  : template.variables,
+              };
+            }),
             isLoading: false
           }));
         } catch (error) {

@@ -307,12 +307,10 @@ export default function TeamsPage() {
     
     toast.success(`Invitation sent to ${inviteEmail}`);
     addNotification({
-      id: Date.now().toString(),
       type: 'info',
       title: 'Team Invitation Sent',
-      message: `Invitation sent to ${inviteEmail}`,
-      read: false,
-      timestamp: new Date()
+      description: `Invitation sent to ${inviteEmail}`,
+      icon: 'mail'
     });
     
     setInviteEmail("");

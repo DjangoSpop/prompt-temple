@@ -1,21 +1,22 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import { Send, Zap, Clock, Copy, ThumbsUp, ThumbsDown, RotateCcw, CheckCircle } from 'lucide-react';
+import { Send, Zap, Clock } from 'lucide-react';
 import TemplateCard from '@/components/TemplateCard';
 import VariableForm from '@/components/VariableForm';
 import PromptViewer from '@/components/PromptViewer';
 import { mockGetIntentCandidates, mockRenderTemplate, mockAssessResponse } from '@/lib/mock-data';
-import type { Template, IntentResponse, RenderResponse, AssessmentResponse } from '@/lib/types';
+import type { IntentResponse, RenderResponse, AssessmentResponse, Template as MockTemplate } from '@/lib/types';
+import type { AppTemplate, AppCategory } from '@/lib/types/adapters';
 
 interface Session {
   id: string;
   intent: string;
   userInput: string;
-  templates: Template[];
-  selectedTemplate?: Template;
+  templates: AppTemplate[];
+  selectedTemplate?: AppTemplate;
   variables?: Record<string, string>;
-  renderResult?: RenderResponse;
+  renderResult?: RenderResponse | undefined;
   timestamp: Date;
 }
 
@@ -30,18 +31,51 @@ export default function OrchestrateView() {
   
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
+  const toAppCategory = (name: string): AppCategory => ({
+    id: 0,
+    name,
+    slug: name.toLowerCase().replace(/\s+/g, '-'),
+    order: 0,
+    is_active: true,
+    template_count: '0',
+  });
+
+  const toAppTemplate = (t: MockTemplate): AppTemplate => ({
+    id: t.id,
+    title: t.name,
+    name: t.name,
+    description: t.description,
+    content: t.content,
+    template_content: t.content,
+    category: toAppCategory(typeof t.category === 'string' ? t.category : String(t.category)),
+    rating: t.rating,
+    is_premium: t.is_premium,
+    tags: [],
+    fields: [],
+    variables: t.variables,
+    created_at: t.created_at,
+    updated_at: t.updated_at,
+    is_public: true,
+    usage_count: t.usage_count,
+    total_ratings: 0,
+    is_featured: false,
+    difficulty_level: 'medium',
+    localizations: {},
+  });
+
   const handleIntentSubmit = async () => {
     if (!userInput.trim() || isProcessing) return;
 
     setIsProcessing(true);
     try {
       const { intent, templates } = await mockGetIntentCandidates(userInput.trim());
+      const mappedTemplates = templates.map(toAppTemplate);
       
       const session: Session = {
         id: `session_${Date.now()}`,
         intent: intent.intent,
         userInput: userInput.trim(),
-        templates,
+        templates: mappedTemplates,
         timestamp: new Date(),
       };
 
@@ -58,7 +92,7 @@ export default function OrchestrateView() {
     }
   };
 
-  const handleTemplateSelect = (template: Template) => {
+  const handleTemplateSelect = (template: AppTemplate) => {
     if (!currentSession) return;
     
     setCurrentSession(prev => prev ? {

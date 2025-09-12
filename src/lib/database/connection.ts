@@ -19,7 +19,17 @@ class DatabaseConnection {
   private isConnected = false;
 
   constructor() {
-    this.initialize();
+    // Defer initialization to first use to avoid build-time connection attempts
+  }
+
+  private initializing: Promise<void> | null = null;
+
+  private async ensureInitialized() {
+    if (this.isConnected || this.pool) return;
+    if (!this.initializing) {
+      this.initializing = this.initialize();
+    }
+    await this.initializing;
   }
 
   private async initialize() {
@@ -94,6 +104,7 @@ class DatabaseConnection {
     params?: any[],
     client?: PoolClient
   ): Promise<QueryResult<T>> {
+    await this.ensureInitialized();
     if (!this.pool) {
       throw new Error('Database not connected');
     }
@@ -135,6 +146,7 @@ class DatabaseConnection {
   async transaction<T>(
     callback: (client: PoolClient) => Promise<T>
   ): Promise<T> {
+    await this.ensureInitialized();
     if (!this.pool) {
       throw new Error('Database not connected');
     }
@@ -169,6 +181,7 @@ class DatabaseConnection {
   }
 
   async getClient(): Promise<PoolClient> {
+    await this.ensureInitialized();
     if (!this.pool) {
       throw new Error('Database not connected');
     }
@@ -196,6 +209,7 @@ class DatabaseConnection {
     responseTime?: number;
     error?: string;
   }> {
+    await this.ensureInitialized();
     if (!this.pool) {
       return {
         status: 'unhealthy',

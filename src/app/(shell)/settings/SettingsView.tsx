@@ -16,7 +16,14 @@ import {
   AlertTriangle
 } from 'lucide-react';
 import CreditsWidget from '@/components/CreditsWidget';
-import type { Quota } from '@/lib/types';
+
+interface Quota {
+  daily_limit: number;
+  daily_used: number;
+  monthly_limit: number;
+  monthly_used: number;
+  reset_date: string;
+}
 
 interface SettingsState {
   notifications: {

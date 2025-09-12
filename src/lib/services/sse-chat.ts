@@ -61,13 +61,13 @@ export class SSEChatService extends EventEmitter {
   private isConnecting = false;
   private retryCount = 0;
   private currentStreamingMessage: ChatMessage | null = null;
-  private healthCheckInterval: NodeJS.Timeout | null = null;
+  private healthCheckInterval: number | NodeJS.Timeout | null = null;
   private connectionInfo: Record<string, unknown> | null = null;
 
   constructor(config: SSEChatConfig = {}) {
     super();
     this.config = {
-      apiUrl: config.apiUrl || process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000',
+      apiUrl: config.apiUrl || process.env.NEXT_PUBLIC_API_URL || 'https://api.prompt-temple.com',
       enableOptimization: config.enableOptimization ?? true,
       enableAnalytics: config.enableAnalytics ?? true,
       maxRetries: config.maxRetries ?? 5,
@@ -132,7 +132,9 @@ export class SSEChatService extends EventEmitter {
    */
   private isTokenExpired(token: string): boolean {
     try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
+      const parts = token.split('.');
+      if (!parts[1]) return true;
+      const payload = JSON.parse(atob(parts[1]));
       const currentTime = Math.floor(Date.now() / 1000);
       return payload.exp < (currentTime + 30); // 30 second buffer like base.ts
     } catch {
@@ -715,7 +717,26 @@ export class SSEChatService extends EventEmitter {
   }
 
   off(event: string, listener: (...args: unknown[]) => void): this {
-    return super.off(event, listener);
+    // Some EventEmitter polyfills (esp. in browser bundles) may not implement
+    // `off` and instead expose `removeListener`. Use whichever exists on the instance.
+    type Removable = {
+      off?: (ev: string, fn: (...args: unknown[]) => void) => void;
+      removeListener?: (ev: string, fn: (...args: unknown[]) => void) => void;
+    };
+
+    try {
+      const self = this as unknown as Removable;
+      if (typeof self.off === 'function') {
+        self.off(event, listener);
+      } else if (typeof self.removeListener === 'function') {
+        self.removeListener(event, listener);
+      }
+    } catch (e) {
+      // Swallow any error to avoid crashing cleanup; removing listeners is best-effort
+      console.warn('Failed to remove listener via off/removeListener fallback:', e);
+    }
+
+    return this;
   }
 
   /**

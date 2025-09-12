@@ -16,7 +16,8 @@ import {
   Cell
 } from 'recharts';
 import useSWR from 'swr';
-import { apiClient, type AnalyticsStats } from '@/lib/api';
+import { apiClient } from '@/lib/api';
+import { type AnalyticsStats } from '@/lib/types';
 import { Activity, TrendingUp, AlertCircle, Clock } from 'lucide-react';
 
 const fetcher = async () => {
@@ -30,7 +31,7 @@ const fetcher = async () => {
 const COLORS = ['#5865f2', '#3ba55d', '#faa81a', '#ed4245'];
 
 export default function DashboardPage() {
-  const { data: stats, error, isLoading } = useSWR<AnalyticsStats>('/analytics/stats', fetcher);
+  const { data: stats, error, isLoading } = useSWR('/analytics/stats', fetcher);
 
   if (isLoading) {
     return (
@@ -65,7 +66,7 @@ export default function DashboardPage() {
     );
   }
 
-  const successRate = stats?.total_prompts ? 
+  const successRate = stats?.total_prompts && stats?.successful_executions ? 
     ((stats.successful_executions / stats.total_prompts) * 100).toFixed(1) : '0';
 
   return (

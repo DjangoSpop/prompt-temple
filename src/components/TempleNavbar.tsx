@@ -8,6 +8,8 @@ import { useSuppressHydrationWarning } from '@/hooks/useSuppressHydrationWarning
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { OnboardingTrigger } from '@/components/onboarding';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
+import { HealthBadge } from '@/components/health/HealthBadge';
+import { BudgetDisplay } from '@/components/rag/BudgetDisplay';
 import { 
   Crown, 
   BookOpen, 
@@ -22,7 +24,11 @@ import {
   Bot,
   TrendingUp,
   HelpCircle,
-  Activity
+  Activity,
+  User,
+  FolderOpen,
+  Trophy,
+  Coins
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -41,17 +47,29 @@ const mainNavLinks: NavLink[] = [
     icon: BarChart3,
     description: 'Overview and analytics'
   },
-  {
+    {
     href: '/templates',
     label: 'Templates',
     icon: BookOpen,
     description: 'Prompt library & manager'
   },
   {
+    href: '/library',
+    label: 'Library',
+    icon: BookOpen,
+    description: 'Prompt templates & manager'
+  },
+  {
     href: '/optimization',
     label: 'Optimizer',
     icon: Zap,
-    description: 'AI prompt optimization'
+    description: 'AI prompt optimization with RAG'
+  },
+  {
+    href: '/workspace',
+    label: 'Workspace',
+    icon: FolderOpen,
+    description: 'Conversations & saved prompts'
   },
   {
     href: '/chat/live',
@@ -60,28 +78,22 @@ const mainNavLinks: NavLink[] = [
     description: 'Live AI conversations'
   },
   {
-    href: '/chat/live/rag',
-    label: 'RAG',
-    icon: Bot,
-    description: 'Knowledge retrieval'
+    href: '/gaming',
+    label: 'Gaming',
+    icon: Trophy,
+    description: 'Achievements & leaderboards'
   },
   {
-    href: '/analysis',
-    label: 'Analytics',
-    icon: TrendingUp,
-    description: 'Performance insights'
+    href: '/profile',
+    label: 'Profile',
+    icon: User,
+    description: 'Account settings & billing'
   },
   {
     href: '/status',
     label: 'Status',
     icon: Activity,
-    description: 'System health'
-  },
-  {
-    href: '/help',
-    label: 'Help',
-    icon: HelpCircle,
-    description: 'Documentation & support'
+    description: 'System health & monitoring'
   }
 ];
 
@@ -180,11 +192,13 @@ export function TempleNavbar() {
                 // Add onboarding data attributes for key navigation items
                 const getDataAttribute = (href: string) => {
                   switch (href) {
-                    case '/templates': return 'library-nav';
+                    case '/library': return 'library-nav';
                     case '/optimization': return 'optimizer-nav';
-                    case '/': return 'temple-nav';
-                    case '/help': return 'academy-nav';
-                    case '/status': return 'analytics-nav';
+                    case '/workspace': return 'workspace-nav';
+                    case '/gaming': return 'gaming-nav';
+                    case '/profile': return 'profile-nav';
+                    case '/': return 'dashboard-nav';
+                    case '/status': return 'status-nav';
                     default: return undefined;
                   }
                 };
@@ -256,12 +270,13 @@ export function TempleNavbar() {
 
                 {/* Enhanced Desktop User Menu */}
                 <div className="hidden md:flex items-center space-x-2">
+                  <HealthBadge variant="button" showResponseTime className="mr-1" data-testid="health-badge" />
                   <OnboardingTrigger variant="help" />
                   <LanguageSwitcher />
                   <ThemeToggle />
-                  <Link href="/settings">
+                  <Link href="/profile" data-testid="profile-link">
                     <Button variant="ghost" size="sm" className="hover:bg-accent/10 hover:text-accent rounded-xl focus-ring">
-                      <Settings className="h-4 w-4" />
+                      <User className="h-4 w-4" />
                     </Button>
                   </Link>
                   <Button 
@@ -372,24 +387,31 @@ export function TempleNavbar() {
               </div>
 
               {/* Enhanced Action Buttons */}
-              <div className="flex space-x-3 pt-4 border-t-2 border-gold-accent/30">
-                <Link href="/settings" className="flex-1">
-                  <Button variant="outline" className="w-full border-gold-accent/30 hover:bg-gold-accent/10 hover:border-gold-accent/50 rounded-xl">
-                    <Settings className="h-4 w-4 mr-2" />
-                    Settings
+              <div className="pt-4 border-t-2 border-gold-accent/30 space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium text-foreground">Service Status</span>
+                  <HealthBadge showResponseTime className="text-xs" />
+                </div>
+                
+                <div className="flex space-x-3">
+                  <Link href="/profile" className="flex-1">
+                    <Button variant="outline" className="w-full border-gold-accent/30 hover:bg-gold-accent/10 hover:border-gold-accent/50 rounded-xl">
+                      <User className="h-4 w-4 mr-2" />
+                      Profile
+                    </Button>
+                  </Link>
+                  <Button 
+                    variant="outline" 
+                    className="flex-1 hover:bg-red-500/10 hover:text-red-600 hover:border-red-300 rounded-xl"
+                    onClick={() => {
+                      logout();
+                      setIsMobileMenuOpen(false);
+                    }}
+                  >
+                    <LogOut className="h-4 w-4 mr-2" />
+                    Sign Out
                   </Button>
-                </Link>
-                <Button 
-                  variant="outline" 
-                  className="flex-1 hover:bg-red-500/10 hover:text-red-600 hover:border-red-300 rounded-xl"
-                  onClick={() => {
-                    logout();
-                    setIsMobileMenuOpen(false);
-                  }}
-                >
-                  <LogOut className="h-4 w-4 mr-2" />
-                  Sign Out
-                </Button>
+                </div>
               </div>
             </div>
           </div>

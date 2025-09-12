@@ -92,12 +92,41 @@ export default function OptimizerPage() {
 - Use clear, professional language
 - Provide specific examples where relevant`,
         improvements: [
-          'Added clear role definition for better context',
-          'Structured the prompt with clear sections',
-          'Added output format specification',
-          'Included constraints for better control',
-          'Enhanced specificity and clarity'
+          {
+            category: 'Structure',
+            description: 'Added clear role definition for better context',
+            impact: 'high' as const
+          },
+          {
+            category: 'Organization',
+            description: 'Structured the prompt with clear sections',
+            impact: 'high' as const
+          },
+          {
+            category: 'Output',
+            description: 'Added output format specification',
+            impact: 'medium' as const
+          },
+          {
+            category: 'Control',
+            description: 'Included constraints for better control',
+            impact: 'medium' as const
+          },
+          {
+            category: 'Clarity',
+            description: 'Enhanced specificity and clarity',
+            impact: 'high' as const
+          }
         ],
+        metrics: {
+          clarity_score: 0.92,
+          specificity_score: 0.87,
+          creativity_score: 0.75,
+          safety_score: 0.95
+        },
+        provider: selectedProvider,
+        model: selectedModel,
+        timestamp: new Date().toISOString(),
         confidence_score: 0.89,
         model_variants: {
           'claude-3-opus': 'Variant optimized for Claude with more conversational tone...',
@@ -342,11 +371,11 @@ export default function OptimizerPage() {
                     <div className="flex items-center gap-1 text-green-600">
                       <CheckCircle className="w-4 h-4" />
                       <span className="text-sm font-medium">
-                        {optimizationResult.confidence_score * 100}% confidence
+                        {(optimizationResult.confidence_score || 0) * 100}% confidence
                       </span>
                     </div>
                     <span className="text-sm text-gray-500">
-                      +{optimizationResult.estimated_improvement} improvement
+                      +{optimizationResult.estimated_improvement || '0%'} improvement
                     </span>
                   </div>
                 </div>
@@ -414,7 +443,7 @@ export default function OptimizerPage() {
                       <div key={index} className="flex items-start gap-2">
                         <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                         <span className="text-sm text-gray-600 dark:text-gray-400">
-                          {improvement}
+                          <strong>{improvement.category}:</strong> {improvement.description}
                         </span>
                       </div>
                     ))}
@@ -434,7 +463,7 @@ export default function OptimizerPage() {
                             {model}
                           </h4>
                           <p className="text-sm text-gray-600 dark:text-gray-400">
-                            {variant}
+                            {String(variant)}
                           </p>
                         </div>
                       ))}

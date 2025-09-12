@@ -2,8 +2,10 @@
 
 import { useState, useCallback } from 'react';
 import { useConfig } from '@/providers/ConfigProvider';
-import { apiClient } from '@/lib/api-client';
-import { TemplateCreateUpdate } from '@/lib/types';
+import { templatesService } from '@/lib/api/templates';
+import { analyticsService } from '@/lib/api/analytics';
+import type { components } from '@/types/api';
+type TemplateCreateUpdate = components['schemas']['TemplateCreateUpdateRequest'];
 import { 
   Upload, 
   FileText, 
@@ -223,7 +225,7 @@ export default function AnalysisPage() {
       setAnalysisResults(results);
 
       // Track analysis event
-      await apiClient.trackEvent({
+      await analyticsService.trackEvent({
         event_type: 'chat_analysis_completed',
         data: {
           file_name: uploadedFile.name,
@@ -251,9 +253,9 @@ export default function AnalysisPage() {
         is_public: false,
       };
 
-      const newTemplate = await apiClient.createTemplate(templateData);
+      const newTemplate = await templatesService.createTemplate(templateData);
       
-      await apiClient.trackEvent({
+      await analyticsService.trackEvent({
         event_type: 'template_created_from_analysis',
         data: {
           template_id: newTemplate.id,
@@ -448,7 +450,7 @@ export default function AnalysisPage() {
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-purple-600">
-                  {Math.round(analysisResults.insights.usageStatistics.avgPromptLength)}
+                  {Math.round(Number(analysisResults.insights.usageStatistics['avgPromptLength'] ?? 0))}
                 </div>
                 <div className="text-sm text-gray-600">Avg Length</div>
               </div>

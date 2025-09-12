@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Ensure correct root to silence monorepo lockfile warning
+  outputFileTracingRoot: __dirname,
   // Enable experimental features
   experimental: {
     // Enable Server Actions
@@ -97,10 +99,8 @@ const nextConfig: NextConfig = {
 
   // ESLint configuration  
   eslint: {
-    // Skip ESLint during local/CI builds to avoid blocking when eslint packages
-    // are missing or intentionally removed. Linting should still be run in CI
-    // or locally via `npm run lint` when the dependencies are available.
-    ignoreDuringBuilds: true,
+    // Enforce ESLint during build
+    ignoreDuringBuilds: false,
   },
 
   // Compression

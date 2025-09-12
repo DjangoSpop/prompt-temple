@@ -49,7 +49,22 @@ export default function RootLayout({
                     <AnalyticsProvider>
                       <TooltipProvider>
                         <div className="flex flex-col min-h-screen">
-                        <ClientOnly fallback={<div className="h-16 bg-secondary/95 backdrop-blur-lg border-b border-primary/20"></div>}>
+                        <ClientOnly fallback={
+                          <nav className="h-16 bg-secondary/95 backdrop-blur-lg border-b border-primary/20 flex items-center justify-between px-4">
+                            <div className="flex items-center space-x-3">
+                              <div className="w-10 h-10 bg-gold-accent rounded-full flex items-center justify-center">
+                                <svg className="h-5 w-5 text-white" viewBox="0 0 24 24" fill="currentColor">
+                                  <polygon points="12,2 22,22 2,22" />
+                                </svg>
+                              </div>
+                              <h1 className="text-xl font-bold">Prompt Temple</h1>
+                            </div>
+                            <div className="flex items-center space-x-3">
+                              <div className="w-20 h-8 bg-muted rounded animate-pulse"></div>
+                              <div className="w-24 h-8 bg-muted rounded animate-pulse"></div>
+                            </div>
+                          </nav>
+                        }>
                           <HealthBanner />
                           <TempleNavbar />
                         </ClientOnly>

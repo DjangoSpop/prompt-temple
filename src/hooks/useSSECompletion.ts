@@ -102,7 +102,7 @@ export function useSSECompletion(): UseSSECompletionReturn {
       };
 
       // Make request to Django API directly
-      const apiBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://127.0.0.1:8000';
+      const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL || 'https://api.prompt-temple.com';
       const url = `${apiBaseUrl}/api/v2/chat/completions/`;
       const response = await fetch(url, {
         method: 'POST',
@@ -256,3 +256,4 @@ export function useSSECompletion(): UseSSECompletionReturn {
     reset,
   };
 }
+

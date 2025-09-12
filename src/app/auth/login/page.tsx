@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -19,7 +19,7 @@ import {
 import { useAuth } from '@/providers/AuthProvider';
 import { FcGoogle } from 'react-icons/fc';
 
-export default function LoginPage() {
+function LoginContent() {
   const [formData, setFormData] = useState({
     username: '',
     password: ''
@@ -310,5 +310,13 @@ export default function LoginPage() {
         </Card>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen" />}> 
+      <LoginContent />
+    </Suspense>
   );
 }

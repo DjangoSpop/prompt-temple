@@ -167,7 +167,7 @@ export const useOptimizerSessions = create<OptimizerState>()(
       updateRubric: (sessionId, rubric) =>
         set((state) => {
           const session = state.sessions[sessionId]
-          if (!session) return state
+          if (!session || !rubric) return state
 
           return {
             sessions: {

@@ -44,11 +44,11 @@ export interface RubricHistory {
 
 export interface OptimizerSessionsState {
   // Sessions data
-  sessions: Record<string, OptimSession>;
-  lastActiveSessionId?: string;
+  sessions: Record<string, OptimSession | undefined>;
+  lastActiveSessionId: string | undefined;
   
   // UI state
-  activeSessionId?: string;
+  activeSessionId: string | undefined;
   searchQuery: string;
   isLoading: boolean;
   error?: string;
@@ -115,6 +115,8 @@ export interface OptimizerSessionsActions {
 
 const initialState: OptimizerSessionsState = {
   sessions: {},
+  activeSessionId: undefined,
+  lastActiveSessionId: undefined,
   searchQuery: '',
   isLoading: false,
   messageLimit: 50,
@@ -132,14 +134,17 @@ export const useOptimizerSessionsStore = create<OptimizerSessionsState & Optimiz
           const now = Date.now();
           const sessionId = `session_${now}`;
           
-          const newSession: OptimSession = {
+          const baseSession: OptimSession = {
             id: sessionId,
             title: templateId ? `Template Session ${new Date().toLocaleString()}` : `New Session ${new Date().toLocaleString()}`,
             createdAt: now,
             updatedAt: now,
-            templateId,
-            variables,
             messages: [],
+          };
+          const newSession: OptimSession = {
+            ...baseSession,
+            ...(templateId !== undefined ? { templateId } : {}),
+            ...(variables !== undefined ? { variables } : {}),
           };
 
           set((state) => ({
@@ -170,9 +175,6 @@ export const useOptimizerSessionsStore = create<OptimizerSessionsState & Optimiz
             title: `${session.title} (Copy)`,
             createdAt: now,
             updatedAt: now,
-            // Keep messages but clear best prompt to encourage re-optimization
-            bestPrompt: undefined,
-            rubric: undefined,
           };
 
           set((state) => ({
@@ -375,7 +377,7 @@ export const useOptimizerSessionsStore = create<OptimizerSessionsState & Optimiz
 
         getFilteredSessions: () => {
           const { sessions, searchQuery } = get();
-          const sessionsList = Object.values(sessions);
+          const sessionsList = (Object.values(sessions).filter(Boolean) as OptimSession[]);
 
           if (!searchQuery.trim()) return sessionsList;
 
@@ -461,7 +463,7 @@ export const useOptimizerSessionsStore = create<OptimizerSessionsState & Optimiz
 
         trimSessions: () => {
           const { sessions, maxSessions } = get();
-          const sessionsList = Object.values(sessions);
+          const sessionsList = (Object.values(sessions).filter(Boolean) as OptimSession[]);
           
           if (sessionsList.length <= maxSessions) return;
 
@@ -472,9 +474,9 @@ export const useOptimizerSessionsStore = create<OptimizerSessionsState & Optimiz
             return b.updatedAt - a.updatedAt;
           });
 
-          const toKeep = sorted.slice(0, maxSessions);
+          const toKeep: OptimSession[] = sorted.slice(0, maxSessions);
           const newSessions: Record<string, OptimSession> = {};
-          
+
           toKeep.forEach(session => {
             newSessions[session.id] = session;
           });
@@ -569,8 +571,9 @@ export const useOptimizerSessionsStore = create<OptimizerSessionsState & Optimiz
         version: 1,
         partialize: (state) => ({
           sessions: Object.fromEntries(
-            Object.entries(state.sessions)
-              .sort(([,a], [,b]) => b.updatedAt - a.updatedAt)
+            (Object.entries(state.sessions)
+              .filter(([, s]) => !!s) as [string, OptimSession][]) // drop undefined sessions
+              .sort(([, a], [, b]) => b.updatedAt - a.updatedAt)
               .slice(0, state.maxSessions)
           ),
           lastActiveSessionId: state.lastActiveSessionId,

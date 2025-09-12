@@ -92,7 +92,7 @@ interface PlanCardProps {
   price: string;
   features: string[];
   isCurrentPlan: boolean;
-  isRecommended?: boolean;
+  isRecommended?: boolean | undefined;
   onUpgrade: () => void;
 }
 
@@ -172,7 +172,8 @@ export default function BillingPage() {
         'Basic analytics',
         'Email support'
       ],
-      isCurrentPlan: billing?.current_plan === 'starter'
+      isCurrentPlan: billing?.current_plan === 'starter',
+      isRecommended: undefined
     },
     {
       name: 'Professional',
@@ -200,7 +201,8 @@ export default function BillingPage() {
         'Advanced security',
         'SLA guarantee'
       ],
-      isCurrentPlan: billing?.current_plan === 'enterprise'
+      isCurrentPlan: billing?.current_plan === 'enterprise',
+      isRecommended: undefined
     }
   ];
 

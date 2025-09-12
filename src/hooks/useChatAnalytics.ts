@@ -397,7 +397,7 @@ Generated: ${new Date().toISOString()}
 ## Overview
 - Total Sessions: ${current.totalSessions}
 - Total Messages: ${current.totalMessages}
-- Total Tokens: ${current.totalTokens.toLocaleString()}
+- Total Tokens: ${(current.totalTokens || 0).toLocaleString()}
 - Average Response Time: ${Math.round(current.averageResponseTime)}ms
 - Average Session Length: ${Math.round(current.averageSessionLength / 1000 / 60)}min
 - Error Rate: ${(current.errorRate * 100).toFixed(2)}%
@@ -405,7 +405,7 @@ Generated: ${new Date().toISOString()}
 
 ## Model Usage
 ${Object.entries(current.modelUsage)
-  .map(([model, tokens]) => `- ${model}: ${tokens.toLocaleString()} tokens`)
+  .map(([model, tokens]) => `- ${model}: ${(tokens || 0).toLocaleString()} tokens`)
   .join('\n')}
 
 ## Slash Command Usage

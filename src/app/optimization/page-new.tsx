@@ -214,7 +214,7 @@ export default function OptimizationPage() {
               <ChatComposer
                 onSend={handleSendMessage}
                 disabled={streaming || rateLimited || !status.connected}
-                credits={user?.credits}
+                credits={user?.credits ?? 0}
                 placeholder={
                   !status.connected 
                     ? "Connecting to optimization service..."

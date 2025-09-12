@@ -11,7 +11,12 @@
       "Bash(npx next:*)",
       "Bash(cd:*)",
       "Bash(npm run generate-types:*)",
-      "Bash(npm run lint)"
+      "Bash(npm run lint)",
+      "Bash(ls:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npx eslint:*)",
+      "Bash(node:*)",
+      "Bash(npm:*)"
     ],
     "deny": [],
     "ask": []

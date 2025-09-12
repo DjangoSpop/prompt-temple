@@ -2,10 +2,10 @@
 
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useRef, useState, useEffect } from 'react';
-import type { Category } from '@/lib/types';
+import type { AppCategory } from '@/lib/types/adapters';
 
 interface CategoryChipsProps {
-  categories: Category[];
+  categories: AppCategory[];
   selectedCategory: string;
   onCategorySelect: (categoryId: string) => void;
   className?: string;
@@ -101,12 +101,12 @@ export function CategoryChips({
         </button>
 
         {categories.map((category) => {
-          const isSelected = selectedCategory === (category.id?.toString() || category.id);
+          const isSelected = selectedCategory === String(category.id);
           
           return (
             <button
               key={category.id}
-              onClick={() => onCategorySelect(category.id?.toString() || category.id)}
+              onClick={() => onCategorySelect(String(category.id))}
               className={`
                 flex-shrink-0 px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 whitespace-nowrap
                 ${isSelected
@@ -120,7 +120,7 @@ export function CategoryChips({
               <span className={`ml-2 text-xs ${
                 isSelected ? 'text-white/80' : 'text-text-muted'
               }`}>
-                {typeof category.template_count === 'string' ? category.template_count : String(category.template_count)}
+                {category.template_count}
               </span>
             </button>
           );

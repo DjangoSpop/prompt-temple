@@ -91,7 +91,13 @@ function EnhancedChatInterface() {
   }, []);
 
   const userId = useMemo(() => getOrCreateUserId(), [getOrCreateUserId]);
-  const sessionId = useMemo(() => `session_${userId}_${Date.now()}`, [userId]);
+  const [sessionId, setSessionId] = React.useState<string>(() => 'server_session');
+
+  // Generate sessionId on client only to avoid SSR/client hydration mismatch
+  React.useEffect(() => {
+    const sid = `session_${userId}_${Date.now()}`;
+    setSessionId(sid);
+  }, [userId]);
 
   // State
   const [isAITyping, setIsAITyping] = useState(false);

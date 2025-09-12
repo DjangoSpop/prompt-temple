@@ -21,7 +21,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
+  
 } from "@/components/ui/dialog";
 import {
   CreditCard,
@@ -29,23 +29,14 @@ import {
   Zap,
   Download,
   Upload,
-  Smartphone,
-  Globe,
   Users,
-  Shield,
-  Star,
   Check,
-  X,
   Calendar,
   TrendingUp,
   Activity,
-  Target,
   Award,
-  Flame,
   Gift,
   Coins,
-  ChevronRight,
-  ExternalLink,
   RefreshCw,
   Share2,
 } from "lucide-react";
@@ -214,7 +205,7 @@ export default function BillingPage() {
   const [showUpgradeDialog, setShowUpgradeDialog] = useState(false);
   const [isProcessingUpgrade, setIsProcessingUpgrade] = useState(false);
 
-  const { user, addExperience, addNotification } = useGameStore();
+  const { addExperience, addNotification } = useGameStore();
 
   const currentPlan = pricingPlans.find(plan => plan.current);
   const usage = mockUsage;
@@ -249,12 +240,6 @@ export default function BillingPage() {
   const getUsagePercentage = (used: number, limit: number | 'unlimited') => {
     if (limit === 'unlimited') return 0;
     return Math.min((used / limit) * 100, 100);
-  };
-
-  const getUsageColor = (percentage: number) => {
-    if (percentage < 60) return 'text-green-500';
-    if (percentage < 80) return 'text-yellow-500';
-    return 'text-red-500';
   };
 
   return (

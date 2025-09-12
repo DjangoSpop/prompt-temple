@@ -79,8 +79,8 @@ export default function EnhancedChatPage() {
       role: 'user',
       content: prompt,
       timestamp: new Date(),
-      templateId,
-      variables,
+      ...(templateId !== undefined ? { templateId } : {}),
+      ...(variables !== undefined ? { variables } : {}),
     };
 
     setMessages(prev => [...prev, userMessage]);
@@ -118,8 +118,8 @@ export default function EnhancedChatPage() {
         content: streamingText,
         timestamp: new Date(),
         metadata: {
-          trace_id,
-          elapsed_time,
+          ...(trace_id !== undefined ? { trace_id } : {}),
+          ...(elapsed_time !== undefined ? { elapsed_time } : {}),
         },
       };
 
@@ -376,8 +376,8 @@ export default function EnhancedChatPage() {
                   {/* Transport Debug Panel */}
                   <TransportDebug
                     isStreaming={isStreaming}
-                    lastTraceId={trace_id}
-                    elapsedTime={elapsed_time}
+                    {...(trace_id !== undefined ? { lastTraceId: trace_id } : {})}
+                    {...(elapsed_time !== undefined ? { elapsedTime: elapsed_time } : {})}
                   />
 
                   {/* Quick Actions */}

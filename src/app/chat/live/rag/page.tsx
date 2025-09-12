@@ -219,7 +219,7 @@ const AnalyticsPanel = ({
         </div>
         <div className="bg-white p-3 rounded-cartouche border border-sand-200">
           <div className="text-xs text-stone-600">Tokens</div>
-          <div className="text-lg font-bold text-stone-800">{analytics.totalTokens.toLocaleString()}</div>
+          <div className="text-lg font-bold text-stone-800">{(analytics.totalTokens || 0).toLocaleString()}</div>
         </div>
         <div className="bg-white p-3 rounded-cartouche border border-sand-200">
           <div className="text-xs text-stone-600">Avg Response</div>
@@ -239,7 +239,7 @@ const AnalyticsPanel = ({
             {Object.entries(analytics.modelUsage).map(([model, tokens]) => (
               <div key={model} className="flex justify-between text-xs">
                 <span className="text-stone-600">{model}</span>
-                <span className="font-mono text-stone-800">{(tokens as number).toLocaleString()}</span>
+                <span className="font-mono text-stone-800">{((tokens as number) || 0).toLocaleString()}</span>
               </div>
             ))}
           </div>
@@ -312,7 +312,12 @@ function NextGenChatInterface() {
 
   const userId = useMemo(() => getOrCreateUserId(), [getOrCreateUserId]);
   const authToken = useMemo(() => getOrCreateAuthToken(), [getOrCreateAuthToken]);
-  const sessionId = useMemo(() => `session_${userId}_${Date.now()}`, [userId]);
+  const [sessionId, setSessionId] = useState<string>(() => 'server_session');
+
+  // Generate sessionId on client only to prevent SSR/client hydration mismatch
+  useEffect(() => {
+    setSessionId(`session_${userId}_${Date.now()}`);
+  }, [userId]);
 
   // UI State
   const [showSidebar, setShowSidebar] = useState(true);
@@ -369,10 +374,12 @@ function NextGenChatInterface() {
   // Track messages for analytics
   useEffect(() => {
     if (streamingChat.messages.length === 0) return;
-    const latestMessage = streamingChat.messages[streamingChat.messages.length - 1];
+
+    const latestMessage = streamingChat.messages.at(-1);
+    if (!latestMessage) return;
 
     // Don't track partial streaming chunks; wait until the message finishes
-  if (latestMessage.isStreaming) return;
+    if (latestMessage.isStreaming) return;
 
     // Deduplicate by message ID to prevent infinite loops on re-renders
     if (trackedMessageIdsRef.current.has(latestMessage.id)) return;
@@ -484,7 +491,7 @@ function NextGenChatInterface() {
               >
                 <Filter className="h-4 w-4 text-stone-600" />
               </button>
-              <ConnectionStatus isConnected={streamingChat.isConnected} latency={streamingChat.latency} />
+              <ConnectionStatus isConnected={streamingChat.isConnected} latency={streamingChat.latency ?? null} />
               
               {/* Debug WebSocket Link */}
               {process.env.NODE_ENV === 'development' && (

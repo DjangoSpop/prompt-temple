@@ -73,7 +73,7 @@ if [ ! -f ".env.local" ]; then
     print_warning ".env.local not found. Creating from template..."
     cat > .env.local << EOF
 # Frontend Environment Variables
-NEXT_PUBLIC_API_BASE_URL=http://localhost:8000
+NEXT_PUBLIC_API_URL=http://localhost:8000
 NEXT_PUBLIC_WS_URL=ws://localhost:8001
 
 # Optional: Authentication
@@ -254,3 +254,4 @@ trap cleanup SIGINT SIGTERM
 
 # Keep script running
 wait
+

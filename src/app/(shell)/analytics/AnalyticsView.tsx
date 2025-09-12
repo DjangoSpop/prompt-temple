@@ -95,7 +95,16 @@ export default function AnalyticsView() {
             used_at: new Date(Date.now() - 1000 * 60 * 60 * 4).toISOString(),
             category: 'Technical'
           }
-        ]
+        ],
+        gamification: {
+          level: 5,
+          experience_points: 2450,
+          daily_streak: 7,
+          achievements_unlocked: 12,
+          badges_earned: 8,
+          rank: 'Expert',
+          next_level_xp: 500
+        }
       };
 
       const mockUserInsights = {

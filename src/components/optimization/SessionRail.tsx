@@ -18,7 +18,7 @@ import { useOptimizerSessionsStore } from '@/store/optimizerSessionsStore';
 import { OptimSession } from '@/store/optimizerSessionsStore';
 
 interface SessionRailProps {
-  activeSessionId?: string;
+  activeSessionId?: string | null;
   onCreateSession: () => void;
   onSelectSession: (sessionId: string) => void;
 }

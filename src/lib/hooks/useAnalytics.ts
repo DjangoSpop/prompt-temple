@@ -103,3 +103,6 @@ export const useTrackEvent = () => {
     isTracking: trackEventMutation.isPending,
   };
 };
+
+// Backwards-compatible alias used by some pages
+export const useAnalytics = () => useDashboard();

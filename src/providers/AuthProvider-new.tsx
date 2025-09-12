@@ -70,7 +70,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const login = async (username: string, password: string) => {
     setIsLoading(true);
     try {
-      const response = await apiClient.login(username, password);
+      await apiClient.login(username, password);
       // Get user profile after successful login
       const userProfile = await apiClient.getProfile();
       setUser(userProfile);
@@ -92,7 +92,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }) => {
     setIsLoading(true);
     try {
-      const response = await apiClient.register(userData);
+      await apiClient.register(userData);
       // Get user profile after successful registration
       const userProfile = await apiClient.getProfile();
       setUser(userProfile);

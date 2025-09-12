@@ -3,7 +3,7 @@ import { BaseApiClient } from './api/base';
 
 // Default configuration
 const DEFAULT_CONFIG = {
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000',
+  baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://api.prompt-temple.com',
   timeout: 30000,
   headers: {
     'Content-Type': 'application/json',
@@ -87,7 +87,7 @@ interface AnalyticsEvent {
   timestamp?: string;
 }
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || 'http://127.0.0.1:8000';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.prompt-temple.com';
 const USE_MOCK_DATA = process.env.NEXT_PUBLIC_USE_MOCK_DATA === 'true';
 
 class ApiError extends Error {

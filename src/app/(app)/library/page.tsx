@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useGameStore } from "@/lib/stores/gameStore";
-import { useTemplatesStore } from "@/store/templatesStore";
+
 import { useI18nStore } from "@/store/i18nStore";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";

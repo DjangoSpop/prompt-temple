@@ -130,35 +130,7 @@ const config: Config = {
           900: '#0E0E10',
         },
         
-        // shadcn/ui color mappings to Egyptian palette
-        primary: {
-          DEFAULT: '#1E3A8A', // Lapis Blue
-          foreground: '#FFFFFF',
-        },
-        secondary: {
-          DEFAULT: '#EBD5A7', // Desert Sand
-          foreground: '#0E0E10',
-        },
-        muted: {
-          DEFAULT: '#F8F0D7',
-          foreground: '#5F5F5F',
-        },
-        accent: {
-          DEFAULT: '#0E7490', // Nile Teal
-          foreground: '#FFFFFF',
-        },
-        destructive: {
-          DEFAULT: '#DC2626',
-          foreground: '#FFFFFF',
-        },
-        card: {
-          DEFAULT: '#FEFCF7',
-          foreground: '#0E0E10',
-        },
-        popover: {
-          DEFAULT: '#FFFFFF',
-          foreground: '#0E0E10',
-        },
+        // shadcn/ui color mappings to Egyptian palette - REMOVED to avoid duplicates
       },
       fontFamily: {
         'display': ['Cairo', 'Manrope', 'sans-serif'],

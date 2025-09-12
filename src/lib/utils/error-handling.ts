@@ -4,7 +4,7 @@ export interface ErrorInfo {
   message: string;
   status?: number;
   code?: string;
-  details?: any;
+  details?: unknown;
   timestamp: Date;
 }
 

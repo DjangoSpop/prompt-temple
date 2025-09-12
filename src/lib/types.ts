@@ -341,6 +341,78 @@ export const AssessmentResponseSchema = z.object({
   score: z.number(),
 });
 
+// Optimizer Types
+export interface AIProvider {
+  id: string;
+  name: string;
+  models: string[];
+}
+
+export interface AIModel {
+  id: string;
+  name: string;
+  provider: string;
+  description?: string;
+  max_tokens?: number;
+  pricing?: {
+    input: number;
+    output: number;
+  };
+}
+
+export interface OptimizerResult {
+  id: string;
+  original_prompt: string;
+  optimized_prompt: string;
+  improvements: Array<{
+    category: string;
+    description: string;
+    impact: 'high' | 'medium' | 'low';
+  }>;
+  metrics: {
+    clarity_score: number;
+    specificity_score: number;
+    creativity_score: number;
+    safety_score: number;
+  };
+  provider: string;
+  model: string;
+  timestamp: string;
+  confidence_score?: number;
+  estimated_improvement?: string;
+  model_variants?: Record<string, string>;
+  optimization_type?: string;
+  created_at?: string;
+}
+
+// Analytics Stats Schema
+export const AnalyticsStatsSchema = z.object({
+  total_templates_used: z.number(),
+  total_renders: z.number(),
+  total_prompts: z.number().optional(),
+  successful_executions: z.number().optional(),
+  failed_executions: z.number().optional(),
+  average_response_time: z.number().optional(),
+  favorite_categories: z.array(z.string()),
+  recent_activity: z.array(z.object({
+    category: z.string(),
+    template_name: z.string(),
+    used_at: z.string(),
+  })),
+  monthly_usage: z.array(z.object({
+    month: z.string(),
+    usage: z.number(),
+  })).optional(),
+  top_templates: z.array(z.object({
+    id: z.string(),
+    name: z.string(),
+    usage_count: z.number(),
+  })).optional(),
+  gamification: GamificationStatsSchema,
+});
+
+export type AnalyticsStats = z.infer<typeof AnalyticsStatsSchema>;
+
 // Template Variable Interface (for mock data compatibility)
 export interface Variable {
   id: string;
@@ -407,7 +479,7 @@ export type RenderRequest = z.infer<typeof RenderRequestSchema>;
 export type RenderResponse = z.infer<typeof RenderResponseSchema>;
 export type AssessmentRequest = z.infer<typeof AssessmentRequestSchema>;
 export type AssessmentResponse = z.infer<typeof AssessmentResponseSchema>;
-export type ApiResponse<T = any> = z.infer<typeof ApiResponseSchema> & { data?: T };
+export type ApiResponse<T = unknown> = z.infer<typeof ApiResponseSchema> & { data?: T };
 
 // Paginated Response Type
 export type PaginatedResponse<T> = {

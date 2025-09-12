@@ -50,7 +50,7 @@ export class WebSocketChatService {
 
   constructor(config: WebSocketChatConfig = {}) {
     this.config = {
-      apiUrl: config.apiUrl || process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:8000',
+      apiUrl: config.apiUrl || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000',
       enableOptimization: config.enableOptimization ?? true,
       enableAnalytics: config.enableAnalytics ?? true,
       maxRetries: config.maxRetries ?? 5,
@@ -698,3 +698,4 @@ export function useWebSocketChat(config?: WebSocketChatConfig) {
     error,
   };
 }
+

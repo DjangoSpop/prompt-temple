@@ -149,7 +149,7 @@ export default function HistoryPage() {
         fields_data: extractedVariables,
       };
 
-      const newTemplate = await apiClient.createTemplate(templateData);
+      const newTemplate = await apiClient.createTemplate(templateData as any);
       
       // Track template creation event
       await apiClient.trackEvent({

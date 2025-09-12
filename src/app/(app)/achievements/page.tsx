@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useGameStore } from "@/lib/stores/gameStore";
+// import { useGameStore } from "@/lib/stores/gameStore";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
@@ -34,11 +34,8 @@ import {
   Calendar,
   TrendingUp,
   Medal,
-  Sparkles,
   Lock,
   CheckCircle,
-  Clock,
-  Filter,
   Grid3X3,
   List,
 } from "lucide-react";
@@ -281,8 +278,6 @@ export default function AchievementsPage() {
   const [selectedRarity, setSelectedRarity] = useState<string>('all');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [leaderboardPeriod, setLeaderboardPeriod] = useState<'weekly' | 'monthly' | 'all-time'>('weekly');
-
-  const { user } = useGameStore();
 
   const categories = [
     { id: 'all', name: 'All', icon: Trophy },

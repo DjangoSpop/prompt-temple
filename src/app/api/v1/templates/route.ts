@@ -9,11 +9,15 @@ import { db } from '@/lib/database/connection';
 // Validation schemas
 const templateCreateSchema = commonSchemas.templateCreate;
 const templateQuerySchema = z.object({
-  ...commonSchemas.pagination.shape,
-  ...commonSchemas.search.shape,
+  page: z.coerce.number().min(1).optional(),
+  limit: z.coerce.number().min(1).max(100).optional(),
+  q: z.string().min(1).max(100).optional(),
+  category: z.string().optional(),
+  sort: z.enum(['created_at', 'updated_at', 'name', 'rating']).optional(),
+  order: z.enum(['asc', 'desc']).optional(),
   author: z.string().optional(),
-  is_featured: z.string().transform(val => val === 'true').optional(),
-  is_public: z.string().transform(val => val === 'true').optional(),
+  is_featured: z.coerce.boolean().optional(),
+  is_public: z.coerce.boolean().optional(),
 });
 
 // GET /api/v1/templates - List templates with filtering and pagination
@@ -97,9 +101,9 @@ export const GET = withErrorHandling(async (request: NextRequest) => {
   query += ` GROUP BY t.id, u.username, c.name`;
 
   // Add sorting
-  const allowedSortFields = ['created_at', 'updated_at', 'name', 'avg_rating'];
-  if (allowedSortFields.includes(sort)) {
-    query += ` ORDER BY ${sort === 'avg_rating' ? 'AVG(r.rating)' : `t.${sort}`} ${order}`;
+  const allowedSortFields = ['created_at', 'updated_at', 'name', 'rating'] as const;
+  if (sort && (allowedSortFields as readonly string[]).includes(sort)) {
+    query += ` ORDER BY ${sort === 'rating' ? 'AVG(r.rating)' : `t.${sort}`} ${order}`;
   }
 
   // Add pagination

@@ -3,10 +3,11 @@
 import React, { useState, useEffect } from 'react';
 import { Play, RotateCcw, Info } from 'lucide-react';
 import { extractTemplateVariables, prepareRenderVariables } from '@/lib/api/orchestrator';
-import type { Template, Variable } from '@/lib/types';
+import type { Variable } from '@/lib/types';
+import type { AppTemplate } from '@/lib/types/adapters';
 
 interface VariableFormProps {
-  template: Template;
+  template: AppTemplate;
   onSubmit: (variables: Record<string, string>) => void;
   isLoading?: boolean;
   initialValues?: Record<string, string>;
@@ -23,7 +24,7 @@ export default function VariableForm({
 
   // Extract variables from template content and combine with defined variables
   const allVariables = React.useMemo(() => {
-    const contentVars = extractTemplateVariables(template.content);
+    const contentVars = extractTemplateVariables(template.content || template.template_content || '');
     const definedVars = template.variables || [];
     
     // Create a map of defined variables for quick lookup

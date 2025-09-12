@@ -95,7 +95,13 @@ function EnhancedChatInterface() {
   }, []);
 
   const userId = useMemo(() => getOrCreateUserId(), [getOrCreateUserId]);
-  const sessionId = useMemo(() => `session_${userId}_${Date.now()}`, [userId]);
+  const [sessionId, setSessionId] = useState<string>(() => 'server_session');
+
+  // Generate sessionId only on client to avoid SSR/client mismatch
+  useEffect(() => {
+    const sid = `session_${userId}_${Date.now()}`;
+    setSessionId(sid);
+  }, [userId]);
 
   // State
   const [isAITyping, setIsAITyping] = useState(false);
@@ -190,7 +196,7 @@ function EnhancedChatInterface() {
         content: message.content,
         role: message.type === 'user' ? 'user' : 'assistant',
         timestamp: message.timestamp,
-        processingTime: message.metadata?.processingTime,
+        ...(message.metadata?.processingTime !== undefined ? { processingTime: message.metadata.processingTime } : {}),
         templateSuggestions: [],
       }]);
       

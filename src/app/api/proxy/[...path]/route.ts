@@ -52,7 +52,7 @@ async function proxy(req: NextRequest, context: { params: Promise<{ path: string
         [...req.headers].filter(([k]) => ALLOWED_HEADERS.includes(k.toLowerCase()))
       ),
       // Important for POST/PUT/PATCH
-      body: ['GET','HEAD'].includes(req.method) ? undefined : await req.arrayBuffer(),
+      body: ['GET','HEAD'].includes(req.method) ? null : await req.arrayBuffer(),
       redirect: 'manual',
       signal: controller.signal, // Add timeout signal
     };

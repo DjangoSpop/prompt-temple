@@ -82,7 +82,7 @@ export const authOptions: NextAuthOptions = {
             };
 
             // Call your backend to handle social auth
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/social/`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/social/`, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -135,7 +135,7 @@ export const authOptions: NextAuthOptions = {
 
 async function refreshAccessToken(token: any) {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/refresh/`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/auth/refresh/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

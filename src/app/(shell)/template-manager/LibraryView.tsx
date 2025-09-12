@@ -1,22 +1,22 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Search, Filter, Star, TrendingUp, Grid3X3, List, Plus, Edit, Trash2, Copy } from 'lucide-react';
+import { Search, Filter, Star, Grid3X3, List, Plus } from 'lucide-react';
 import TemplateCard from '@/components/TemplateCard';
 import TemplateEditor from '@/components/TemplateEditor';
-import SearchBar from '@/components/SearchBar';
-import CategoryChips from '@/components/CategoryChips';
-import { useTemplates, useTemplateCategories } from '@/lib/hooks/useDashboard';
-import { useTemplateManagement } from '@/lib/hooks/useTemplateManagement';
-import { apiClient } from '@/lib/api-client';
-import type { Template, Category } from '@/lib/types';
+import { SearchBar } from '@/components/SearchBar';
+import { CategoryChips } from '@/components/CategoryChips';
+import { useTemplates, useTemplateActions } from '@/lib/hooks/useTemplates';
+import { useCategories } from '@/lib/hooks/useCategories';
+import { templatesService } from '@/lib/api/templates';
+import type { AppTemplate, AppCategory } from '@/lib/types/adapters';
 
 export default function LibraryView() {
-  const { templates, isLoading: templatesLoading, loadTemplates } = useTemplates();
-  const { categories, isLoading: categoriesLoading } = useTemplateCategories();
-  const templateManagement = useTemplateManagement();
+  const { templates, isLoading: templatesLoading, refetch } = useTemplates();
+  const { data: categoriesData, isLoading: categoriesLoading } = useCategories();
+  const templateManagement = useTemplateActions();
   
-  const [featuredTemplates, setFeaturedTemplates] = useState<any[]>([]);
+  const [featuredTemplates, setFeaturedTemplates] = useState<AppTemplate[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -35,32 +35,13 @@ export default function LibraryView() {
   }, []);
 
   useEffect(() => {
-    const filters: any = {};
-    
-    if (searchQuery) {
-      filters.search = searchQuery;
-    }
-    
-    if (selectedCategory) {
-      filters.category = selectedCategory;
-    }
-    
-    if (typeFilter) {
-      filters.is_public = typeFilter === 'free';
-    }
-    
-    if (sortBy && sortBy !== 'featured') {
-      filters.ordering = sortBy === 'rating' ? '-average_rating' : 
-                        sortBy === 'usage' ? '-usage_count' : 
-                        sortBy === 'newest' ? '-created_at' : '';
-    }
-    
-    loadTemplates(filters);
-  }, [searchQuery, selectedCategory, sortBy, typeFilter]);
+    // refetch is keyed by filters in hook; here we simply trigger due to changes
+    refetch();
+  }, [searchQuery, selectedCategory, sortBy, typeFilter, refetch]);
 
   const loadFeaturedTemplates = async () => {
     try {
-      const featured = await apiClient.getFeaturedTemplates();
+      const featured = await templatesService.getFeaturedTemplates();
       setFeaturedTemplates(featured);
     } catch (error) {
       console.error('Failed to load featured templates:', error);
@@ -87,7 +68,7 @@ export default function LibraryView() {
     setEditingTemplate(undefined);
   };
 
-  const handleTemplateAction = async (action: string, template: Template) => {
+  const handleTemplateAction = async (action: string, template: AppTemplate) => {
     try {
       switch (action) {
         case 'edit':
@@ -96,13 +77,13 @@ export default function LibraryView() {
         case 'duplicate':
           await templateManagement.duplicateTemplate(template.id);
           // Refresh templates list
-          loadTemplates();
+          refetch();
           break;
         case 'delete':
-          if (window.confirm(`Are you sure you want to delete "${template.name || (template as any).title}"?`)) {
+          if (window.confirm(`Are you sure you want to delete "${template.name || template.title}"?`)) {
             await templateManagement.deleteTemplate(template.id);
             // Refresh templates list
-            loadTemplates();
+            refetch();
           }
           break;
         case 'use':
@@ -120,12 +101,12 @@ export default function LibraryView() {
   };
 
   // Action handlers
-  const handleUseTemplate = (template: Template) => {
+  const handleUseTemplate = (template: AppTemplate) => {
     // TODO: Navigate to template editor with this template
-    console.log('Using template:', template.name || (template as any).title);
+    console.log('Using template:', template.name || template.title);
   };
 
-  const handleSaveTemplate = (template: Template) => {
+  const handleSaveTemplate = (template: AppTemplate) => {
     // TODO: Save template to user's collection
     console.log('Saving template:', template.name || (template as any).title);
   };
@@ -169,11 +150,11 @@ export default function LibraryView() {
   }
 
   // Filter and search templates
-  const filteredTemplates = templates.filter((template: Template) => {
+  const filteredTemplates = templates.filter((template: AppTemplate) => {
     // Search filter
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
-      const templateName = template.name || (template as any).title || '';
+      const templateName = template.name || template.title || '';
       if (!templateName.toLowerCase().includes(query) && 
           !template.description?.toLowerCase().includes(query)) {
         return false;
@@ -182,9 +163,7 @@ export default function LibraryView() {
 
     // Category filter
     if (selectedCategory) {
-      const templateCategoryId = typeof template.category === 'string' 
-        ? template.category 
-        : (template.category as any)?.id?.toString();
+      const templateCategoryId = String(template.category?.id ?? '');
       if (templateCategoryId !== selectedCategory) {
         return false;
       }
@@ -212,7 +191,7 @@ export default function LibraryView() {
           <Star className="w-5 h-5 text-yellow" />
           <h1 className="text-text-primary font-semibold">
             {searchQuery ? `Search: "${searchQuery}"` : selectedCategory ? 
-              (categories.find(c => c.id?.toString() === selectedCategory)?.name || 'Category') : 
+              ((categoriesData?.results || []).find((c) => String(c.id) === selectedCategory)?.name || 'Category') : 
               'Template Library'}
           </h1>
         </div>
@@ -276,7 +255,7 @@ export default function LibraryView() {
 
           {/* Categories */}
           <CategoryChips
-            categories={categories}
+            categories={(categoriesData?.results || []) as unknown as AppCategory[]}
             selectedCategory={selectedCategory}
             onCategorySelect={handleCategorySelect}
           />
@@ -334,7 +313,7 @@ export default function LibraryView() {
                 ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'
                 : 'space-y-4'
             }>
-              {filteredTemplates.map((template: Template) => (
+              {filteredTemplates.map((template: AppTemplate) => (
                 <TemplateCard
                   key={template.id}
                   template={template}
@@ -382,11 +361,11 @@ export default function LibraryView() {
       {/* Template Editor Modal */}
       {showEditor && (
         <TemplateEditor
-          templateId={editingTemplate}
+          templateId={editingTemplate ?? ''}
           onClose={handleCloseEditor}
           onSave={() => {
             // Refresh templates list after save
-            loadTemplates();
+            refetch();
           }}
         />
       )}

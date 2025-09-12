@@ -159,7 +159,6 @@ const config: Config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        // Egyptian temple and gamification colors
         pharaoh: {
           DEFAULT: "hsl(40 100% 50%)", // Pure gold
           dark: "hsl(35 100% 40%)", // Darker gold

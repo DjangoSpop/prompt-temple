@@ -76,3 +76,6 @@ export const useBillingActions = () => {
     portalResult: createCustomerPortalSessionMutation.data,
   };
 };
+
+// Backwards-compatible alias used by some pages
+export const useBilling = () => useSubscription();

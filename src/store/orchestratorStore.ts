@@ -309,6 +309,7 @@ export const useOrchestratorStore = create<OrchestratorState & OrchestratorActio
         try {
           for (let i = 0; i < stages.length; i++) {
             const stage = stages[i];
+            if (!stage) continue;
             
             // Check if we've exceeded budget
             if (globalSettings.totalSpent >= globalSettings.budgetLimit) {
@@ -366,7 +367,6 @@ export const useOrchestratorStore = create<OrchestratorState & OrchestratorActio
         get().updateStage(stageId, { 
           isActive: true, 
           startTime: new Date(),
-          error: undefined,
         });
 
         try {

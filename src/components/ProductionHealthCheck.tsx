@@ -149,7 +149,7 @@ export function ProductionHealthCheck() {
     }
 
     // 5. Environment Configuration Check
-    const requiredEnvVars = ['NEXT_PUBLIC_API_BASE_URL'];
+    const requiredEnvVars = ['NEXT_PUBLIC_API_URL'];
     const missingVars = requiredEnvVars.filter(varName => !process.env[varName]);
     
     if (missingVars.length === 0) {
@@ -157,7 +157,7 @@ export function ProductionHealthCheck() {
         component: 'Environment Configuration',
         status: 'healthy',
         message: 'All required environment variables configured',
-        details: `API URL: ${process.env.NEXT_PUBLIC_API_BASE_URL}`,
+        details: `API URL: ${process.env.NEXT_PUBLIC_API_URL}`,
         timestamp: new Date()
       });
     } else {
@@ -398,3 +398,4 @@ export function ProductionHealthCheck() {
     </div>
   );
 }
+

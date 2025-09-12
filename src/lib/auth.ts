@@ -23,14 +23,14 @@ type TokenPair = {
 };
 
 type AuthEventType = 'login' | 'logout' | 'token_refresh' | 'unauthorized';
-type AuthEventListener = (data?: any) => void;
+type AuthEventListener = (data?: unknown) => void;
 
 /**
  * Comprehensive auth adapter that integrates with the generated API client
  * Provides unified authentication interface for the application
  */
 class AuthAdapter {
-  private eventListeners: Map<string, Set<Function>> = new Map();
+  private eventListeners: Map<string, Set<(data?: unknown) => void>> = new Map();
 
   constructor() {
     // Listen to auth service events and re-emit them
@@ -56,14 +56,14 @@ class AuthAdapter {
   }
 
   // Event management
-  addEventListener(event: string, callback: Function) {
+  addEventListener(event: string, callback: (data?: unknown) => void) {
     if (!this.eventListeners.has(event)) {
       this.eventListeners.set(event, new Set());
     }
     this.eventListeners.get(event)!.add(callback);
   }
 
-  removeEventListener(event: string, callback: Function) {
+  removeEventListener(event: string, callback: (data?: unknown) => void) {
     this.eventListeners.get(event)?.delete(callback);
   }
 

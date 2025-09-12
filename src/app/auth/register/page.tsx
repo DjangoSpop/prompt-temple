@@ -1,13 +1,13 @@
   'use client';
 
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Mail, User, Lock, Eye, EyeOff, AlertCircle, Loader2 } from 'lucide-react';
 import { useAuth } from '@/providers/AuthProvider';
 
-export default function RegisterPage() {
+function RegisterContent() {
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -59,9 +59,7 @@ export default function RegisterPage() {
         last_name: formData.last_name.trim(),
         password: formData.password,
         password_confirm: formData.password_confirm,
-        bio: formData.bio,
-        theme_preference: formData.theme_preference,
-        language_preference: formData.language_preference,
+        // preferences are set post-registration in profile settings
       });
 
       // Redirect to login (or target) after successful registration
@@ -257,5 +255,13 @@ export default function RegisterPage() {
         </Card>
       </div>
     </div>
+  );
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen" />}> 
+      <RegisterContent />
+    </Suspense>
   );
 }

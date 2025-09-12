@@ -3,6 +3,7 @@ import { z } from 'zod';
 const envSchema = z.object({
   // API Configuration
   NEXT_PUBLIC_API_BASE_URL: z.string().url().default('https://api.prompt-temple.com'),
+  NEXT_PUBLIC_API_URL: z.string().url().optional(),
   NEXT_PUBLIC_APP_NAME: z.string().default('PromptCraft'),
   NEXT_PUBLIC_APP_VERSION: z.string().default('1.0.0'),
   
@@ -91,8 +92,10 @@ export const isProduction = () => env.NODE_ENV === 'production';
 export const isTest = () => env.NODE_ENV === 'test';
 
 // API Configuration
+const PUBLIC_API_URL = process.env.NEXT_PUBLIC_API_URL || env.NEXT_PUBLIC_API_BASE_URL;
+
 export const apiConfig = {
-  baseUrl: env.NEXT_PUBLIC_API_BASE_URL,
+  baseUrl: PUBLIC_API_URL,
   timeout: 30000,
   retryAttempts: 3,
   retryDelay: 1000,

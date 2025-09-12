@@ -10,7 +10,10 @@ import {
   RefreshCw,
   ChevronDown,
   ChevronUp,
-  Info
+  Info,
+  Zap,
+  Server,
+  Globe
 } from 'lucide-react';
 import { useSSEChat } from '@/lib/services/sse-chat';
 import { Button } from '@/components/ui/button';
@@ -23,7 +26,7 @@ interface ConnectionStatusProps {
 }
 
 interface ConnectionMetrics {
-  latency: number;
+  latency: number | null;
   reconnectAttempts: number;
   messagesPerMinute: number;
   lastConnected: Date | null;
@@ -36,7 +39,7 @@ export const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
 }) => {
   const { service, isConnected, isConnecting, error } = useSSEChat();
   const [metrics, setMetrics] = useState<ConnectionMetrics>({
-    latency: 0,
+    latency: null,
     reconnectAttempts: 0,
     messagesPerMinute: 0,
     lastConnected: null,
@@ -86,7 +89,7 @@ export const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
       setMetrics(prev => ({
         ...prev,
         connectionQuality: 'disconnected',
-        latency: 0,
+        latency: null,
       }));
       clearInterval(pingInterval);
     };
@@ -207,7 +210,7 @@ export const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
           {isConnected && (
             <div className="flex items-center space-x-2">
               {getQualityBadge()}
-              {metrics.latency > 0 && (
+              {metrics.latency !== null && metrics.latency > 0 && (
                 <span className="text-xs text-gray-500">
                   {metrics.latency}ms
                 </span>
@@ -260,7 +263,7 @@ export const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
                   <AlertTriangle className="w-5 h-5 text-red-500 mt-0.5" />
                   <div>
                     <h4 className="font-medium text-red-800">Connection Error</h4>
-                    <p className="text-sm text-red-600 mt-1">{error}</p>
+                    <p className="text-sm text-red-600 mt-1">{error.message}</p>
                     <div className="mt-2 text-xs text-red-500">
                       <p>• Check your internet connection</p>
                       <p>• Verify the server is running</p>
@@ -287,7 +290,7 @@ export const ConnectionStatus: React.FC<ConnectionStatusProps> = ({
                 <Zap className="w-4 h-4 text-blue-500" />
                 <div>
                   <p className="text-xs text-gray-600">Latency</p>
-                  <p className="text-lg font-semibold">{metrics.latency}ms</p>
+                  <p className="text-lg font-semibold">{metrics.latency !== null ? `${metrics.latency}ms` : 'N/A'}</p>
                 </div>
               </div>
             </CardContent>

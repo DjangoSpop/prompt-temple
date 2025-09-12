@@ -56,7 +56,7 @@ export const GET = withErrorHandling(async (request: NextRequest) => {
   
   if (dbHealth.status === 'unhealthy' || memoryStatus === 'unhealthy') {
     overallStatus = 'unhealthy';
-  } else if (dbHealth.status === 'unhealthy' || memoryStatus === 'degraded') {
+  } else if (memoryStatus === 'degraded') {
     overallStatus = 'degraded';
   }
 

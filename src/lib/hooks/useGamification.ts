@@ -49,3 +49,30 @@ export const useStreak = () => {
     staleTime: 5 * 60 * 1000, // 5 minutes
   });
 };
+
+// Backwards-compatible aggregator used by Gaming page
+export const useGamification = () => {
+  const achievements = useAchievements();
+  const badges = useBadges();
+  const leaderboard = useLeaderboard();
+  const userLevel = useUserLevel();
+  const streak = useStreak();
+
+  const isLoading =
+    achievements.isLoading ||
+    badges.isLoading ||
+    leaderboard.isLoading ||
+    userLevel.isLoading ||
+    streak.isLoading;
+
+  return {
+    data: {
+      achievements: achievements.data,
+      badges: badges.data,
+      leaderboard: leaderboard.data,
+      userLevel: userLevel.data,
+      streak: streak.data,
+    },
+    isLoading,
+  } as const;
+};

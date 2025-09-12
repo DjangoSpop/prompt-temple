@@ -1,6 +1,5 @@
 import { BaseApiClient } from './base';
 import type { components } from '../../types/api';
-import type { Template } from '@/lib/types';
 
 type TemplateList = components['schemas']['TemplateList'];
 
@@ -23,7 +22,11 @@ export function extractTemplateVariables(content: string): string[] {
   return Array.from(variables);
 }
 
-export function prepareRenderVariables(template: Template, variables: Record<string, string>): Record<string, string> {
+export function prepareRenderVariables(
+  // accept any object that may contain variables metadata; kept structural
+  _template: { variables?: unknown } | undefined,
+  variables: Record<string, string>
+): Record<string, string> {
   // For now, just return the variables as-is
   // This could be extended to validate against template schema, apply transformations, etc.
   return { ...variables };

@@ -50,10 +50,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
             console.log('🎉 AuthProvider: Login successful');
             resolve();
           },
-          onError: (error: any) => {
-            console.error('❌ AuthProvider: Login failed:', error);
-            reject(error);
-          },
+          onError: (error: unknown) => { console.error('AuthProvider: error:', error); reject(error instanceof Error ? error : new Error(String(error))); },
         }
       );
     });
@@ -75,10 +72,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
             console.log('🎉 AuthProvider: Registration successful');
             resolve();
           },
-          onError: (error: any) => {
-            console.error('❌ AuthProvider: Registration failed:', error);
-            reject(error);
-          },
+          onError: (error: unknown) => { console.error('AuthProvider: error:', error); reject(error instanceof Error ? error : new Error(String(error))); },
         }
       );
     });
@@ -131,3 +125,4 @@ export function AuthProvider({ children }: AuthProviderProps) {
     </AuthContext.Provider>
   );
 }
+
