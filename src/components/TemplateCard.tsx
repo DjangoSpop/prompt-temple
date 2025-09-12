@@ -14,6 +14,25 @@ interface TemplateCardProps {
 export default function TemplateCard({ template, viewMode, onSelect }: TemplateCardProps) {
   const [isLoading, setIsLoading] = useState(false);
 
+  const templateDisplayName = (t: TemplateList | TemplateDetail): string => {
+    const maybe = t as unknown as { name?: string; title?: string };
+    return maybe.name ?? maybe.title ?? 'Untitled';
+  };
+
+  const templateCategoryName = (t: TemplateList | TemplateDetail): string => {
+    const cat = t.category as unknown;
+    if (typeof cat === 'string') return cat;
+    if (cat && typeof cat === 'object' && 'name' in (cat as { name?: string })) {
+      return (cat as { name?: string }).name ?? 'Unknown';
+    }
+    return 'Unknown';
+  };
+
+  const templateContent = (t: TemplateList | TemplateDetail): string => {
+    const maybe = t as unknown as { content?: string; template_content?: string };
+    return maybe.content ?? maybe.template_content ?? '';
+  };
+
   const handleUseTemplate = async (e: React.MouseEvent) => {
     e.stopPropagation();
     setIsLoading(true);
@@ -31,7 +50,7 @@ export default function TemplateCard({ template, viewMode, onSelect }: TemplateC
   };
 
   const handleCardClick = () => {
-    console.log('Template selected:', template.id, template.name || (template as any).title);
+    console.log('Template selected:', template.id, templateDisplayName(template));
     onSelect?.(template);
   };
 
@@ -58,7 +77,7 @@ export default function TemplateCard({ template, viewMode, onSelect }: TemplateC
           <div className="flex-1 min-w-0">
             <div className="flex items-center space-x-2 mb-2">
               <h3 className="text-text-primary font-medium group-hover:text-interactive-hover transition-colors truncate">
-                {template.name || (template as any).title || 'Untitled'}
+                {templateDisplayName(template)}
               </h3>
               {template.is_premium && (
                 <span title="Premium template">
@@ -83,7 +102,7 @@ export default function TemplateCard({ template, viewMode, onSelect }: TemplateC
               </div>
               
               <span className="bg-interactive-muted px-2 py-0.5 rounded text-xs">
-                {typeof template.category === 'string' ? template.category : (template.category as any)?.name || 'Unknown'}
+                {templateCategoryName(template)}
               </span>
             </div>
           </div>
@@ -129,7 +148,7 @@ export default function TemplateCard({ template, viewMode, onSelect }: TemplateC
       <div className="p-4 pb-3">
         <div className="flex items-start justify-between mb-2">
           <h3 className="text-text-primary font-medium group-hover:text-interactive-hover transition-colors line-clamp-2 flex-1">
-            {template.name || (template as any).title || 'Untitled'}
+            {templateDisplayName(template)}
           </h3>
           {template.is_premium && (
             <span title="Premium template">
@@ -159,10 +178,10 @@ export default function TemplateCard({ template, viewMode, onSelect }: TemplateC
       <div className="px-4 pb-3">
         <div className="bg-bg-tertiary rounded p-3 text-xs">
           <div className="text-text-muted line-clamp-3 font-mono">
-            {template.content || (template as any).template_content ? (
+            {templateContent(template) ? (
               <>
-                {(template.content || (template as any).template_content || '').substring(0, 150)}
-                {(template.content || (template as any).template_content || '').length > 150 && '...'}
+                {templateContent(template).substring(0, 150)}
+                {templateContent(template).length > 150 && '...'}
               </>
             ) : (
               'No content available'
@@ -175,7 +194,7 @@ export default function TemplateCard({ template, viewMode, onSelect }: TemplateC
       <div className="px-4 pb-4">
         <div className="flex items-center justify-between">
           <span className="bg-interactive-muted px-2 py-1 rounded text-xs text-text-secondary">
-            {typeof template.category === 'string' ? template.category : (template.category as any)?.name || 'Unknown'}
+            {templateCategoryName(template)}
           </span>
           
           <div className="flex items-center space-x-2">
@@ -183,7 +202,7 @@ export default function TemplateCard({ template, viewMode, onSelect }: TemplateC
               onClick={(e) => {
                 e.stopPropagation();
                 // Handle quick copy
-                navigator.clipboard.writeText(template.content || (template as any).template_content || '');
+                navigator.clipboard.writeText(templateContent(template));
               }}
               className="p-1.5 text-interactive-normal hover:text-interactive-hover hover:bg-interactive-hover/10 rounded transition-colors"
               title="Copy to clipboard"

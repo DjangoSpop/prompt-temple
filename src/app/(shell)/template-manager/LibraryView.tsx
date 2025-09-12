@@ -16,7 +16,7 @@ export default function LibraryView() {
   const { categories, isLoading: categoriesLoading } = useTemplateCategories();
   const templateManagement = useTemplateManagement();
   
-  const [featuredTemplates, setFeaturedTemplates] = useState<any[]>([]);
+  const [featuredTemplates, setFeaturedTemplates] = useState<Template[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -30,12 +30,12 @@ export default function LibraryView() {
   const [editingTemplate, setEditingTemplate] = useState<string | undefined>(undefined);
 
   useEffect(() => {
-    console.log('Library page viewed');
+    // Load featured templates on mount
     loadFeaturedTemplates();
   }, []);
 
   useEffect(() => {
-    const filters: any = {};
+    const filters: Record<string, string | number | boolean> = {};
     
     if (searchQuery) {
       filters.search = searchQuery;
@@ -87,6 +87,11 @@ export default function LibraryView() {
     setEditingTemplate(undefined);
   };
 
+  const templateDisplayName = (t: Template): string => {
+    const maybe = t as unknown as { name?: string; title?: string };
+    return maybe.name ?? maybe.title ?? '';
+  };
+
   const handleTemplateAction = async (action: string, template: Template) => {
     try {
       switch (action) {
@@ -99,7 +104,7 @@ export default function LibraryView() {
           loadTemplates();
           break;
         case 'delete':
-          if (window.confirm(`Are you sure you want to delete "${template.name || (template as any).title}"?`)) {
+          if (window.confirm(`Are you sure you want to delete "${templateDisplayName(template)}"?`)) {
             await templateManagement.deleteTemplate(template.id);
             // Refresh templates list
             loadTemplates();
@@ -122,12 +127,12 @@ export default function LibraryView() {
   // Action handlers
   const handleUseTemplate = (template: Template) => {
     // TODO: Navigate to template editor with this template
-    console.log('Using template:', template.name || (template as any).title);
+    console.log('Using template:', templateDisplayName(template));
   };
 
   const handleSaveTemplate = (template: Template) => {
     // TODO: Save template to user's collection
-    console.log('Saving template:', template.name || (template as any).title);
+    console.log('Saving template:', templateDisplayName(template));
   };
 
   const handleRateTemplate = (templateId: string, rating: number) => {
@@ -173,7 +178,7 @@ export default function LibraryView() {
     // Search filter
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
-      const templateName = template.name || (template as any).title || '';
+      const templateName = templateDisplayName(template);
       if (!templateName.toLowerCase().includes(query) && 
           !template.description?.toLowerCase().includes(query)) {
         return false;
@@ -182,9 +187,12 @@ export default function LibraryView() {
 
     // Category filter
     if (selectedCategory) {
-      const templateCategoryId = typeof template.category === 'string' 
-        ? template.category 
-        : (template.category as any)?.id?.toString();
+      const cat = template.category as unknown;
+      const templateCategoryId = typeof cat === 'string'
+        ? cat
+        : (cat && typeof cat === 'object' && 'id' in (cat as { id?: string | number }))
+          ? String((cat as { id?: string | number }).id)
+          : undefined;
       if (templateCategoryId !== selectedCategory) {
         return false;
       }

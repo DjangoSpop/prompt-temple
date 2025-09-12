@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { 
   BarChart3, 
   TrendingUp, 
@@ -57,18 +57,7 @@ export default function AnalyticsView() {
   const [activeTab, setActiveTab] = useState<'overview' | 'insights' | 'templates'>('overview');
   const [dateRange, setDateRange] = useState('7d');
 
-  useEffect(() => {
-    console.log('Analytics page viewed');
-    loadAnalyticsData();
-  }, []);
-
-  useEffect(() => {
-    if (dateRange) {
-      refreshData();
-    }
-  }, [dateRange]);
-
-  const loadAnalyticsData = async () => {
+  const loadAnalyticsData = useCallback(async () => {
     try {
       setLoading(true);
       
@@ -179,9 +168,9 @@ export default function AnalyticsView() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  const refreshData = async () => {
+  const refreshData = useCallback(async () => {
     try {
       setRefreshing(true);
       await loadAnalyticsData();
@@ -190,7 +179,18 @@ export default function AnalyticsView() {
     } finally {
       setRefreshing(false);
     }
-  };
+  }, [loadAnalyticsData]);
+
+  useEffect(() => {
+    console.log('Analytics page viewed');
+    loadAnalyticsData();
+  }, [loadAnalyticsData]);
+
+  useEffect(() => {
+    if (dateRange) {
+      refreshData();
+    }
+  }, [dateRange, refreshData]);
 
   const exportData = () => {
     const data = {
@@ -496,16 +496,16 @@ export default function AnalyticsView() {
       {/* Tabs */}
       <div className="border-b border-border bg-bg-secondary">
         <div className="px-4 flex space-x-6">
-          {[
+          {([
             { id: 'overview', label: 'Overview', icon: PieChart },
             { id: 'insights', label: 'User Insights', icon: Users },
             { id: 'templates', label: 'Template Analytics', icon: BarChart3 },
-          ].map((tab) => {
+          ] as const).map((tab) => {
             const Icon = tab.icon;
             return (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
+                onClick={() => setActiveTab(tab.id)}
                 className={`flex items-center space-x-2 px-4 py-3 border-b-2 transition-colors ${
                   activeTab === tab.id
                     ? 'border-brand text-brand'

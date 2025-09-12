@@ -43,7 +43,6 @@ interface SettingsState {
 
 export default function SettingsView() {
   const [quotas, setQuotas] = useState<Quota | null>(null);
-  const [config, setConfig] = useState<any>(null);
   const [settings, setSettings] = useState<SettingsState>({
     notifications: {
       email: true,
@@ -71,49 +70,44 @@ export default function SettingsView() {
   const [activeTab, setActiveTab] = useState<'general' | 'quotas' | 'privacy' | 'advanced'>('general');
 
   useEffect(() => {
-    console.log('Settings page viewed');
-    loadSettings();
+    // Load settings and quotas on mount
+    const load = async () => {
+      try {
+        setLoading(true);
+        // Mock API delay
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        const mockQuotas: Quota = {
+          daily_limit: 100,
+          daily_used: 23,
+          monthly_limit: 2000,
+          monthly_used: 456,
+          reset_date: new Date(Date.now() + 86400000).toISOString(), // Tomorrow
+        };
+
+        setQuotas(mockQuotas);
+
+        // Load settings from localStorage
+        const savedSettings = localStorage.getItem('promptcord-settings');
+        if (savedSettings) {
+          setSettings(JSON.parse(savedSettings));
+        }
+      } catch (error) {
+        console.error('Failed to load settings:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    load();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const loadSettings = async () => {
-    try {
-      setLoading(true);
-      
-      // Mock API delay
-      await new Promise(resolve => setTimeout(resolve, 500));
-      
-      const mockQuotas = {
-        daily_limit: 100,
-        daily_used: 23,
-        monthly_limit: 2000,
-        monthly_used: 456,
-        reset_date: new Date(Date.now() + 86400000).toISOString() // Tomorrow
-      };
-      
-      const mockConfig = {
-        features: {
-          analytics: true,
-          premium_templates: true,
-          api_access: false
-        }
-      };
-      
-      setQuotas(mockQuotas);
-      setConfig(mockConfig);
-      
-      // Load settings from localStorage or config
-      const savedSettings = localStorage.getItem('promptcord-settings');
-      if (savedSettings) {
-        setSettings(JSON.parse(savedSettings));
-      }
-    } catch (error) {
-      console.error('Failed to load settings:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleSettingChange = (category: keyof SettingsState, key: string, value: any) => {
+  const handleSettingChange = (
+    category: keyof SettingsState,
+    key: string,
+    value: boolean | string
+  ) => {
     setSettings(prev => ({
       ...prev,
       [category]: {
@@ -468,17 +462,17 @@ export default function SettingsView() {
         <div className="w-64 bg-bg-secondary border-r border-border">
           <div className="p-4">
             <nav className="space-y-1">
-              {[
+              {([
                 { id: 'general', label: 'General', icon: Settings },
                 { id: 'quotas', label: 'Quotas & Usage', icon: CreditCard },
                 { id: 'privacy', label: 'Privacy', icon: Shield },
                 { id: 'advanced', label: 'Advanced', icon: Database },
-              ].map((item) => {
+              ] as const).map((item) => {
                 const Icon = item.icon;
                 return (
                   <button
                     key={item.id}
-                    onClick={() => setActiveTab(item.id as any)}
+                    onClick={() => setActiveTab(item.id)}
                     className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-left transition-colors ${
                       activeTab === item.id
                         ? 'bg-brand/10 text-brand'

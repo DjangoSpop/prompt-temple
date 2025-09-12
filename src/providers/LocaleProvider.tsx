@@ -1,5 +1,6 @@
+"use client";
+
 import { createContext, useContext, useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
 import { setCookie, getCookie } from 'cookies-next'
 
 interface LocaleContextType {
@@ -16,10 +17,11 @@ const LocaleContext = createContext<LocaleContextType>({
   t: () => '',
 })
 
+type Translations = Record<string, unknown>
+
 export function LocaleProvider({ children }: { children: React.ReactNode }) {
-  const router = useRouter()
-  const [translations, setTranslations] = useState<Record<string, any>>({})
-  const [locale, setLocaleState] = useState(getCookie('NEXT_LOCALE') as string || 'en')
+  const [translations, setTranslations] = useState<Translations>({})
+  const [locale, setLocaleState] = useState((getCookie('NEXT_LOCALE') as string) || 'en')
   const dir = locale === 'ar' ? 'rtl' : 'ltr'
 
   useEffect(() => {
@@ -40,22 +42,27 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
     setCookie('NEXT_LOCALE', newLocale)
     document.documentElement.lang = newLocale
     document.documentElement.dir = newLocale === 'ar' ? 'rtl' : 'ltr'
-    router.push(router.pathname, router.asPath, { locale: newLocale })
+    // In App Router, locale routing is typically handled via i18n libs.
+    // We avoid programmatic navigation here to keep compatibility.
   }
 
   const t = (key: string, namespace = 'common') => {
     const keys = key.split('.')
-    let current = translations
+    let current: unknown = translations
 
     for (const k of keys) {
-      if (current[k] === undefined) {
+      if (
+        current === null ||
+        typeof current !== 'object' ||
+        !(k in (current as Record<string, unknown>))
+      ) {
         console.warn(`Translation key not found: ${key}`)
         return key
       }
-      current = current[k]
+      current = (current as Record<string, unknown>)[k]
     }
 
-    return current
+    return typeof current === 'string' ? current : key
   }
 
   return (

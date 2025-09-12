@@ -25,6 +25,7 @@
 .DS_Store
 Thumbs.db
 *.pem
+.tools/
 
 # debug
 npm-debug.log*
