@@ -78,6 +78,12 @@ const mainNavLinks: NavLink[] = [
     description: 'System health'
   },
   {
+    href:'/profile',
+    label: 'Profile',
+    icon: Crown,
+    description: 'User account & settings'
+  },
+  {
     href: '/help',
     label: 'Help',
     icon: HelpCircle,

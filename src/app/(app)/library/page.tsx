@@ -1,594 +1,448 @@
 "use client";
 
-import { useState, useEffect, useMemo, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { useGameStore } from "@/lib/stores/gameStore";
-import { useTemplatesStore } from "@/store/templatesStore";
+import { useEffect, useMemo, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useDebounce } from "@/hooks/useDebounce";
 import { useI18nStore } from "@/store/i18nStore";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import {
+  useV2TemplateCategoriesListQuery,
+  useV2TemplatesListQuery,
+} from "@/hooks/api";
+import {
+  createColumnHelper,
+  flexRender,
+  getCoreRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
 import { Input } from "@/components/ui/input";
-import { SearchBar } from "@/components/ui/search-bar";
-import { FacetedFilter } from "@/components/ui/faceted-filter";
-import { TemplateCard } from "@/components/ui/template-card";
+import { Button } from "@/components/ui/button";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { Separator } from "@/components/ui/separator";
+import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  BookOpen,
-  Code,
-  Palette,
-  Target,
-  Lightbulb,
-  TrendingUp,
-  Grid3X3,
-  List,
-  SlidersHorizontal,
-  LayoutGrid,
-  Rows3,
+  AlertCircle,
+  ArrowLeft,
+  ArrowRight,
   Filter,
+  Loader2,
+  RefreshCw,
   Search,
-  Bookmark,
-  ChevronDown as ChevronDownIcon,
-  Crown,
-  Download,
-  Eye,
-  Play,
-  Share2,
   Star,
-  Zap,
+  TrendingUp,
 } from "lucide-react";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
 
-interface Template {
-  id: string;
-  title: string;
-  description: string;
-  category: string;
-  difficulty: 'Beginner' | 'Intermediate' | 'Advanced' | 'Expert';
-  rating: number;
-  downloads: number;
-  views: number;
-  author: {
-    name: string;
-    avatar: string;
-    level: number;
-  };
-  tags: string[];
-  xpReward: number;
-  isPremium: boolean;
-  isBookmarked: boolean;
-  createdAt: Date;
-  lastUsed?: Date;
-  content: string;
-  rarity: 'common' | 'rare' | 'epic' | 'legendary';
-}
+import type { OperationResponse } from "@/lib/apiClient";
 
-const mockTemplates: Template[] = [
-  {
-    id: "1",
-    title: "Creative Writing Prompt Generator",
-    description: "Generate unique and engaging creative writing prompts for any genre or theme.",
-    category: "Creative Writing",
-    difficulty: "Beginner",
-    rating: 4.8,
-    downloads: 12500,
-    views: 45000,
-    author: {
-      name: "Sarah Chen",
-      avatar: "/avatars/sarah.jpg",
-      level: 42
-    },
-    tags: ["writing", "creativity", "storytelling", "fiction"],
-    xpReward: 50,
-    isPremium: false,
-    isBookmarked: true,
-    createdAt: new Date("2024-01-15"),
-    lastUsed: new Date("2024-01-20"),
-    content: "Create a compelling story prompt about {theme} that includes {character_type}...",
-    rarity: "rare"
-  },
-  {
-    id: "2",
-    title: "Advanced Code Review Assistant",
-    description: "Comprehensive code review with security, performance, and best practices analysis.",
-    category: "Development",
-    difficulty: "Expert",
-    rating: 4.9,
-    downloads: 8900,
-    views: 28000,
-    author: {
-      name: "Alex Rodriguez",
-      avatar: "/avatars/alex.jpg",
-      level: 67
-    },
-    tags: ["code", "review", "security", "performance", "best-practices"],
-    xpReward: 150,
-    isPremium: true,
-    isBookmarked: false,
-    createdAt: new Date("2024-01-10"),
-    content: "Analyze the following code for {language} and provide detailed feedback on...",
-    rarity: "legendary"
-  },
-  {
-    id: "3",
-    title: "UI/UX Design Critique",
-    description: "Professional design feedback focusing on usability, accessibility, and visual hierarchy.",
-    category: "Design",
-    difficulty: "Intermediate",
-    rating: 4.7,
-    downloads: 15600,
-    views: 52000,
-    author: {
-      name: "Maya Patel",
-      avatar: "/avatars/maya.jpg",
-      level: 38
-    },
-    tags: ["design", "ui", "ux", "usability", "accessibility"],
-    xpReward: 75,
-    isPremium: false,
-    isBookmarked: true,
-    createdAt: new Date("2024-01-12"),
-    lastUsed: new Date("2024-01-18"),
-    content: "Evaluate this {design_type} design and provide feedback on...",
-    rarity: "epic"
-  },
-  {
-    id: "4",
-    title: "Marketing Campaign Strategist",
-    description: "Create comprehensive marketing strategies tailored to your target audience and goals.",
-    category: "Marketing",
-    difficulty: "Advanced",
-    rating: 4.6,
-    downloads: 9800,
-    views: 35000,
-    author: {
-      name: "Jordan Kim",
-      avatar: "/avatars/jordan.jpg",
-      level: 51
-    },
-    tags: ["marketing", "strategy", "campaign", "audience", "growth"],
-    xpReward: 100,
-    isPremium: true,
-    isBookmarked: false,
-    createdAt: new Date("2024-01-08"),
-    content: "Develop a marketing strategy for {product_type} targeting {audience}...",
-    rarity: "epic"
-  },
-  {
-    id: "5",
-    title: "Learning Path Creator",
-    description: "Design personalized learning paths for any skill or subject area.",
-    category: "Education",
-    difficulty: "Intermediate",
-    rating: 4.5,
-    downloads: 11200,
-    views: 41000,
-    author: {
-      name: "Dr. Emily Watson",
-      avatar: "/avatars/emily.jpg",
-      level: 29
-    },
-    tags: ["education", "learning", "curriculum", "skills", "development"],
-    xpReward: 60,
-    isPremium: false,
-    isBookmarked: true,
-    createdAt: new Date("2024-01-14"),
-    content: "Create a structured learning path for {subject} suitable for {skill_level}...",
-    rarity: "rare"
-  },
-  {
-    id: "6",
-    title: "Business Analysis Framework",
-    description: "Comprehensive business analysis tool for market research and strategic planning.",
-    category: "Business",
-    difficulty: "Advanced",
-    rating: 4.8,
-    downloads: 7400,
-    views: 22000,
-    author: {
-      name: "Michael Chen",
-      avatar: "/avatars/michael.jpg",
-      level: 55
-    },
-    tags: ["business", "analysis", "strategy", "market-research", "planning"],
-    xpReward: 120,
-    isPremium: true,
-    isBookmarked: false,
-    createdAt: new Date("2024-01-06"),
-    content: "Analyze the business case for {business_idea} including market size...",
-    rarity: "legendary"
-  }
+const columnHelper = createColumnHelper<TemplateListItem>();
+
+const ORDERING_OPTIONS = [
+  { value: "-popularity_score", labelKey: "library.sortOptions.popular" },
+  { value: "-average_rating", labelKey: "library.sortOptions.rating" },
+  { value: "-created_at", labelKey: "library.sortOptions.newest" },
+  { value: "title", labelKey: "library.sortOptions.alphabetical" },
 ];
 
-const categories = [
-  { id: "all", name: "All Templates", icon: BookOpen },
-  { id: "creative-writing", name: "Creative Writing", icon: Lightbulb },
-  { id: "development", name: "Development", icon: Code },
-  { id: "design", name: "Design", icon: Palette },
-  { id: "marketing", name: "Marketing", icon: TrendingUp },
-  { id: "education", name: "Education", icon: BookOpen },
-  { id: "business", name: "Business", icon: Target },
-];
+type TemplatesListResponse = OperationResponse<"v2_templates_list">;
+type TemplateListItem = TemplatesListResponse extends { results?: infer R }
+  ? R extends readonly unknown[]
+    ? R[number]
+    : TemplatesListResponse extends { results?: (infer I)[] }
+      ? I
+      : never
+  : never;
 
-const difficultyColors = {
-  'Beginner': 'text-green-500',
-  'Intermediate': 'text-blue-500',
-  'Advanced': 'text-purple-500',
-  'Expert': 'text-red-500'
-};
+type TemplateCategoryResponse = OperationResponse<"v2_template_categories_list">;
+type TemplateCategoryItem = TemplateCategoryResponse extends { results?: infer R }
+  ? R extends readonly unknown[]
+    ? R[number]
+    : TemplateCategoryResponse extends { results?: (infer I)[] }
+      ? I
+      : never
+  : never;
 
-const rarityColors = {
-  'common': 'text-gray-400',
-  'rare': 'text-blue-400',
-  'epic': 'text-purple-400',
-  'legendary': 'text-yellow-400'
-};
-
-const rarityGlow = {
-  'common': '',
-  'rare': 'ring-2 ring-blue-400/20',
-  'epic': 'ring-2 ring-purple-400/20',
-  'legendary': 'ring-2 ring-yellow-400/20 shadow-lg shadow-yellow-400/10'
-};
+const PAGE_SIZE = 10;
 
 export default function LibraryPage() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const [selectedDifficulty, setSelectedDifficulty] = useState("all");
-  
-  const [selectedRarity, setSelectedRarity] = useState("all");
-  const [sortBy, setSortBy] = useState("popular");
-  const [showFilters, setShowFilters] = useState(false);
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  
-  const { addExperience, addNotification } = useGameStore();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const { t, direction } = useI18nStore();
+  const pathname = usePathname();
 
-  const filteredTemplates = useMemo(() => {
-    const filtered = mockTemplates.filter(template => {
-      const matchesSearch = template.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                           template.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                           template.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
-      
-      const matchesCategory = selectedCategory === "all" || 
-                             template.category.toLowerCase().replace(/\s+/g, '-') === selectedCategory;
-      
-      const matchesDifficulty = selectedDifficulty === "all" || 
-                               template.difficulty.toLowerCase() === selectedDifficulty.toLowerCase();
-      
-      const matchesRarity = selectedRarity === "all" || 
-                           template.rarity === selectedRarity;
 
-      return matchesSearch && matchesCategory && matchesDifficulty && matchesRarity;
-    });
+  const initialSearch = searchParams.get("q") ?? "";
+  const initialCategory = searchParams.get("category") ?? "all";
 
-    // Sort templates
-    switch (sortBy) {
-      case 'popular':
-        filtered.sort((a, b) => b.downloads - a.downloads);
-        break;
-      case 'rating':
-        filtered.sort((a, b) => b.rating - a.rating);
-        break;
-      case 'newest':
-        filtered.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
-        break;
-      case 'xp':
-        filtered.sort((a, b) => b.xpReward - a.xpReward);
-        break;
-      default:
-        break;
+  const [search, setSearch] = useState(initialSearch);
+  const [category, setCategory] = useState<string>(initialCategory);
+  const [ordering, setOrdering] = useState(ORDERING_OPTIONS[0]?.value ?? "-popularity_score");
+  const [page, setPage] = useState<number>(Number(searchParams.get("page")) || 1);
+
+  const debouncedSearch = useDebounce(search, 300);
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (debouncedSearch) params.set('q', debouncedSearch);
+    if (category !== 'all') params.set('category', category);
+    if (ordering !== ORDERING_OPTIONS[0]?.value) params.set('ordering', ordering);
+    if (page > 1) params.set('page', String(page));
+
+    const queryString = params.toString();
+    const href = queryString ? `${pathname}?${queryString}` : pathname;
+    router.replace(href, { scroll: false });
+  }, [debouncedSearch, category, ordering, page, pathname, router]);
+
+  const templateQuery = useV2TemplatesListQuery(
+    {
+      query: {
+        search: debouncedSearch || undefined,
+        ordering: ordering || undefined,
+        page,
+        category: category !== "all" ? Number(category) : undefined,
+      },
+    },
+    {
+      placeholderData: (prev) => prev,
+      staleTime: 60_000,
+      onError: (err) => {
+        toast.error(err?.message ?? t("common.error"));
+      },
     }
+  );
 
-    return filtered;
-  }, [searchQuery, selectedCategory, selectedDifficulty, selectedRarity, sortBy]);
+  const categoriesQuery = useV2TemplateCategoriesListQuery(
+    { query: { ordering: "name", page: 1 } },
+    {
+      staleTime: 10 * 60_000,
+      onError: (err) => {
+        toast.error(err?.message ?? t("common.error"));
+      },
+    }
+  );
 
-  const handleTemplateUse = (template: Template) => {
-    addExperience(template.xpReward);
-    addNotification({
-      type: 'achievement',
-      title: 'Template Used!',
-      description: `You earned ${template.xpReward} XP from "${template.title}"`,
-      icon: 'ðŸŽ¯'
-    });
-  };
+  const templates = templateQuery.data?.results ?? [];
+  const totalItems = templateQuery.data?.count ?? templates.length;
+  const totalPages = totalItems > 0 ? Math.ceil(totalItems / PAGE_SIZE) : 1;
 
-  const handleBookmark = (templateId: string) => {
-    // Toggle bookmark logic would go here
-    console.log('Toggle bookmark for:', templateId);
-  };
+  const table = useReactTable({
+    data: templates,
+    columns: useMemo(
+      () => [
+        columnHelper.accessor("title", {
+          header: () => t("library.columns.title"),
+          cell: (info) => (
+            <div className="space-y-1">
+              <button
+                type="button"
+                onClick={() => router.push(`/template/${info.row.original.id}`)}
+                className="text-left font-medium text-foreground hover:text-primary focus:outline-none focus-visible:ring focus-visible:ring-offset-2 focus-visible:ring-primary rounded"
+              >
+                {info.getValue()}
+              </button>
+              <p className="text-sm text-muted-foreground line-clamp-2" aria-label={t("library.columns.description")}>
+                {info.row.original.description}
+              </p>
+              {info.row.original.is_featured && (
+                <Badge variant="secondary" className="gap-1">
+                  <TrendingUp className="h-3 w-3" /> {t("library.featured")}
+                </Badge>
+              )}
+            </div>
+          ),
+        }),
+        columnHelper.accessor((row) => row.category?.name ?? t("library.uncategorized"), {
+          id: "category",
+          header: () => t("library.columns.category"),
+          cell: (info) => (
+            <Badge variant="outline" className="capitalize">
+              {info.getValue()}
+            </Badge>
+          ),
+        }),
+        columnHelper.accessor("usage_count", {
+          header: () => t("library.columns.usage"),
+          cell: (info) => <span className="tabular-nums">{info.getValue() ?? 0}</span>,
+        }),
+        columnHelper.accessor("average_rating", {
+          header: () => t("library.columns.rating"),
+          cell: (info) => (
+            <span className="flex items-center gap-1">
+              <Star className="h-4 w-4 text-yellow-500" aria-hidden />
+              {info.getValue()?.toFixed(1) ?? "—"}
+            </span>
+          ),
+        }),
+        columnHelper.display({
+          id: "actions",
+          header: () => <span className="sr-only">{t("library.columns.actions")}</span>,
+          cell: (info) => (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => router.push(`/template/${info.row.original.id}`)}
+            >
+              {t("library.useTemplate")}
+            </Button>
+          ),
+        }),
+      ],
+      [router, t]
+    ),
+    getCoreRowModel: getCoreRowModel(),
+  });
+
+  const isLoading = templateQuery.isLoading;
+  const isFetching = templateQuery.isFetching && !templateQuery.isLoading;
+  const isError = templateQuery.isError;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-secondary/20 to-primary/5">
-      {/* Header */}
-      <div className="border-b border-border bg-background/50 backdrop-blur-sm sticky top-0 z-10">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
-                Template Library
-              </h1>
-              <p className="text-muted-foreground mt-1">
-                Discover and use powerful AI templates to boost your productivity
-              </p>
+    <main className="space-y-6" dir={direction}>
+      <section>
+        <Card className="border-none bg-background/60 backdrop-blur" aria-labelledby="library-heading">
+          <CardHeader className="space-y-2">
+            <CardTitle id="library-heading" className="text-3xl font-semibold tracking-tight">
+              {t("library.title")}
+            </CardTitle>
+            <CardDescription>{t("library.subtitle")}</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className={cn("flex flex-col gap-4 md:flex-row md:items-end", direction === "rtl" && "md:flex-row-reverse")}
+            >
+              <div className="flex-1">
+                <label htmlFor="library-search" className="sr-only">
+                  {t("library.searchPlaceholder")}
+                </label>
+                <div className="relative">
+                  <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" aria-hidden />
+                  <Input
+                    id="library-search"
+                    placeholder={t("library.searchPlaceholder") ?? ""}
+                    value={search}
+                    onChange={(event) => {
+                      setSearch(event.target.value);
+                      setPage(1);
+                    }}
+                    className="pl-9"
+                    aria-describedby="library-search-description"
+                  />
+                </div>
+                <p id="library-search-description" className="mt-1 text-xs text-muted-foreground">
+                  {t("library.searchHint")}
+                </p>
+              </div>
+              <div className="flex flex-1 flex-wrap gap-3 md:justify-end">
+                <div className="min-w-[160px]">
+                  <label htmlFor="library-order" className="block text-xs font-medium text-muted-foreground">
+                    {t("library.sortBy")}
+                  </label>
+                  <Select
+                    value={ordering}
+                    onValueChange={(value) => {
+                      setOrdering(value);
+                      setPage(1);
+                    }}
+                  >
+                    <SelectTrigger id="library-order" className="mt-1">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {ORDERING_OPTIONS.map((option) => (
+                        <SelectItem key={option.value} value={option.value}>
+                          {t(option.labelKey)}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="min-w-[160px]">
+                  <label htmlFor="library-category" className="block text-xs font-medium text-muted-foreground">
+                    {t("library.filterByCategory")}
+                  </label>
+                  <Select
+                    value={category}
+                    onValueChange={(value) => {
+                      setCategory(value);
+                      setPage(1);
+                    }}
+                  >
+                    <SelectTrigger id="library-category" className="mt-1">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">{t("library.categories.all")}</SelectItem>
+                      {(categoriesQuery.data?.results ?? []).map((item) => (
+                        <SelectItem key={item.id} value={String(item.id)}>
+                          {item.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="mt-6 inline-flex items-center gap-2"
+                  onClick={() => {
+                    setCategory("all");
+                    setOrdering(ORDERING_OPTIONS[0]?.value ?? "-popularity_score");
+                    setSearch("");
+                    setPage(1);
+                  }}
+                >
+                  <Filter className="h-4 w-4" />
+                  {t("library.clearFilters")}
+                </Button>
+              </div>
             </div>
-            <div className="flex items-center gap-3">
-              <Badge variant="secondary" className="px-3 py-1">
-                <BookOpen className="h-4 w-4 mr-1" />
-                {filteredTemplates.length} templates
-              </Badge>
-            </div>
-          </div>
+          </CardContent>
+        </Card>
+      </section>
 
-          {/* Search and Filters */}
-          <div className="flex flex-col lg:flex-row gap-4">
-            {/* Search */}
-            <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-              <Input
-                placeholder="Search templates, tags, or authors..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 bg-background/50 border-border/50"
-              />
-            </div>
-
-            {/* Quick Filters */}
-            <div className="flex items-center gap-2">
-              <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                <SelectTrigger className="w-40 bg-background/50">
-                  <SelectValue placeholder="Category" />
-                </SelectTrigger>
-                <SelectContent>
-                  {categories.map(category => (
-                    <SelectItem key={category.id} value={category.id}>
-                      <div className="flex items-center gap-2">
-                        <category.icon className="h-4 w-4" />
-                        {category.name}
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-
-              <Select value={sortBy} onValueChange={setSortBy}>
-                <SelectTrigger className="w-40 bg-background/50">
-                  <SelectValue placeholder="Sort by" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="popular">Most Popular</SelectItem>
-                  <SelectItem value="rating">Highest Rated</SelectItem>
-                  <SelectItem value="newest">Newest</SelectItem>
-                  <SelectItem value="xp">Most XP</SelectItem>
-                </SelectContent>
-              </Select>
-
+      <section className="space-y-4" aria-live={isFetching ? "polite" : "off"}>
+        <Card className="border-none bg-background/60 backdrop-blur">
+          <CardHeader>
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex flex-col">
+                <CardTitle className="text-lg font-semibold">
+                  {t("library.tableTitle")}
+                </CardTitle>
+                <CardDescription>
+                  {t("library.templateCount", { count: totalItems })}
+                </CardDescription>
+              </div>
               <Button
-                variant="outline"
+                type="button"
+                variant="ghost"
                 size="sm"
-                onClick={() => setShowFilters(!showFilters)}
-                className="bg-background/50"
+                onClick={() => templateQuery.refetch()}
+                disabled={isFetching}
+                className="gap-2"
               >
-                <SlidersHorizontal className="h-4 w-4 mr-1" />
-                Filters
-                <ChevronDownIcon className={`h-4 w-4 ml-1 transition-transform ${showFilters ? 'rotate-180' : ''}`} />
+                <RefreshCw className={cn("h-4 w-4", isFetching && "animate-spin")} />
+                {t("library.refresh")}
               </Button>
             </div>
-          </div>
-
-          {/* Advanced Filters */}
-          <AnimatePresence>
-            {showFilters && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.3 }}
-                className="mt-4 p-4 bg-secondary/20 rounded-lg border border-border/50"
-              >
-                <div className="flex flex-wrap gap-4">
-                  <div className="flex flex-col gap-2">
-                    <label className="text-sm font-medium">Difficulty</label>
-                    <Select value={selectedDifficulty} onValueChange={setSelectedDifficulty}>
-                      <SelectTrigger className="w-40">
-                        <SelectValue placeholder="All Levels" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">All Levels</SelectItem>
-                        <SelectItem value="beginner">Beginner</SelectItem>
-                        <SelectItem value="intermediate">Intermediate</SelectItem>
-                        <SelectItem value="advanced">Advanced</SelectItem>
-                        <SelectItem value="expert">Expert</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="flex flex-col gap-2">
-                    <label className="text-sm font-medium">Rarity</label>
-                    <Select value={selectedRarity} onValueChange={setSelectedRarity}>
-                      <SelectTrigger className="w-40">
-                        <SelectValue placeholder="All Rarities" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="all">All Rarities</SelectItem>
-                        <SelectItem value="common">Common</SelectItem>
-                        <SelectItem value="rare">Rare</SelectItem>
-                        <SelectItem value="epic">Epic</SelectItem>
-                        <SelectItem value="legendary">Legendary</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-              </motion.div>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {isLoading ? (
+              <LibrarySkeleton />
+            ) : isError ? (
+              <Alert variant="destructive" role="alert">
+                <AlertCircle className="h-4 w-4" />
+                <AlertTitle>{t("common.error")}</AlertTitle>
+                <AlertDescription>
+                  {templateQuery.error?.message ?? t("library.loadError")}
+                </AlertDescription>
+              </Alert>
+            ) : templates.length === 0 ? (
+              <EmptyState title={t("library.noResults")} description={t("library.noResultsDescription")} />
+            ) : (
+              <div className="overflow-hidden rounded-md border">
+                <table className="w-full caption-bottom text-sm" role="grid">
+                  <thead className="bg-muted/40">
+                    {table.getHeaderGroups().map((headerGroup) => (
+                      <tr key={headerGroup.id} className="border-b" role="row">
+                        {headerGroup.headers.map((header) => (
+                          <th
+                            key={header.id}
+                            role="columnheader"
+                            className="px-4 py-3 text-left text-xs font-medium uppercase text-muted-foreground"
+                          >
+                            {header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
+                          </th>
+                        ))}
+                      </tr>
+                    ))}
+                  </thead>
+                  <tbody>
+                    {table.getRowModel().rows.map((row) => (
+                      <tr key={row.id} className="border-b last:border-none" role="row">
+                        {row.getVisibleCells().map((cell) => (
+                          <td key={cell.id} role="gridcell" className="px-4 py-4 align-top">
+                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             )}
-          </AnimatePresence>
-        </div>
-      </div>
 
-      {/* Template Grid */}
-      <div className="container mx-auto px-6 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <AnimatePresence mode="popLayout">
-            {filteredTemplates.map((template, index) => (
-              <motion.div
-                key={template.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ 
-                  duration: 0.3,
-                  delay: index * 0.05
-                }}
-                layout
-              >
-                <Card className={`group cursor-pointer transition-all duration-300 hover:scale-[1.02] glass-effect ${rarityGlow[template.rarity]}`}>
-                  <CardHeader className="pb-3">
-                    <div className="flex items-start justify-between mb-2">
-                      <div className="flex items-center gap-2">
-                        <Badge 
-                          variant="secondary" 
-                          className={`text-xs ${rarityColors[template.rarity]} bg-${template.rarity}/10`}
-                        >
-                          {template.rarity}
-                        </Badge>
-                        {template.isPremium && (
-                          <Badge variant="secondary" className="text-xs bg-gradient-to-r from-yellow-400 to-orange-500 text-black">
-                            <Crown className="h-3 w-3 mr-1" />
-                            Premium
-                          </Badge>
-                        )}
-                      </div>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleBookmark(template.id)}
-                        className="h-8 w-8 p-0 opacity-0 group-hover:opacity-100 transition-opacity"
-                      >
-                        <Bookmark className={`h-4 w-4 ${template.isBookmarked ? 'fill-primary' : ''}`} />
-                      </Button>
-                    </div>
-                    
-                    <CardTitle className="text-lg leading-tight">{template.title}</CardTitle>
-                    <CardDescription className="text-sm line-clamp-2">
-                      {template.description}
-                    </CardDescription>
-                  </CardHeader>
+            <Separator />
 
-                  <CardContent className="space-y-4">
-                    {/* Stats */}
-                    <div className="flex items-center justify-between text-sm text-muted-foreground">
-                      <div className="flex items-center gap-3">
-                        <div className="flex items-center gap-1">
-                          <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                          {template.rating}
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <Download className="h-4 w-4" />
-                          {template.downloads > 1000 ? `${(template.downloads / 1000).toFixed(1)}k` : template.downloads}
-                        </div>
-                        <div className="flex items-center gap-1">
-                          <Eye className="h-4 w-4" />
-                          {template.views > 1000 ? `${(template.views / 1000).toFixed(1)}k` : template.views}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Author */}
-                    <div className="flex items-center gap-2">
-                      <Avatar className="h-6 w-6">
-                        <AvatarImage src={template.author.avatar} />
-                        <AvatarFallback className="text-xs">
-                          {template.author.name.charAt(0)}
-                        </AvatarFallback>
-                      </Avatar>
-                      <span className="text-sm text-muted-foreground">{template.author.name}</span>
-                      <Badge variant="outline" className="text-xs">
-                        L{template.author.level}
-                      </Badge>
-                    </div>
-
-                    {/* Tags */}
-                    <div className="flex flex-wrap gap-1">
-                      {template.tags.slice(0, 3).map(tag => (
-                        <Badge key={tag} variant="outline" className="text-xs">
-                          {tag}
-                        </Badge>
-                      ))}
-                      {template.tags.length > 3 && (
-                        <Badge variant="outline" className="text-xs">
-                          +{template.tags.length - 3}
-                        </Badge>
-                      )}
-                    </div>
-
-                    {/* Difficulty and XP */}
-                    <div className="flex items-center justify-between">
-                      <Badge 
-                        variant="outline" 
-                        className={`text-xs ${difficultyColors[template.difficulty]}`}
-                      >
-                        {template.difficulty}
-                      </Badge>
-                      <div className="flex items-center gap-1 text-sm font-medium text-experience">
-                        <Zap className="h-4 w-4" />
-                        {template.xpReward} XP
-                      </div>
-                    </div>
-
-                    {/* Action Buttons */}
-                    <div className="flex gap-2 pt-2">
-                      <Button 
-                        className="flex-1" 
-                        onClick={() => handleTemplateUse(template)}
-                      >
-                        <Play className="h-4 w-4 mr-1" />
-                        Use Template
-                      </Button>
-                      <Button variant="outline" size="sm" className="px-3">
-                        <Share2 className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </div>
-
-        {/* Empty State */}
-        {filteredTemplates.length === 0 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center py-16"
-          >
-            <div className="w-24 h-24 bg-secondary/20 rounded-full flex items-center justify-center mx-auto mb-4">
-              <BookOpen className="h-12 w-12 text-muted-foreground" />
+            <div className="flex items-center justify-between text-sm">
+              <p className="text-muted-foreground">
+                {t("library.paginationSummary", {
+                  page,
+                  pages: totalPages,
+                })}
+              </p>
+              <div className="flex items-center gap-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+                  disabled={page === 1 || isLoading}
+                  className="gap-1"
+                >
+                  <ArrowLeft className="h-4 w-4" />
+                  {t("library.prev")}
+                </Button>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+                  disabled={page >= totalPages || isLoading}
+                  className="gap-1"
+                >
+                  {t("library.next")}
+                  <ArrowRight className="h-4 w-4" />
+                </Button>
+              </div>
             </div>
-            <h3 className="text-xl font-semibold mb-2">No templates found</h3>
-            <p className="text-muted-foreground max-w-sm mx-auto">
-              Try adjusting your search criteria or filters to find the templates you're looking for.
-            </p>
-            <Button 
-              variant="outline" 
-              className="mt-4"
-              onClick={() => {
-                setSearchQuery("");
-                setSelectedCategory("all");
-                setSelectedDifficulty("all");
-                setSelectedRarity("all");
-              }}
-            >
-              Clear all filters
-            </Button>
-          </motion.div>
-        )}
-      </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      {isFetching && !isLoading && (
+        <div className="fixed bottom-4 right-4 inline-flex items-center gap-2 rounded-full bg-background/90 px-4 py-2 shadow">
+          <Loader2 className="h-4 w-4 animate-spin" />
+          <span className="text-sm text-muted-foreground">{t("library.updating")}</span>
+        </div>
+      )}
+    </main>
+  );
+}
+
+function EmptyState({ title, description }: { title: string; description?: string | null }) {
+  return (
+    <div className="flex flex-col items-center rounded-lg border border-dashed p-8 text-center">
+      <Filter className="h-10 w-10 text-muted-foreground" aria-hidden />
+      <h3 className="mt-4 text-lg font-semibold">{title}</h3>
+      {description && <p className="mt-2 max-w-md text-sm text-muted-foreground">{description}</p>}
+    </div>
+  );
+}
+
+function LibrarySkeleton() {
+  return (
+    <div className="space-y-3">
+      {Array.from({ length: 5 }).map((_, index) => (
+        <div key={index} className="flex items-start gap-3 rounded-md border p-4">
+          <Skeleton className="h-4 w-48" />
+          <Skeleton className="h-4 w-24" />
+          <Skeleton className="h-4 w-16" />
+          <Skeleton className="h-4 w-16" />
+          <Skeleton className="ml-auto h-8 w-28" />
+        </div>
+      ))}
     </div>
   );
 }

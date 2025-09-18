@@ -26,9 +26,15 @@ const cardVariants = cva(
   }
 )
 
+export type CardVariant = 'default' | 'temple' | 'glass' | 'glow'
+export type CardPadding = 'none' | 'sm' | 'default' | 'lg'
+
 export interface CardProps
   extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof cardVariants> {}
+    VariantProps<typeof cardVariants> {
+  variant?: CardVariant
+  padding?: CardPadding
+}
 
 const Card = React.forwardRef<HTMLDivElement, CardProps>(
   ({ className, variant, padding, ...props }, ref) => (

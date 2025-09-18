@@ -11,7 +11,7 @@ const envSchema = z.object({
   NEXT_PUBLIC_APP_ENVIRONMENT: z.string().default('development'),
   
   // Authentication
-  NEXTAUTH_URL: z.string().url().default('http://localhost:8000'),
+  NEXTAUTH_URL: z.string().url().default('https://api.prompt-temple.com'),
   NEXTAUTH_SECRET: z.string().default('development-secret-key-change-in-production'),
   
   // Third-party Authentication
@@ -40,7 +40,7 @@ const envSchema = z.object({
   NEXT_PUBLIC_MOCK_API: z.string().transform(val => val === 'true').default('false'),
   
   // CORS
-  ALLOWED_ORIGINS: z.string().default('http://localhost:8000'),
+  ALLOWED_ORIGINS: z.string().default('https://api.prompt-temple.com'),
 });
 
 export type EnvConfig = z.infer<typeof envSchema>;
@@ -58,7 +58,7 @@ function validateEnv(): EnvConfig {
         NEXT_PUBLIC_APP_VERSION: '1.0.0',
         NODE_ENV: 'development' as const,
         NEXT_PUBLIC_APP_ENVIRONMENT: 'development',
-        NEXTAUTH_URL: 'http://localhost:8000',
+        NEXTAUTH_URL: 'https://api.prompt-temple.com',
         NEXTAUTH_SECRET: 'development-secret-key-change-in-production',
         NEXT_PUBLIC_GOOGLE_CLIENT_ID: undefined,
         GOOGLE_CLIENT_SECRET: undefined,
@@ -73,7 +73,7 @@ function validateEnv(): EnvConfig {
         ENABLE_BILLING: true,
         NEXT_PUBLIC_DEV_MODE: true,
         NEXT_PUBLIC_MOCK_API: true,
-        ALLOWED_ORIGINS: 'http://localhost:8000',
+        ALLOWED_ORIGINS: 'https://api.prompt-temple.com',
       } as EnvConfig;
     }
     
