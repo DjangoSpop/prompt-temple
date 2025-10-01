@@ -16,8 +16,8 @@ export const useV1AuthAuthCheckEmailRetrieveQuery = (
   return useQuery<OperationResponse<'v1_auth_auth_check_email_retrieve'>, ApiError, OperationResponse<'v1_auth_auth_check_email_retrieve'>, QueryKey>({
     queryKey: ['v1_auth_auth_check_email_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_auth_auth_check_email_retrieve>>;
-      return apiClient.call('v1_auth_auth_check_email_retrieve', createCallArgs<'v1_auth_auth_check_email_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_auth_auth_check_email_retrieve'>>;
+      return apiClient.call('v1_auth_auth_check_email_retrieve', createCallArgs<'v1_auth_auth_check_email_retrieve'>(payload));
     },
     ...options,
   });
@@ -31,7 +31,7 @@ export const useV1AuthChangePasswordCreateMutation = (
   return useMutation<OperationResponse<'v1_auth_change_password_create'>, ApiError, V1AuthChangePasswordCreateArgs>({
     mutationKey: ['v1_auth_change_password_create'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v1_auth_change_password_create>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v1_auth_change_password_create'>>;
       return apiClient.call('v1_auth_change_password_create', createCallArgs<'v1_auth_change_password_create'>(payload));
     },
     ...options,
@@ -47,7 +47,7 @@ export const useV1AuthCheckUsernameRetrieveQuery = (
   return useQuery<OperationResponse<'v1_auth_check_username_retrieve'>, ApiError, OperationResponse<'v1_auth_check_username_retrieve'>, QueryKey>({
     queryKey: ['v1_auth_check_username_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_auth_check_username_retrieve>>;
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_auth_check_username_retrieve>'>;
       return apiClient.call('v1_auth_check_username_retrieve', createCallArgs<'v1_auth_check_username_retrieve>(payload));
     },
     ...options,
@@ -62,7 +62,7 @@ export const useV1AuthLoginCreateMutation = (
   return useMutation<OperationResponse<'v1_auth_login_create'>, ApiError, V1AuthLoginCreateArgs>({
     mutationKey: ['v1_auth_login_create'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v1_auth_login_create>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v1_auth_login_create>'>;
       return apiClient.call('v1_auth_login_create', createCallArgs<'v1_auth_login_create'>(payload));
     },
     ...options,
@@ -77,7 +77,7 @@ export const useV1AuthLogoutCreateMutation = (
   return useMutation<OperationResponse<'v1_auth_logout_create'>, ApiError, V1AuthLogoutCreateArgs>({
     mutationKey: ['v1_auth_logout_create'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v1_auth_logout_create>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v1_auth_logout_create>'>;
       return apiClient.call('v1_auth_logout_create', createCallArgs<'v1_auth_logout_create'>(payload));
     },
     ...options,
@@ -93,7 +93,7 @@ export const useV1AuthProfileRetrieveQuery = (
   return useQuery<OperationResponse<'v1_auth_profile_retrieve'>, ApiError, OperationResponse<'v1_auth_profile_retrieve'>, QueryKey>({
     queryKey: ['v1_auth_profile_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_auth_profile_retrieve>>;
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_auth_profile_retrieve>'>;
       return apiClient.call('v1_auth_profile_retrieve', createCallArgs<'v1_auth_profile_retrieve>(payload));
     },
     ...options,
@@ -108,7 +108,7 @@ export const useV1AuthProfilePartialUpdateMutation = (
   return useMutation<OperationResponse<'v1_auth_profile_partial_update'>, ApiError, V1AuthProfilePartialUpdateArgs>({
     mutationKey: ['v1_auth_profile_partial_update'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v1_auth_profile_partial_update>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v1_auth_profile_partial_update>'>;
       return apiClient.call('v1_auth_profile_partial_update', createCallArgs<'v1_auth_profile_partial_update'>(payload));
     },
     ...options,
@@ -123,7 +123,7 @@ export const useV1AuthProfileUpdateMutation = (
   return useMutation<OperationResponse<'v1_auth_profile_update'>, ApiError, V1AuthProfileUpdateArgs>({
     mutationKey: ['v1_auth_profile_update'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v1_auth_profile_update>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v1_auth_profile_update>'>;
       return apiClient.call('v1_auth_profile_update', createCallArgs<'v1_auth_profile_update'>(payload));
     },
     ...options,
@@ -139,7 +139,7 @@ export const useV1AuthProfileUpdateRetrieveQuery = (
   return useQuery<OperationResponse<'v1_auth_profile_update_retrieve'>, ApiError, OperationResponse<'v1_auth_profile_update_retrieve'>, QueryKey>({
     queryKey: ['v1_auth_profile_update_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_auth_profile_update_retrieve>>;
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_auth_profile_update_retrieve>'>;
       return apiClient.call('v1_auth_profile_update_retrieve', createCallArgs<'v1_auth_profile_update_retrieve>(payload));
     },
     ...options,
@@ -154,7 +154,7 @@ export const useV1AuthProfileUpdatePartialUpdateMutation = (
   return useMutation<OperationResponse<'v1_auth_profile_update_partial_update'>, ApiError, V1AuthProfileUpdatePartialUpdateArgs>({
     mutationKey: ['v1_auth_profile_update_partial_update'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v1_auth_profile_update_partial_update>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v1_auth_profile_update_partial_update>'>;
       return apiClient.call('v1_auth_profile_update_partial_update', createCallArgs<'v1_auth_profile_update_partial_update'>(payload));
     },
     ...options,
@@ -169,7 +169,7 @@ export const useV1AuthProfileUpdateUpdateMutation = (
   return useMutation<OperationResponse<'v1_auth_profile_update_update'>, ApiError, V1AuthProfileUpdateUpdateArgs>({
     mutationKey: ['v1_auth_profile_update_update'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v1_auth_profile_update_update>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v1_auth_profile_update_update>'>;
       return apiClient.call('v1_auth_profile_update_update', createCallArgs<'v1_auth_profile_update_update'>(payload));
     },
     ...options,
@@ -184,7 +184,7 @@ export const useV1AuthRefreshCreateMutation = (
   return useMutation<OperationResponse<'v1_auth_refresh_create'>, ApiError, V1AuthRefreshCreateArgs>({
     mutationKey: ['v1_auth_refresh_create'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v1_auth_refresh_create>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v1_auth_refresh_create>'>;
       return apiClient.call('v1_auth_refresh_create', createCallArgs<'v1_auth_refresh_create'>(payload));
     },
     ...options,
@@ -199,7 +199,7 @@ export const useV1AuthRegisterCreateMutation = (
   return useMutation<OperationResponse<'v1_auth_register_create'>, ApiError, V1AuthRegisterCreateArgs>({
     mutationKey: ['v1_auth_register_create'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v1_auth_register_create>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v1_auth_register_create>'>;
       return apiClient.call('v1_auth_register_create', createCallArgs<'v1_auth_register_create'>(payload));
     },
     ...options,
@@ -215,7 +215,7 @@ export const useV1AuthStatsRetrieveQuery = (
   return useQuery<OperationResponse<'v1_auth_stats_retrieve'>, ApiError, OperationResponse<'v1_auth_stats_retrieve'>, QueryKey>({
     queryKey: ['v1_auth_stats_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_auth_stats_retrieve>>;
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_auth_stats_retrieve>'>;
       return apiClient.call('v1_auth_stats_retrieve', createCallArgs<'v1_auth_stats_retrieve>(payload));
     },
     ...options,
@@ -231,7 +231,7 @@ export const useV2AuthAuthCheckEmailRetrieveQuery = (
   return useQuery<OperationResponse<'v2_auth_auth_check_email_retrieve'>, ApiError, OperationResponse<'v2_auth_auth_check_email_retrieve'>, QueryKey>({
     queryKey: ['v2_auth_auth_check_email_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_auth_auth_check_email_retrieve>>;
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_auth_auth_check_email_retrieve>'>;
       return apiClient.call('v2_auth_auth_check_email_retrieve', createCallArgs<'v2_auth_auth_check_email_retrieve>(payload));
     },
     ...options,
@@ -246,7 +246,7 @@ export const useV2AuthChangePasswordCreateMutation = (
   return useMutation<OperationResponse<'v2_auth_change_password_create'>, ApiError, V2AuthChangePasswordCreateArgs>({
     mutationKey: ['v2_auth_change_password_create'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v2_auth_change_password_create>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v2_auth_change_password_create>'>;
       return apiClient.call('v2_auth_change_password_create', createCallArgs<'v2_auth_change_password_create'>(payload));
     },
     ...options,
@@ -262,7 +262,7 @@ export const useV2AuthCheckUsernameRetrieveQuery = (
   return useQuery<OperationResponse<'v2_auth_check_username_retrieve'>, ApiError, OperationResponse<'v2_auth_check_username_retrieve'>, QueryKey>({
     queryKey: ['v2_auth_check_username_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_auth_check_username_retrieve>>;
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_auth_check_username_retrieve>'>;
       return apiClient.call('v2_auth_check_username_retrieve', createCallArgs<'v2_auth_check_username_retrieve>(payload));
     },
     ...options,
@@ -277,7 +277,7 @@ export const useV2AuthLoginCreateMutation = (
   return useMutation<OperationResponse<'v2_auth_login_create'>, ApiError, V2AuthLoginCreateArgs>({
     mutationKey: ['v2_auth_login_create'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v2_auth_login_create>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v2_auth_login_create>'>;
       return apiClient.call('v2_auth_login_create', createCallArgs<'v2_auth_login_create'>(payload));
     },
     ...options,
@@ -292,7 +292,7 @@ export const useV2AuthLogoutCreateMutation = (
   return useMutation<OperationResponse<'v2_auth_logout_create'>, ApiError, V2AuthLogoutCreateArgs>({
     mutationKey: ['v2_auth_logout_create'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v2_auth_logout_create>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v2_auth_logout_create>'>;
       return apiClient.call('v2_auth_logout_create', createCallArgs<'v2_auth_logout_create'>(payload));
     },
     ...options,
@@ -308,7 +308,7 @@ export const useV2AuthProfileRetrieveQuery = (
   return useQuery<OperationResponse<'v2_auth_profile_retrieve'>, ApiError, OperationResponse<'v2_auth_profile_retrieve'>, QueryKey>({
     queryKey: ['v2_auth_profile_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_auth_profile_retrieve>>;
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_auth_profile_retrieve>'>;
       return apiClient.call('v2_auth_profile_retrieve', createCallArgs<'v2_auth_profile_retrieve>(payload));
     },
     ...options,
@@ -323,7 +323,7 @@ export const useV2AuthProfilePartialUpdateMutation = (
   return useMutation<OperationResponse<'v2_auth_profile_partial_update'>, ApiError, V2AuthProfilePartialUpdateArgs>({
     mutationKey: ['v2_auth_profile_partial_update'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v2_auth_profile_partial_update>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v2_auth_profile_partial_update>'>;
       return apiClient.call('v2_auth_profile_partial_update', createCallArgs<'v2_auth_profile_partial_update'>(payload));
     },
     ...options,
@@ -338,7 +338,7 @@ export const useV2AuthProfileUpdateMutation = (
   return useMutation<OperationResponse<'v2_auth_profile_update'>, ApiError, V2AuthProfileUpdateArgs>({
     mutationKey: ['v2_auth_profile_update'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v2_auth_profile_update>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v2_auth_profile_update>'>;
       return apiClient.call('v2_auth_profile_update', createCallArgs<'v2_auth_profile_update'>(payload));
     },
     ...options,
@@ -354,7 +354,7 @@ export const useV2AuthProfileUpdateRetrieveQuery = (
   return useQuery<OperationResponse<'v2_auth_profile_update_retrieve'>, ApiError, OperationResponse<'v2_auth_profile_update_retrieve'>, QueryKey>({
     queryKey: ['v2_auth_profile_update_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_auth_profile_update_retrieve>>;
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_auth_profile_update_retrieve>'>;
       return apiClient.call('v2_auth_profile_update_retrieve', createCallArgs<'v2_auth_profile_update_retrieve>(payload));
     },
     ...options,
@@ -369,7 +369,7 @@ export const useV2AuthProfileUpdatePartialUpdateMutation = (
   return useMutation<OperationResponse<'v2_auth_profile_update_partial_update'>, ApiError, V2AuthProfileUpdatePartialUpdateArgs>({
     mutationKey: ['v2_auth_profile_update_partial_update'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v2_auth_profile_update_partial_update>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v2_auth_profile_update_partial_update>'>;
       return apiClient.call('v2_auth_profile_update_partial_update', createCallArgs<'v2_auth_profile_update_partial_update'>(payload));
     },
     ...options,
@@ -384,7 +384,7 @@ export const useV2AuthProfileUpdateUpdateMutation = (
   return useMutation<OperationResponse<'v2_auth_profile_update_update'>, ApiError, V2AuthProfileUpdateUpdateArgs>({
     mutationKey: ['v2_auth_profile_update_update'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v2_auth_profile_update_update>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v2_auth_profile_update_update>'>;
       return apiClient.call('v2_auth_profile_update_update', createCallArgs<'v2_auth_profile_update_update'>(payload));
     },
     ...options,
@@ -399,7 +399,7 @@ export const useV2AuthRefreshCreateMutation = (
   return useMutation<OperationResponse<'v2_auth_refresh_create'>, ApiError, V2AuthRefreshCreateArgs>({
     mutationKey: ['v2_auth_refresh_create'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v2_auth_refresh_create>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v2_auth_refresh_create>'>;
       return apiClient.call('v2_auth_refresh_create', createCallArgs<'v2_auth_refresh_create'>(payload));
     },
     ...options,
@@ -414,7 +414,7 @@ export const useV2AuthRegisterCreateMutation = (
   return useMutation<OperationResponse<'v2_auth_register_create'>, ApiError, V2AuthRegisterCreateArgs>({
     mutationKey: ['v2_auth_register_create'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v2_auth_register_create>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v2_auth_register_create>'>;
       return apiClient.call('v2_auth_register_create', createCallArgs<'v2_auth_register_create'>(payload));
     },
     ...options,
@@ -430,7 +430,7 @@ export const useV2AuthStatsRetrieveQuery = (
   return useQuery<OperationResponse<'v2_auth_stats_retrieve'>, ApiError, OperationResponse<'v2_auth_stats_retrieve'>, QueryKey>({
     queryKey: ['v2_auth_stats_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_auth_stats_retrieve>>;
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_auth_stats_retrieve>'>;
       return apiClient.call('v2_auth_stats_retrieve', createCallArgs<'v2_auth_stats_retrieve>(payload));
     },
     ...options,

@@ -15,7 +15,7 @@ export const useV1BillingCheckoutCreateMutation = (
   return useMutation<OperationResponse<'v1_billing_checkout_create'>, ApiError, V1BillingCheckoutCreateArgs>({
     mutationKey: ['v1_billing_checkout_create'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v1_billing_checkout_create>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v1_billing_checkout_create'>>;
       return apiClient.call('v1_billing_checkout_create', createCallArgs<'v1_billing_checkout_create'>(payload));
     },
     ...options,
@@ -31,8 +31,8 @@ export const useV1BillingMeEntitlementsRetrieveQuery = (
   return useQuery<OperationResponse<'v1_billing_me_entitlements_retrieve'>, ApiError, OperationResponse<'v1_billing_me_entitlements_retrieve'>, QueryKey>({
     queryKey: ['v1_billing_me_entitlements_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_billing_me_entitlements_retrieve>>;
-      return apiClient.call('v1_billing_me_entitlements_retrieve', createCallArgs<'v1_billing_me_entitlements_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_billing_me_entitlements_retrieve'>>;
+      return apiClient.call('v1_billing_me_entitlements_retrieve', createCallArgs<'v1_billing_me_entitlements_retrieve'>(payload));
     },
     ...options,
   });
@@ -47,8 +47,8 @@ export const useV1BillingMeSubscriptionRetrieveQuery = (
   return useQuery<OperationResponse<'v1_billing_me_subscription_retrieve'>, ApiError, OperationResponse<'v1_billing_me_subscription_retrieve'>, QueryKey>({
     queryKey: ['v1_billing_me_subscription_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_billing_me_subscription_retrieve>>;
-      return apiClient.call('v1_billing_me_subscription_retrieve', createCallArgs<'v1_billing_me_subscription_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_billing_me_subscription_retrieve'>>;
+      return apiClient.call('v1_billing_me_subscription_retrieve', createCallArgs<'v1_billing_me_subscription_retrieve'>(payload));
     },
     ...options,
   });
@@ -63,8 +63,8 @@ export const useV1BillingMeUsageRetrieveQuery = (
   return useQuery<OperationResponse<'v1_billing_me_usage_retrieve'>, ApiError, OperationResponse<'v1_billing_me_usage_retrieve'>, QueryKey>({
     queryKey: ['v1_billing_me_usage_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_billing_me_usage_retrieve>>;
-      return apiClient.call('v1_billing_me_usage_retrieve', createCallArgs<'v1_billing_me_usage_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_billing_me_usage_retrieve'>>;
+      return apiClient.call('v1_billing_me_usage_retrieve', createCallArgs<'v1_billing_me_usage_retrieve'>(payload));
     },
     ...options,
   });
@@ -79,8 +79,8 @@ export const useV1BillingPlansRetrieveQuery = (
   return useQuery<OperationResponse<'v1_billing_plans_retrieve'>, ApiError, OperationResponse<'v1_billing_plans_retrieve'>, QueryKey>({
     queryKey: ['v1_billing_plans_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_billing_plans_retrieve>>;
-      return apiClient.call('v1_billing_plans_retrieve', createCallArgs<'v1_billing_plans_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_billing_plans_retrieve'>>;
+      return apiClient.call('v1_billing_plans_retrieve', createCallArgs<'v1_billing_plans_retrieve'>(payload));
     },
     ...options,
   });
@@ -95,8 +95,8 @@ export const useV1BillingPlansRetrieve2Query = (
   return useQuery<OperationResponse<'v1_billing_plans_retrieve_2'>, ApiError, OperationResponse<'v1_billing_plans_retrieve_2'>, QueryKey>({
     queryKey: ['v1_billing_plans_retrieve_2', args],
     queryFn: ({ signal }) => {
-      const payload = { ...args, signal } as Partial<OperationCallArgs<'v1_billing_plans_retrieve_2>>;
-      return apiClient.call('v1_billing_plans_retrieve_2', createCallArgs<'v1_billing_plans_retrieve_2>(payload));
+      const payload = { ...args, signal } as Partial<OperationCallArgs<'v1_billing_plans_retrieve_2'>>;
+      return apiClient.call('v1_billing_plans_retrieve_2', createCallArgs<'v1_billing_plans_retrieve_2'>(payload));
     },
     ...options,
   });
@@ -110,7 +110,7 @@ export const useV1BillingPortalCreateMutation = (
   return useMutation<OperationResponse<'v1_billing_portal_create'>, ApiError, V1BillingPortalCreateArgs>({
     mutationKey: ['v1_billing_portal_create'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v1_billing_portal_create>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v1_billing_portal_create'>>;
       return apiClient.call('v1_billing_portal_create', createCallArgs<'v1_billing_portal_create'>(payload));
     },
     ...options,
@@ -125,7 +125,7 @@ export const useV1BillingWebhooksStripeCreateMutation = (
   return useMutation<OperationResponse<'v1_billing_webhooks_stripe_create'>, ApiError, V1BillingWebhooksStripeCreateArgs>({
     mutationKey: ['v1_billing_webhooks_stripe_create'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v1_billing_webhooks_stripe_create>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v1_billing_webhooks_stripe_create'>>;
       return apiClient.call('v1_billing_webhooks_stripe_create', createCallArgs<'v1_billing_webhooks_stripe_create'>(payload));
     },
     ...options,
@@ -140,7 +140,7 @@ export const useV2BillingCheckoutCreateMutation = (
   return useMutation<OperationResponse<'v2_billing_checkout_create'>, ApiError, V2BillingCheckoutCreateArgs>({
     mutationKey: ['v2_billing_checkout_create'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v2_billing_checkout_create>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v2_billing_checkout_create'>>;
       return apiClient.call('v2_billing_checkout_create', createCallArgs<'v2_billing_checkout_create'>(payload));
     },
     ...options,
@@ -156,8 +156,8 @@ export const useV2BillingMeEntitlementsRetrieveQuery = (
   return useQuery<OperationResponse<'v2_billing_me_entitlements_retrieve'>, ApiError, OperationResponse<'v2_billing_me_entitlements_retrieve'>, QueryKey>({
     queryKey: ['v2_billing_me_entitlements_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_billing_me_entitlements_retrieve>>;
-      return apiClient.call('v2_billing_me_entitlements_retrieve', createCallArgs<'v2_billing_me_entitlements_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_billing_me_entitlements_retrieve'>>;
+      return apiClient.call('v2_billing_me_entitlements_retrieve', createCallArgs<'v2_billing_me_entitlements_retrieve'>(payload));
     },
     ...options,
   });
@@ -172,8 +172,8 @@ export const useV2BillingMeSubscriptionRetrieveQuery = (
   return useQuery<OperationResponse<'v2_billing_me_subscription_retrieve'>, ApiError, OperationResponse<'v2_billing_me_subscription_retrieve'>, QueryKey>({
     queryKey: ['v2_billing_me_subscription_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_billing_me_subscription_retrieve>>;
-      return apiClient.call('v2_billing_me_subscription_retrieve', createCallArgs<'v2_billing_me_subscription_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_billing_me_subscription_retrieve'>>;
+      return apiClient.call('v2_billing_me_subscription_retrieve', createCallArgs<'v2_billing_me_subscription_retrieve'>(payload));
     },
     ...options,
   });
@@ -188,8 +188,8 @@ export const useV2BillingMeUsageRetrieveQuery = (
   return useQuery<OperationResponse<'v2_billing_me_usage_retrieve'>, ApiError, OperationResponse<'v2_billing_me_usage_retrieve'>, QueryKey>({
     queryKey: ['v2_billing_me_usage_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_billing_me_usage_retrieve>>;
-      return apiClient.call('v2_billing_me_usage_retrieve', createCallArgs<'v2_billing_me_usage_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_billing_me_usage_retrieve'>>;
+      return apiClient.call('v2_billing_me_usage_retrieve', createCallArgs<'v2_billing_me_usage_retrieve'>(payload));
     },
     ...options,
   });
@@ -204,8 +204,8 @@ export const useV2BillingPlansRetrieveQuery = (
   return useQuery<OperationResponse<'v2_billing_plans_retrieve'>, ApiError, OperationResponse<'v2_billing_plans_retrieve'>, QueryKey>({
     queryKey: ['v2_billing_plans_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_billing_plans_retrieve>>;
-      return apiClient.call('v2_billing_plans_retrieve', createCallArgs<'v2_billing_plans_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_billing_plans_retrieve'>>;
+      return apiClient.call('v2_billing_plans_retrieve', createCallArgs<'v2_billing_plans_retrieve'>(payload));
     },
     ...options,
   });
@@ -220,8 +220,8 @@ export const useV2BillingPlansRetrieve2Query = (
   return useQuery<OperationResponse<'v2_billing_plans_retrieve_2'>, ApiError, OperationResponse<'v2_billing_plans_retrieve_2'>, QueryKey>({
     queryKey: ['v2_billing_plans_retrieve_2', args],
     queryFn: ({ signal }) => {
-      const payload = { ...args, signal } as Partial<OperationCallArgs<'v2_billing_plans_retrieve_2>>;
-      return apiClient.call('v2_billing_plans_retrieve_2', createCallArgs<'v2_billing_plans_retrieve_2>(payload));
+      const payload = { ...args, signal } as Partial<OperationCallArgs<'v2_billing_plans_retrieve_2'>>;
+      return apiClient.call('v2_billing_plans_retrieve_2', createCallArgs<'v2_billing_plans_retrieve_2'>(payload));
     },
     ...options,
   });
@@ -235,7 +235,7 @@ export const useV2BillingPortalCreateMutation = (
   return useMutation<OperationResponse<'v2_billing_portal_create'>, ApiError, V2BillingPortalCreateArgs>({
     mutationKey: ['v2_billing_portal_create'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v2_billing_portal_create>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v2_billing_portal_create'>>;
       return apiClient.call('v2_billing_portal_create', createCallArgs<'v2_billing_portal_create'>(payload));
     },
     ...options,
@@ -250,7 +250,7 @@ export const useV2BillingWebhooksStripeCreateMutation = (
   return useMutation<OperationResponse<'v2_billing_webhooks_stripe_create'>, ApiError, V2BillingWebhooksStripeCreateArgs>({
     mutationKey: ['v2_billing_webhooks_stripe_create'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v2_billing_webhooks_stripe_create>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v2_billing_webhooks_stripe_create'>>;
       return apiClient.call('v2_billing_webhooks_stripe_create', createCallArgs<'v2_billing_webhooks_stripe_create'>(payload));
     },
     ...options,

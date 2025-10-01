@@ -231,6 +231,14 @@ const config: Config = {
         'pyramid-lg': '0 8px 40px rgba(203, 161, 53, 0.2)',
         'nile': '0 4px 20px rgba(14, 116, 144, 0.15)',
         'temple': '0 2px 10px rgba(14, 14, 16, 0.1)',
+        // Liquid morphism shadows
+        'liquid': '0 8px 32px rgba(0, 0, 0, 0.12)',
+        'liquid-lg': '0 16px 64px rgba(0, 0, 0, 0.16)',
+      },
+      // Enhanced backdrop blur for liquid morphism
+      backdropBlur: {
+        xs: '2px',
+        '4xl': '72px',
       },
     },
   },

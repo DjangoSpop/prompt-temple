@@ -4,3 +4,4 @@ export { OnboardingProgress } from './OnboardingProgress';
 export { WelcomeDashboard } from './WelcomeDashboard';
 export { StepTracker } from './StepTracker';
 export { GuidedTour } from './GuidedTour';
+export { HelpAgent } from './HelpAgent';

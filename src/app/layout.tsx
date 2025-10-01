@@ -6,12 +6,13 @@ import { AnalyticsProvider } from "@/providers/AnalyticsProvider";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { HealthBanner } from "@/components/HealthBanner";
-import { TempleNavbar } from "@/components/TempleNavbar";
+import { MainNavbar } from "@/components/nav/MainNavbar";
 import { AppShell } from "@/components/layout/AppShell";
 import { ClientOnly } from "@/components/ClientOnly";
 import { HydrationGuard } from "@/components/HydrationGuard";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { UserOnboarding } from "@/components/onboarding";
+import { FastNavWidget } from "@/components/FastNavWidget";
 import "./globals.css";
 import '../styles/chat.css';
 
@@ -51,7 +52,7 @@ export default function RootLayout({
                         <div className="flex flex-col min-h-screen">
                         <ClientOnly fallback={<div className="h-16 bg-secondary/95 backdrop-blur-lg border-b border-primary/20"></div>}>
                           <HealthBanner />
-                          <TempleNavbar />
+                          <MainNavbar />
                         </ClientOnly>
                         <main className="flex-1 overflow-y-auto">
                           <ErrorBoundary>
@@ -61,6 +62,7 @@ export default function RootLayout({
                         {/* Onboarding system for new users */}
                         <ClientOnly>
                           <UserOnboarding autoStart={true} />
+                          <FastNavWidget />
                         </ClientOnly>
                       </div>
                       </TooltipProvider>

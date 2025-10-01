@@ -11,7 +11,8 @@
       "Bash(npx next:*)",
       "Bash(cd:*)",
       "Bash(npm run generate-types:*)",
-      "Bash(npm run lint)"
+      "Bash(npm run lint)",
+      "Bash(npm run type-check:*)"
     ],
     "deny": [],
     "ask": []

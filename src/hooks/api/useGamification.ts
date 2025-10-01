@@ -16,8 +16,8 @@ export const useV1GamificationAchievementsRetrieveQuery = (
   return useQuery<OperationResponse<'v1_gamification_achievements_retrieve'>, ApiError, OperationResponse<'v1_gamification_achievements_retrieve'>, QueryKey>({
     queryKey: ['v1_gamification_achievements_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_gamification_achievements_retrieve>>;
-      return apiClient.call('v1_gamification_achievements_retrieve', createCallArgs<'v1_gamification_achievements_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_gamification_achievements_retrieve'>>;
+      return apiClient.call('v1_gamification_achievements_retrieve', createCallArgs<'v1_gamification_achievements_retrieve'>(payload));
     },
     ...options,
   });
@@ -32,8 +32,8 @@ export const useV1GamificationBadgesRetrieveQuery = (
   return useQuery<OperationResponse<'v1_gamification_badges_retrieve'>, ApiError, OperationResponse<'v1_gamification_badges_retrieve'>, QueryKey>({
     queryKey: ['v1_gamification_badges_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_gamification_badges_retrieve>>;
-      return apiClient.call('v1_gamification_badges_retrieve', createCallArgs<'v1_gamification_badges_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_gamification_badges_retrieve'>>;
+      return apiClient.call('v1_gamification_badges_retrieve', createCallArgs<'v1_gamification_badges_retrieve'>(payload));
     },
     ...options,
   });
@@ -48,8 +48,8 @@ export const useV1GamificationDailyChallengesRetrieveQuery = (
   return useQuery<OperationResponse<'v1_gamification_daily_challenges_retrieve'>, ApiError, OperationResponse<'v1_gamification_daily_challenges_retrieve'>, QueryKey>({
     queryKey: ['v1_gamification_daily_challenges_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_gamification_daily_challenges_retrieve>>;
-      return apiClient.call('v1_gamification_daily_challenges_retrieve', createCallArgs<'v1_gamification_daily_challenges_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_gamification_daily_challenges_retrieve'>>;
+      return apiClient.call('v1_gamification_daily_challenges_retrieve', createCallArgs<'v1_gamification_daily_challenges_retrieve'>(payload));
     },
     ...options,
   });
@@ -64,8 +64,8 @@ export const useV1GamificationLeaderboardRetrieveQuery = (
   return useQuery<OperationResponse<'v1_gamification_leaderboard_retrieve'>, ApiError, OperationResponse<'v1_gamification_leaderboard_retrieve'>, QueryKey>({
     queryKey: ['v1_gamification_leaderboard_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_gamification_leaderboard_retrieve>>;
-      return apiClient.call('v1_gamification_leaderboard_retrieve', createCallArgs<'v1_gamification_leaderboard_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_gamification_leaderboard_retrieve'>>;
+      return apiClient.call('v1_gamification_leaderboard_retrieve', createCallArgs<'v1_gamification_leaderboard_retrieve'>(payload));
     },
     ...options,
   });
@@ -80,8 +80,8 @@ export const useV1GamificationStreakRetrieveQuery = (
   return useQuery<OperationResponse<'v1_gamification_streak_retrieve'>, ApiError, OperationResponse<'v1_gamification_streak_retrieve'>, QueryKey>({
     queryKey: ['v1_gamification_streak_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_gamification_streak_retrieve>>;
-      return apiClient.call('v1_gamification_streak_retrieve', createCallArgs<'v1_gamification_streak_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_gamification_streak_retrieve'>>;
+      return apiClient.call('v1_gamification_streak_retrieve', createCallArgs<'v1_gamification_streak_retrieve'>(payload));
     },
     ...options,
   });
@@ -96,8 +96,8 @@ export const useV1GamificationUserLevelRetrieveQuery = (
   return useQuery<OperationResponse<'v1_gamification_user_level_retrieve'>, ApiError, OperationResponse<'v1_gamification_user_level_retrieve'>, QueryKey>({
     queryKey: ['v1_gamification_user_level_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_gamification_user_level_retrieve>>;
-      return apiClient.call('v1_gamification_user_level_retrieve', createCallArgs<'v1_gamification_user_level_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_gamification_user_level_retrieve'>>;
+      return apiClient.call('v1_gamification_user_level_retrieve', createCallArgs<'v1_gamification_user_level_retrieve'>(payload));
     },
     ...options,
   });
@@ -112,8 +112,8 @@ export const useV2GamificationAchievementsRetrieveQuery = (
   return useQuery<OperationResponse<'v2_gamification_achievements_retrieve'>, ApiError, OperationResponse<'v2_gamification_achievements_retrieve'>, QueryKey>({
     queryKey: ['v2_gamification_achievements_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_gamification_achievements_retrieve>>;
-      return apiClient.call('v2_gamification_achievements_retrieve', createCallArgs<'v2_gamification_achievements_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_gamification_achievements_retrieve'>>;
+      return apiClient.call('v2_gamification_achievements_retrieve', createCallArgs<'v2_gamification_achievements_retrieve'>(payload));
     },
     ...options,
   });
@@ -128,8 +128,8 @@ export const useV2GamificationBadgesRetrieveQuery = (
   return useQuery<OperationResponse<'v2_gamification_badges_retrieve'>, ApiError, OperationResponse<'v2_gamification_badges_retrieve'>, QueryKey>({
     queryKey: ['v2_gamification_badges_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_gamification_badges_retrieve>>;
-      return apiClient.call('v2_gamification_badges_retrieve', createCallArgs<'v2_gamification_badges_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_gamification_badges_retrieve'>>;
+      return apiClient.call('v2_gamification_badges_retrieve', createCallArgs<'v2_gamification_badges_retrieve'>(payload));
     },
     ...options,
   });
@@ -144,8 +144,8 @@ export const useV2GamificationDailyChallengesRetrieveQuery = (
   return useQuery<OperationResponse<'v2_gamification_daily_challenges_retrieve'>, ApiError, OperationResponse<'v2_gamification_daily_challenges_retrieve'>, QueryKey>({
     queryKey: ['v2_gamification_daily_challenges_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_gamification_daily_challenges_retrieve>>;
-      return apiClient.call('v2_gamification_daily_challenges_retrieve', createCallArgs<'v2_gamification_daily_challenges_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_gamification_daily_challenges_retrieve'>>;
+      return apiClient.call('v2_gamification_daily_challenges_retrieve', createCallArgs<'v2_gamification_daily_challenges_retrieve'>(payload));
     },
     ...options,
   });
@@ -160,8 +160,8 @@ export const useV2GamificationLeaderboardRetrieveQuery = (
   return useQuery<OperationResponse<'v2_gamification_leaderboard_retrieve'>, ApiError, OperationResponse<'v2_gamification_leaderboard_retrieve'>, QueryKey>({
     queryKey: ['v2_gamification_leaderboard_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_gamification_leaderboard_retrieve>>;
-      return apiClient.call('v2_gamification_leaderboard_retrieve', createCallArgs<'v2_gamification_leaderboard_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_gamification_leaderboard_retrieve'>>;
+      return apiClient.call('v2_gamification_leaderboard_retrieve', createCallArgs<'v2_gamification_leaderboard_retrieve'>(payload));
     },
     ...options,
   });
@@ -176,8 +176,8 @@ export const useV2GamificationStreakRetrieveQuery = (
   return useQuery<OperationResponse<'v2_gamification_streak_retrieve'>, ApiError, OperationResponse<'v2_gamification_streak_retrieve'>, QueryKey>({
     queryKey: ['v2_gamification_streak_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_gamification_streak_retrieve>>;
-      return apiClient.call('v2_gamification_streak_retrieve', createCallArgs<'v2_gamification_streak_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_gamification_streak_retrieve'>>;
+      return apiClient.call('v2_gamification_streak_retrieve', createCallArgs<'v2_gamification_streak_retrieve'>(payload));
     },
     ...options,
   });
@@ -192,8 +192,8 @@ export const useV2GamificationUserLevelRetrieveQuery = (
   return useQuery<OperationResponse<'v2_gamification_user_level_retrieve'>, ApiError, OperationResponse<'v2_gamification_user_level_retrieve'>, QueryKey>({
     queryKey: ['v2_gamification_user_level_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_gamification_user_level_retrieve>>;
-      return apiClient.call('v2_gamification_user_level_retrieve', createCallArgs<'v2_gamification_user_level_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_gamification_user_level_retrieve'>>;
+      return apiClient.call('v2_gamification_user_level_retrieve', createCallArgs<'v2_gamification_user_level_retrieve'>(payload));
     },
     ...options,
   });

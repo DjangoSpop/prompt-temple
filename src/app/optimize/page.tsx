@@ -110,12 +110,12 @@ export default function OptimizePage() {
     <main className="space-y-6" dir={direction}>
       <Card className="border-none bg-background/60 backdrop-blur">
         <CardHeader>
-          <CardTitle className="text-3xl font-semibold">{t("optimize.title")}</CardTitle>
-          <CardDescription>{t("optimize.subtitle")}</CardDescription>
+          <CardTitle className="text-2xl font-semibold">{t("optimize.title")}</CardTitle>
+          <CardDescription className="text-sm">{t("optimize.subtitle")}</CardDescription>
         </CardHeader>
         <CardContent className="grid gap-6 lg:grid-cols-[320px,1fr]">
           <div className="space-y-4">
-            <Label htmlFor="optimize-template" className="text-xs font-medium uppercase tracking-wide">
+            <Label htmlFor="optimize-template" className="text-sm font-medium">
               {t("optimize.templatePicker")}
             </Label>
             <Select
@@ -150,14 +150,17 @@ export default function OptimizePage() {
               </Alert>
             )}
             {template && (
-              <div className="rounded-md border bg-muted/40 p-3 text-sm">
-                <p className="font-semibold">{template.title}</p>
-                <p className="text-muted-foreground">{template.description}</p>
-                <div className="mt-2 flex flex-wrap gap-1">
-                  <Badge variant="secondary">{template.category?.name}</Badge>
-                  {template.tags && Array.isArray(template.tags) && template.tags.map((tag: string) => (
-                    <Badge key={tag} variant="outline">{tag}</Badge>
+              <div className="rounded-lg border bg-muted/30 p-4">
+                <h3 className="font-semibold text-sm">{template.title}</h3>
+                <p className="text-muted-foreground text-xs mt-1 line-clamp-2">{template.description}</p>
+                <div className="mt-3 flex flex-wrap gap-1">
+                  <Badge variant="secondary" className="text-xs">{template.category?.name}</Badge>
+                  {template.tags && Array.isArray(template.tags) && template.tags.slice(0, 2).map((tag: unknown) => (
+                    <Badge key={String(tag)} variant="outline" className="text-xs">{String(tag)}</Badge>
                   ))}
+                  {template.tags && Array.isArray(template.tags) && template.tags.length > 2 && (
+                    <Badge variant="outline" className="text-xs">+{template.tags.length - 2} more</Badge>
+                  )}
                 </div>
               </div>
             )}
@@ -189,12 +192,15 @@ export default function OptimizePage() {
                         error={form.formState.errors?.[field.id]?.message as string | undefined}
                       />
                     ))}
-                    <div className="flex items-center gap-3">
-                      <Button type="submit" disabled={analyzer.isPending} className="gap-2">
-                        {analyzer.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Wand2 className="h-4 w-4" />}
-                        {t("optimize.runAnalysis")}
+                    <div className="flex items-center gap-2 mt-6">
+                      <Button type="submit" disabled={analyzer.isPending} className="flex-1 sm:flex-none">
+                        {analyzer.isPending ? (
+                          <><Loader2 className="h-4 w-4 animate-spin mr-2" />{t("optimize.analyzing")}</>
+                        ) : (
+                          <><Wand2 className="h-4 w-4 mr-2" />{t("optimize.runAnalysis")}</>
+                        )}
                       </Button>
-                      <Button type="button" variant="outline" onClick={() => form.reset()}>
+                      <Button type="button" variant="ghost" size="sm" onClick={() => form.reset()}>
                         {t("optimize.resetForm")}
                       </Button>
                     </div>
@@ -246,7 +252,7 @@ export default function OptimizePage() {
 }
 
 function FieldInput({ field, register, error }: FieldInputProps) {
-  const inputId = optimize-field-;
+  const inputId = `optimize-field-${field.id}`;
   const baseProps = {
     id: inputId,
     placeholder: field.placeholder,

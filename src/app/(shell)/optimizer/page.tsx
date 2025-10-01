@@ -6,6 +6,7 @@ import { apiClient } from '@/lib/api-client';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { OptimizerResult, AIProvider, AIModel } from '@/lib/types';
+import AdvancedOptimizer from '@/components/optimization/AdvancedOptimizer';
 import { 
   Zap, 
   Download, 
@@ -32,6 +33,25 @@ const AI_PROVIDERS: AIProvider[] = [
 
 export default function OptimizerPage() {
   const { user } = useAuth();
+  const [useAdvancedMode, setUseAdvancedMode] = useState(true);
+
+  // If advanced mode is enabled, show the new AdvancedOptimizer
+  if (useAdvancedMode) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50">
+        <div className="absolute top-4 right-4">
+          <Button
+            variant="outline"
+            onClick={() => setUseAdvancedMode(false)}
+            className="text-sm"
+          >
+            Switch to Classic Mode
+          </Button>
+        </div>
+        <AdvancedOptimizer />
+      </div>
+    );
+  }
   const [inputPrompt, setInputPrompt] = useState('');
   const [selectedProvider, setSelectedProvider] = useState('openai');
   const [selectedModel, setSelectedModel] = useState('gpt-4');
@@ -138,7 +158,16 @@ export default function OptimizerPage() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 space-y-8">
+    <div className="min-h-screen bg-gray-50">
+      <div className="absolute top-4 right-4">
+        <Button
+          onClick={() => setUseAdvancedMode(true)}
+          className="text-sm bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
+        >
+          Try Advanced Mode
+        </Button>
+      </div>
+      <div className="container mx-auto px-4 py-8 space-y-8">
       {/* Header */}
       <div className="text-center space-y-4">
         <div className="flex items-center justify-center gap-3">
@@ -558,6 +587,7 @@ export default function OptimizerPage() {
               </div>
             </Card>
           )}
+        </div>
         </div>
       </div>
     </div>

@@ -16,7 +16,7 @@ export const useV1TemplateCategoriesListQuery = (
   return useQuery<OperationResponse<'v1_template_categories_list'>, ApiError, OperationResponse<'v1_template_categories_list'>, QueryKey>({
     queryKey: ['v1_template_categories_list', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_template_categories_list>>;
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_template_categories_list'>>;
       return apiClient.call('v1_template_categories_list', createCallArgs<'v1_template_categories_list>(payload));
     },
     ...options,
@@ -32,7 +32,7 @@ export const useV1TemplateCategoriesRetrieveQuery = (
   return useQuery<OperationResponse<'v1_template_categories_retrieve'>, ApiError, OperationResponse<'v1_template_categories_retrieve'>, QueryKey>({
     queryKey: ['v1_template_categories_retrieve', args],
     queryFn: ({ signal }) => {
-      const payload = { ...args, signal } as Partial<OperationCallArgs<'v1_template_categories_retrieve>>;
+      const payload = { ...args, signal } as Partial<OperationCallArgs<'v1_template_categories_retrieve'>>;
       return apiClient.call('v1_template_categories_retrieve', createCallArgs<'v1_template_categories_retrieve>(payload));
     },
     ...options,
@@ -48,7 +48,7 @@ export const useV1TemplateCategoriesTemplatesRetrieveQuery = (
   return useQuery<OperationResponse<'v1_template_categories_templates_retrieve'>, ApiError, OperationResponse<'v1_template_categories_templates_retrieve'>, QueryKey>({
     queryKey: ['v1_template_categories_templates_retrieve', args],
     queryFn: ({ signal }) => {
-      const payload = { ...args, signal } as Partial<OperationCallArgs<'v1_template_categories_templates_retrieve>>;
+      const payload = { ...args, signal } as Partial<OperationCallArgs<'v1_template_categories_templates_retrieve'>>;
       return apiClient.call('v1_template_categories_templates_retrieve', createCallArgs<'v1_template_categories_templates_retrieve>(payload));
     },
     ...options,
@@ -64,7 +64,7 @@ export const useV1TemplatesListQuery = (
   return useQuery<OperationResponse<'v1_templates_list'>, ApiError, OperationResponse<'v1_templates_list'>, QueryKey>({
     queryKey: ['v1_templates_list', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_templates_list>>;
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_templates_list'>>;
       return apiClient.call('v1_templates_list', createCallArgs<'v1_templates_list>(payload));
     },
     ...options,
@@ -79,7 +79,7 @@ export const useV1TemplatesCreateMutation = (
   return useMutation<OperationResponse<'v1_templates_create'>, ApiError, V1TemplatesCreateArgs>({
     mutationKey: ['v1_templates_create'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v1_templates_create>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v1_templates_create'>>;
       return apiClient.call('v1_templates_create', createCallArgs<'v1_templates_create'>(payload));
     },
     ...options,
@@ -94,7 +94,7 @@ export const useV1TemplatesDestroyMutation = (
   return useMutation<OperationResponse<'v1_templates_destroy'>, ApiError, V1TemplatesDestroyArgs>({
     mutationKey: ['v1_templates_destroy'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v1_templates_destroy>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v1_templates_destroy'>>;
       return apiClient.call('v1_templates_destroy', createCallArgs<'v1_templates_destroy'>(payload));
     },
     ...options,
@@ -110,7 +110,7 @@ export const useV1TemplatesRetrieveQuery = (
   return useQuery<OperationResponse<'v1_templates_retrieve'>, ApiError, OperationResponse<'v1_templates_retrieve'>, QueryKey>({
     queryKey: ['v1_templates_retrieve', args],
     queryFn: ({ signal }) => {
-      const payload = { ...args, signal } as Partial<OperationCallArgs<'v1_templates_retrieve>>;
+      const payload = { ...args, signal } as Partial<OperationCallArgs<'v1_templates_retrieve'>>;
       return apiClient.call('v1_templates_retrieve', createCallArgs<'v1_templates_retrieve>(payload));
     },
     ...options,
@@ -125,7 +125,7 @@ export const useV1TemplatesPartialUpdateMutation = (
   return useMutation<OperationResponse<'v1_templates_partial_update'>, ApiError, V1TemplatesPartialUpdateArgs>({
     mutationKey: ['v1_templates_partial_update'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v1_templates_partial_update>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v1_templates_partial_update'>>;
       return apiClient.call('v1_templates_partial_update', createCallArgs<'v1_templates_partial_update'>(payload));
     },
     ...options,
@@ -140,7 +140,7 @@ export const useV1TemplatesUpdateMutation = (
   return useMutation<OperationResponse<'v1_templates_update'>, ApiError, V1TemplatesUpdateArgs>({
     mutationKey: ['v1_templates_update'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v1_templates_update>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v1_templates_update'>>;
       return apiClient.call('v1_templates_update', createCallArgs<'v1_templates_update'>(payload));
     },
     ...options,
@@ -156,7 +156,7 @@ export const useV1TemplatesAnalyticsRetrieveQuery = (
   return useQuery<OperationResponse<'v1_templates_analytics_retrieve'>, ApiError, OperationResponse<'v1_templates_analytics_retrieve'>, QueryKey>({
     queryKey: ['v1_templates_analytics_retrieve', args],
     queryFn: ({ signal }) => {
-      const payload = { ...args, signal } as Partial<OperationCallArgs<'v1_templates_analytics_retrieve>>;
+      const payload = { ...args, signal } as Partial<OperationCallArgs<'v1_templates_analytics_retrieve'>>;
       return apiClient.call('v1_templates_analytics_retrieve', createCallArgs<'v1_templates_analytics_retrieve>(payload));
     },
     ...options,
@@ -171,7 +171,7 @@ export const useV1TemplatesAnalyzeWithAiCreateMutation = (
   return useMutation<OperationResponse<'v1_templates_analyze_with_ai_create'>, ApiError, V1TemplatesAnalyzeWithAiCreateArgs>({
     mutationKey: ['v1_templates_analyze_with_ai_create'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v1_templates_analyze_with_ai_create>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v1_templates_analyze_with_ai_create'>>;
       return apiClient.call('v1_templates_analyze_with_ai_create', createCallArgs<'v1_templates_analyze_with_ai_create'>(payload));
     },
     ...options,
@@ -186,7 +186,7 @@ export const useV1TemplatesCompleteUsageCreateMutation = (
   return useMutation<OperationResponse<'v1_templates_complete_usage_create'>, ApiError, V1TemplatesCompleteUsageCreateArgs>({
     mutationKey: ['v1_templates_complete_usage_create'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v1_templates_complete_usage_create>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v1_templates_complete_usage_create'>>;
       return apiClient.call('v1_templates_complete_usage_create', createCallArgs<'v1_templates_complete_usage_create'>(payload));
     },
     ...options,
@@ -201,7 +201,7 @@ export const useV1TemplatesDuplicateCreateMutation = (
   return useMutation<OperationResponse<'v1_templates_duplicate_create'>, ApiError, V1TemplatesDuplicateCreateArgs>({
     mutationKey: ['v1_templates_duplicate_create'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v1_templates_duplicate_create>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v1_templates_duplicate_create'>>;
       return apiClient.call('v1_templates_duplicate_create', createCallArgs<'v1_templates_duplicate_create'>(payload));
     },
     ...options,
@@ -216,7 +216,7 @@ export const useV1TemplatesRateTemplateCreateMutation = (
   return useMutation<OperationResponse<'v1_templates_rate_template_create'>, ApiError, V1TemplatesRateTemplateCreateArgs>({
     mutationKey: ['v1_templates_rate_template_create'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v1_templates_rate_template_create>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v1_templates_rate_template_create'>>;
       return apiClient.call('v1_templates_rate_template_create', createCallArgs<'v1_templates_rate_template_create'>(payload));
     },
     ...options,
@@ -231,7 +231,7 @@ export const useV1TemplatesStartUsageCreateMutation = (
   return useMutation<OperationResponse<'v1_templates_start_usage_create'>, ApiError, V1TemplatesStartUsageCreateArgs>({
     mutationKey: ['v1_templates_start_usage_create'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v1_templates_start_usage_create>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v1_templates_start_usage_create'>>;
       return apiClient.call('v1_templates_start_usage_create', createCallArgs<'v1_templates_start_usage_create'>(payload));
     },
     ...options,
@@ -247,7 +247,7 @@ export const useV1TemplatesFeaturedRetrieveQuery = (
   return useQuery<OperationResponse<'v1_templates_featured_retrieve'>, ApiError, OperationResponse<'v1_templates_featured_retrieve'>, QueryKey>({
     queryKey: ['v1_templates_featured_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_templates_featured_retrieve>>;
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_templates_featured_retrieve'>>;
       return apiClient.call('v1_templates_featured_retrieve', createCallArgs<'v1_templates_featured_retrieve>(payload));
     },
     ...options,
@@ -263,7 +263,7 @@ export const useV1TemplatesMyTemplatesRetrieveQuery = (
   return useQuery<OperationResponse<'v1_templates_my_templates_retrieve'>, ApiError, OperationResponse<'v1_templates_my_templates_retrieve'>, QueryKey>({
     queryKey: ['v1_templates_my_templates_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_templates_my_templates_retrieve>>;
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_templates_my_templates_retrieve'>>;
       return apiClient.call('v1_templates_my_templates_retrieve', createCallArgs<'v1_templates_my_templates_retrieve>(payload));
     },
     ...options,
@@ -279,7 +279,7 @@ export const useV1TemplatesSearchSuggestionsRetrieveQuery = (
   return useQuery<OperationResponse<'v1_templates_search_suggestions_retrieve'>, ApiError, OperationResponse<'v1_templates_search_suggestions_retrieve'>, QueryKey>({
     queryKey: ['v1_templates_search_suggestions_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_templates_search_suggestions_retrieve>>;
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_templates_search_suggestions_retrieve'>>;
       return apiClient.call('v1_templates_search_suggestions_retrieve', createCallArgs<'v1_templates_search_suggestions_retrieve>(payload));
     },
     ...options,
@@ -295,7 +295,7 @@ export const useV1TemplatesTrendingRetrieveQuery = (
   return useQuery<OperationResponse<'v1_templates_trending_retrieve'>, ApiError, OperationResponse<'v1_templates_trending_retrieve'>, QueryKey>({
     queryKey: ['v1_templates_trending_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_templates_trending_retrieve>>;
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_templates_trending_retrieve'>>;
       return apiClient.call('v1_templates_trending_retrieve', createCallArgs<'v1_templates_trending_retrieve>(payload));
     },
     ...options,
@@ -311,7 +311,7 @@ export const useV2TemplateCategoriesListQuery = (
   return useQuery<OperationResponse<'v2_template_categories_list'>, ApiError, OperationResponse<'v2_template_categories_list'>, QueryKey>({
     queryKey: ['v2_template_categories_list', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_template_categories_list>>;
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_template_categories_list'>>;
       return apiClient.call('v2_template_categories_list', createCallArgs<'v2_template_categories_list>(payload));
     },
     ...options,
@@ -327,7 +327,7 @@ export const useV2TemplateCategoriesRetrieveQuery = (
   return useQuery<OperationResponse<'v2_template_categories_retrieve'>, ApiError, OperationResponse<'v2_template_categories_retrieve'>, QueryKey>({
     queryKey: ['v2_template_categories_retrieve', args],
     queryFn: ({ signal }) => {
-      const payload = { ...args, signal } as Partial<OperationCallArgs<'v2_template_categories_retrieve>>;
+      const payload = { ...args, signal } as Partial<OperationCallArgs<'v2_template_categories_retrieve'>>;
       return apiClient.call('v2_template_categories_retrieve', createCallArgs<'v2_template_categories_retrieve>(payload));
     },
     ...options,
@@ -343,7 +343,7 @@ export const useV2TemplateCategoriesTemplatesRetrieveQuery = (
   return useQuery<OperationResponse<'v2_template_categories_templates_retrieve'>, ApiError, OperationResponse<'v2_template_categories_templates_retrieve'>, QueryKey>({
     queryKey: ['v2_template_categories_templates_retrieve', args],
     queryFn: ({ signal }) => {
-      const payload = { ...args, signal } as Partial<OperationCallArgs<'v2_template_categories_templates_retrieve>>;
+      const payload = { ...args, signal } as Partial<OperationCallArgs<'v2_template_categories_templates_retrieve'>>;
       return apiClient.call('v2_template_categories_templates_retrieve', createCallArgs<'v2_template_categories_templates_retrieve>(payload));
     },
     ...options,
@@ -359,7 +359,7 @@ export const useV2TemplatesListQuery = (
   return useQuery<OperationResponse<'v2_templates_list'>, ApiError, OperationResponse<'v2_templates_list'>, QueryKey>({
     queryKey: ['v2_templates_list', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_templates_list>>;
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_templates_list'>>;
       return apiClient.call('v2_templates_list', createCallArgs<'v2_templates_list>(payload));
     },
     ...options,
@@ -374,7 +374,7 @@ export const useV2TemplatesCreateMutation = (
   return useMutation<OperationResponse<'v2_templates_create'>, ApiError, V2TemplatesCreateArgs>({
     mutationKey: ['v2_templates_create'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v2_templates_create>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v2_templates_create'>>;
       return apiClient.call('v2_templates_create', createCallArgs<'v2_templates_create'>(payload));
     },
     ...options,
@@ -389,7 +389,7 @@ export const useV2TemplatesDestroyMutation = (
   return useMutation<OperationResponse<'v2_templates_destroy'>, ApiError, V2TemplatesDestroyArgs>({
     mutationKey: ['v2_templates_destroy'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v2_templates_destroy>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v2_templates_destroy'>>;
       return apiClient.call('v2_templates_destroy', createCallArgs<'v2_templates_destroy'>(payload));
     },
     ...options,
@@ -405,7 +405,7 @@ export const useV2TemplatesRetrieveQuery = (
   return useQuery<OperationResponse<'v2_templates_retrieve'>, ApiError, OperationResponse<'v2_templates_retrieve'>, QueryKey>({
     queryKey: ['v2_templates_retrieve', args],
     queryFn: ({ signal }) => {
-      const payload = { ...args, signal } as Partial<OperationCallArgs<'v2_templates_retrieve>>;
+      const payload = { ...args, signal } as Partial<OperationCallArgs<'v2_templates_retrieve'>>;
       return apiClient.call('v2_templates_retrieve', createCallArgs<'v2_templates_retrieve>(payload));
     },
     ...options,
@@ -420,7 +420,7 @@ export const useV2TemplatesPartialUpdateMutation = (
   return useMutation<OperationResponse<'v2_templates_partial_update'>, ApiError, V2TemplatesPartialUpdateArgs>({
     mutationKey: ['v2_templates_partial_update'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v2_templates_partial_update>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v2_templates_partial_update'>>;
       return apiClient.call('v2_templates_partial_update', createCallArgs<'v2_templates_partial_update'>(payload));
     },
     ...options,
@@ -435,7 +435,7 @@ export const useV2TemplatesUpdateMutation = (
   return useMutation<OperationResponse<'v2_templates_update'>, ApiError, V2TemplatesUpdateArgs>({
     mutationKey: ['v2_templates_update'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v2_templates_update>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v2_templates_update'>>;
       return apiClient.call('v2_templates_update', createCallArgs<'v2_templates_update'>(payload));
     },
     ...options,
@@ -451,7 +451,7 @@ export const useV2TemplatesAnalyticsRetrieveQuery = (
   return useQuery<OperationResponse<'v2_templates_analytics_retrieve'>, ApiError, OperationResponse<'v2_templates_analytics_retrieve'>, QueryKey>({
     queryKey: ['v2_templates_analytics_retrieve', args],
     queryFn: ({ signal }) => {
-      const payload = { ...args, signal } as Partial<OperationCallArgs<'v2_templates_analytics_retrieve>>;
+      const payload = { ...args, signal } as Partial<OperationCallArgs<'v2_templates_analytics_retrieve'>>;
       return apiClient.call('v2_templates_analytics_retrieve', createCallArgs<'v2_templates_analytics_retrieve>(payload));
     },
     ...options,
@@ -466,7 +466,7 @@ export const useV2TemplatesAnalyzeWithAiCreateMutation = (
   return useMutation<OperationResponse<'v2_templates_analyze_with_ai_create'>, ApiError, V2TemplatesAnalyzeWithAiCreateArgs>({
     mutationKey: ['v2_templates_analyze_with_ai_create'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v2_templates_analyze_with_ai_create>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v2_templates_analyze_with_ai_create'>>;
       return apiClient.call('v2_templates_analyze_with_ai_create', createCallArgs<'v2_templates_analyze_with_ai_create'>(payload));
     },
     ...options,
@@ -481,7 +481,7 @@ export const useV2TemplatesCompleteUsageCreateMutation = (
   return useMutation<OperationResponse<'v2_templates_complete_usage_create'>, ApiError, V2TemplatesCompleteUsageCreateArgs>({
     mutationKey: ['v2_templates_complete_usage_create'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v2_templates_complete_usage_create>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v2_templates_complete_usage_create'>>;
       return apiClient.call('v2_templates_complete_usage_create', createCallArgs<'v2_templates_complete_usage_create'>(payload));
     },
     ...options,
@@ -496,7 +496,7 @@ export const useV2TemplatesDuplicateCreateMutation = (
   return useMutation<OperationResponse<'v2_templates_duplicate_create'>, ApiError, V2TemplatesDuplicateCreateArgs>({
     mutationKey: ['v2_templates_duplicate_create'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v2_templates_duplicate_create>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v2_templates_duplicate_create'>>;
       return apiClient.call('v2_templates_duplicate_create', createCallArgs<'v2_templates_duplicate_create'>(payload));
     },
     ...options,
@@ -511,7 +511,7 @@ export const useV2TemplatesRateTemplateCreateMutation = (
   return useMutation<OperationResponse<'v2_templates_rate_template_create'>, ApiError, V2TemplatesRateTemplateCreateArgs>({
     mutationKey: ['v2_templates_rate_template_create'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v2_templates_rate_template_create>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v2_templates_rate_template_create'>>;
       return apiClient.call('v2_templates_rate_template_create', createCallArgs<'v2_templates_rate_template_create'>(payload));
     },
     ...options,
@@ -526,7 +526,7 @@ export const useV2TemplatesStartUsageCreateMutation = (
   return useMutation<OperationResponse<'v2_templates_start_usage_create'>, ApiError, V2TemplatesStartUsageCreateArgs>({
     mutationKey: ['v2_templates_start_usage_create'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v2_templates_start_usage_create>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v2_templates_start_usage_create'>>;
       return apiClient.call('v2_templates_start_usage_create', createCallArgs<'v2_templates_start_usage_create'>(payload));
     },
     ...options,
@@ -542,7 +542,7 @@ export const useV2TemplatesFeaturedRetrieveQuery = (
   return useQuery<OperationResponse<'v2_templates_featured_retrieve'>, ApiError, OperationResponse<'v2_templates_featured_retrieve'>, QueryKey>({
     queryKey: ['v2_templates_featured_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_templates_featured_retrieve>>;
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_templates_featured_retrieve'>>;
       return apiClient.call('v2_templates_featured_retrieve', createCallArgs<'v2_templates_featured_retrieve>(payload));
     },
     ...options,
@@ -558,7 +558,7 @@ export const useV2TemplatesMyTemplatesRetrieveQuery = (
   return useQuery<OperationResponse<'v2_templates_my_templates_retrieve'>, ApiError, OperationResponse<'v2_templates_my_templates_retrieve'>, QueryKey>({
     queryKey: ['v2_templates_my_templates_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_templates_my_templates_retrieve>>;
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_templates_my_templates_retrieve'>>;
       return apiClient.call('v2_templates_my_templates_retrieve', createCallArgs<'v2_templates_my_templates_retrieve>(payload));
     },
     ...options,
@@ -574,7 +574,7 @@ export const useV2TemplatesSearchSuggestionsRetrieveQuery = (
   return useQuery<OperationResponse<'v2_templates_search_suggestions_retrieve'>, ApiError, OperationResponse<'v2_templates_search_suggestions_retrieve'>, QueryKey>({
     queryKey: ['v2_templates_search_suggestions_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_templates_search_suggestions_retrieve>>;
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_templates_search_suggestions_retrieve'>>;
       return apiClient.call('v2_templates_search_suggestions_retrieve', createCallArgs<'v2_templates_search_suggestions_retrieve>(payload));
     },
     ...options,
@@ -590,7 +590,7 @@ export const useV2TemplatesTrendingRetrieveQuery = (
   return useQuery<OperationResponse<'v2_templates_trending_retrieve'>, ApiError, OperationResponse<'v2_templates_trending_retrieve'>, QueryKey>({
     queryKey: ['v2_templates_trending_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_templates_trending_retrieve>>;
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_templates_trending_retrieve'>>;
       return apiClient.call('v2_templates_trending_retrieve', createCallArgs<'v2_templates_trending_retrieve>(payload));
     },
     ...options,

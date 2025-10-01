@@ -15,7 +15,7 @@ export const useV1AiGenerateCreateMutation = (
   return useMutation<OperationResponse<'v1_ai_generate_create'>, ApiError, V1AiGenerateCreateArgs>({
     mutationKey: ['v1_ai_generate_create'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v1_ai_generate_create>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v1_ai_generate_create'>>;
       return apiClient.call('v1_ai_generate_create', createCallArgs<'v1_ai_generate_create'>(payload));
     },
     ...options,
@@ -31,8 +31,8 @@ export const useV1AiModelsRetrieveQuery = (
   return useQuery<OperationResponse<'v1_ai_models_retrieve'>, ApiError, OperationResponse<'v1_ai_models_retrieve'>, QueryKey>({
     queryKey: ['v1_ai_models_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_ai_models_retrieve>>;
-      return apiClient.call('v1_ai_models_retrieve', createCallArgs<'v1_ai_models_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_ai_models_retrieve'>>;
+      return apiClient.call('v1_ai_models_retrieve', createCallArgs<'v1_ai_models_retrieve'>(payload));
     },
     ...options,
   });
@@ -47,8 +47,8 @@ export const useV1AiProvidersRetrieveQuery = (
   return useQuery<OperationResponse<'v1_ai_providers_retrieve'>, ApiError, OperationResponse<'v1_ai_providers_retrieve'>, QueryKey>({
     queryKey: ['v1_ai_providers_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_ai_providers_retrieve>>;
-      return apiClient.call('v1_ai_providers_retrieve', createCallArgs<'v1_ai_providers_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_ai_providers_retrieve'>>;
+      return apiClient.call('v1_ai_providers_retrieve', createCallArgs<'v1_ai_providers_retrieve'>(payload));
     },
     ...options,
   });
@@ -63,8 +63,8 @@ export const useV1AiQuotasRetrieveQuery = (
   return useQuery<OperationResponse<'v1_ai_quotas_retrieve'>, ApiError, OperationResponse<'v1_ai_quotas_retrieve'>, QueryKey>({
     queryKey: ['v1_ai_quotas_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_ai_quotas_retrieve>>;
-      return apiClient.call('v1_ai_quotas_retrieve', createCallArgs<'v1_ai_quotas_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_ai_quotas_retrieve'>>;
+      return apiClient.call('v1_ai_quotas_retrieve', createCallArgs<'v1_ai_quotas_retrieve'>(payload));
     },
     ...options,
   });
@@ -79,8 +79,8 @@ export const useV1AiUsageRetrieveQuery = (
   return useQuery<OperationResponse<'v1_ai_usage_retrieve'>, ApiError, OperationResponse<'v1_ai_usage_retrieve'>, QueryKey>({
     queryKey: ['v1_ai_usage_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_ai_usage_retrieve>>;
-      return apiClient.call('v1_ai_usage_retrieve', createCallArgs<'v1_ai_usage_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_ai_usage_retrieve'>>;
+      return apiClient.call('v1_ai_usage_retrieve', createCallArgs<'v1_ai_usage_retrieve'>(payload));
     },
     ...options,
   });
@@ -94,7 +94,7 @@ export const useV2AiGenerateCreateMutation = (
   return useMutation<OperationResponse<'v2_ai_generate_create'>, ApiError, V2AiGenerateCreateArgs>({
     mutationKey: ['v2_ai_generate_create'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v2_ai_generate_create>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v2_ai_generate_create'>>;
       return apiClient.call('v2_ai_generate_create', createCallArgs<'v2_ai_generate_create'>(payload));
     },
     ...options,
@@ -110,8 +110,8 @@ export const useV2AiModelsRetrieveQuery = (
   return useQuery<OperationResponse<'v2_ai_models_retrieve'>, ApiError, OperationResponse<'v2_ai_models_retrieve'>, QueryKey>({
     queryKey: ['v2_ai_models_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_ai_models_retrieve>>;
-      return apiClient.call('v2_ai_models_retrieve', createCallArgs<'v2_ai_models_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_ai_models_retrieve'>>;
+      return apiClient.call('v2_ai_models_retrieve', createCallArgs<'v2_ai_models_retrieve'>(payload));
     },
     ...options,
   });
@@ -126,8 +126,8 @@ export const useV2AiProvidersRetrieveQuery = (
   return useQuery<OperationResponse<'v2_ai_providers_retrieve'>, ApiError, OperationResponse<'v2_ai_providers_retrieve'>, QueryKey>({
     queryKey: ['v2_ai_providers_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_ai_providers_retrieve>>;
-      return apiClient.call('v2_ai_providers_retrieve', createCallArgs<'v2_ai_providers_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_ai_providers_retrieve'>>;
+      return apiClient.call('v2_ai_providers_retrieve', createCallArgs<'v2_ai_providers_retrieve'>(payload));
     },
     ...options,
   });
@@ -142,8 +142,8 @@ export const useV2AiQuotasRetrieveQuery = (
   return useQuery<OperationResponse<'v2_ai_quotas_retrieve'>, ApiError, OperationResponse<'v2_ai_quotas_retrieve'>, QueryKey>({
     queryKey: ['v2_ai_quotas_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_ai_quotas_retrieve>>;
-      return apiClient.call('v2_ai_quotas_retrieve', createCallArgs<'v2_ai_quotas_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_ai_quotas_retrieve'>>;
+      return apiClient.call('v2_ai_quotas_retrieve', createCallArgs<'v2_ai_quotas_retrieve'>(payload));
     },
     ...options,
   });
@@ -158,9 +158,8 @@ export const useV2AiUsageRetrieveQuery = (
   return useQuery<OperationResponse<'v2_ai_usage_retrieve'>, ApiError, OperationResponse<'v2_ai_usage_retrieve'>, QueryKey>({
     queryKey: ['v2_ai_usage_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_ai_usage_retrieve>>;
-      return apiClient.call('v2_ai_usage_retrieve', createCallArgs<'v2_ai_usage_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_ai_usage_retrieve'>>;
+      return apiClient.call('v2_ai_usage_retrieve', createCallArgs<'v2_ai_usage_retrieve'>(payload));
     },
     ...options,
   });
-};

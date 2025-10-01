@@ -16,8 +16,8 @@ export const useV1CoreConfigRetrieveQuery = (
   return useQuery<OperationResponse<'v1_core_config_retrieve'>, ApiError, OperationResponse<'v1_core_config_retrieve'>, QueryKey>({
     queryKey: ['v1_core_config_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_core_config_retrieve>>;
-      return apiClient.call('v1_core_config_retrieve', createCallArgs<'v1_core_config_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_core_config_retrieve'>>;
+      return apiClient.call('v1_core_config_retrieve', createCallArgs<'v1_core_config_retrieve'>(payload));
     },
     ...options,
   });
@@ -32,8 +32,8 @@ export const useV1CoreHealthRetrieveQuery = (
   return useQuery<OperationResponse<'v1_core_health_retrieve'>, ApiError, OperationResponse<'v1_core_health_retrieve'>, QueryKey>({
     queryKey: ['v1_core_health_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_core_health_retrieve>>;
-      return apiClient.call('v1_core_health_retrieve', createCallArgs<'v1_core_health_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_core_health_retrieve'>>;
+      return apiClient.call('v1_core_health_retrieve', createCallArgs<'v1_core_health_retrieve'>(payload));
     },
     ...options,
   });
@@ -48,8 +48,8 @@ export const useV1CoreNotificationsRetrieveQuery = (
   return useQuery<OperationResponse<'v1_core_notifications_retrieve'>, ApiError, OperationResponse<'v1_core_notifications_retrieve'>, QueryKey>({
     queryKey: ['v1_core_notifications_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_core_notifications_retrieve>>;
-      return apiClient.call('v1_core_notifications_retrieve', createCallArgs<'v1_core_notifications_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_core_notifications_retrieve'>>;
+      return apiClient.call('v1_core_notifications_retrieve', createCallArgs<'v1_core_notifications_retrieve'>(payload));
     },
     ...options,
   });
@@ -63,7 +63,7 @@ export const useV1CoreNotificationsCreateMutation = (
   return useMutation<OperationResponse<'v1_core_notifications_create'>, ApiError, V1CoreNotificationsCreateArgs>({
     mutationKey: ['v1_core_notifications_create'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v1_core_notifications_create>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v1_core_notifications_create'>>;
       return apiClient.call('v1_core_notifications_create', createCallArgs<'v1_core_notifications_create'>(payload));
     },
     ...options,
@@ -79,8 +79,8 @@ export const useV2CoreConfigRetrieveQuery = (
   return useQuery<OperationResponse<'v2_core_config_retrieve'>, ApiError, OperationResponse<'v2_core_config_retrieve'>, QueryKey>({
     queryKey: ['v2_core_config_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_core_config_retrieve>>;
-      return apiClient.call('v2_core_config_retrieve', createCallArgs<'v2_core_config_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_core_config_retrieve'>>;
+      return apiClient.call('v2_core_config_retrieve', createCallArgs<'v2_core_config_retrieve'>(payload));
     },
     ...options,
   });
@@ -95,8 +95,8 @@ export const useV2CoreHealthRetrieveQuery = (
   return useQuery<OperationResponse<'v2_core_health_retrieve'>, ApiError, OperationResponse<'v2_core_health_retrieve'>, QueryKey>({
     queryKey: ['v2_core_health_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_core_health_retrieve>>;
-      return apiClient.call('v2_core_health_retrieve', createCallArgs<'v2_core_health_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_core_health_retrieve'>>;
+      return apiClient.call('v2_core_health_retrieve', createCallArgs<'v2_core_health_retrieve'>(payload));
     },
     ...options,
   });
@@ -111,8 +111,8 @@ export const useV2CoreNotificationsRetrieveQuery = (
   return useQuery<OperationResponse<'v2_core_notifications_retrieve'>, ApiError, OperationResponse<'v2_core_notifications_retrieve'>, QueryKey>({
     queryKey: ['v2_core_notifications_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_core_notifications_retrieve>>;
-      return apiClient.call('v2_core_notifications_retrieve', createCallArgs<'v2_core_notifications_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_core_notifications_retrieve'>>;
+      return apiClient.call('v2_core_notifications_retrieve', createCallArgs<'v2_core_notifications_retrieve'>(payload));
     },
     ...options,
   });
@@ -126,7 +126,7 @@ export const useV2CoreNotificationsCreateMutation = (
   return useMutation<OperationResponse<'v2_core_notifications_create'>, ApiError, V2CoreNotificationsCreateArgs>({
     mutationKey: ['v2_core_notifications_create'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v2_core_notifications_create>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v2_core_notifications_create'>>;
       return apiClient.call('v2_core_notifications_create', createCallArgs<'v2_core_notifications_create'>(payload));
     },
     ...options,

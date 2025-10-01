@@ -16,8 +16,8 @@ export const useV1AnalyticsAbTestsRetrieveQuery = (
   return useQuery<OperationResponse<'v1_analytics_ab_tests_retrieve'>, ApiError, OperationResponse<'v1_analytics_ab_tests_retrieve'>, QueryKey>({
     queryKey: ['v1_analytics_ab_tests_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_analytics_ab_tests_retrieve>>;
-      return apiClient.call('v1_analytics_ab_tests_retrieve', createCallArgs<'v1_analytics_ab_tests_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_analytics_ab_tests_retrieve'>>;
+      return apiClient.call('v1_analytics_ab_tests_retrieve', createCallArgs<'v1_analytics_ab_tests_retrieve'>(payload));
     },
     ...options,
   });
@@ -32,8 +32,8 @@ export const useV1AnalyticsDashboardRetrieveQuery = (
   return useQuery<OperationResponse<'v1_analytics_dashboard_retrieve'>, ApiError, OperationResponse<'v1_analytics_dashboard_retrieve'>, QueryKey>({
     queryKey: ['v1_analytics_dashboard_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_analytics_dashboard_retrieve>>;
-      return apiClient.call('v1_analytics_dashboard_retrieve', createCallArgs<'v1_analytics_dashboard_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_analytics_dashboard_retrieve'>>;
+      return apiClient.call('v1_analytics_dashboard_retrieve', createCallArgs<'v1_analytics_dashboard_retrieve'>(payload));
     },
     ...options,
   });
@@ -48,8 +48,8 @@ export const useV1AnalyticsRecommendationsRetrieveQuery = (
   return useQuery<OperationResponse<'v1_analytics_recommendations_retrieve'>, ApiError, OperationResponse<'v1_analytics_recommendations_retrieve'>, QueryKey>({
     queryKey: ['v1_analytics_recommendations_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_analytics_recommendations_retrieve>>;
-      return apiClient.call('v1_analytics_recommendations_retrieve', createCallArgs<'v1_analytics_recommendations_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_analytics_recommendations_retrieve'>>;
+      return apiClient.call('v1_analytics_recommendations_retrieve', createCallArgs<'v1_analytics_recommendations_retrieve'>(payload));
     },
     ...options,
   });
@@ -64,8 +64,8 @@ export const useV1AnalyticsTemplateAnalyticsRetrieveQuery = (
   return useQuery<OperationResponse<'v1_analytics_template_analytics_retrieve'>, ApiError, OperationResponse<'v1_analytics_template_analytics_retrieve'>, QueryKey>({
     queryKey: ['v1_analytics_template_analytics_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_analytics_template_analytics_retrieve>>;
-      return apiClient.call('v1_analytics_template_analytics_retrieve', createCallArgs<'v1_analytics_template_analytics_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_analytics_template_analytics_retrieve'>>;
+      return apiClient.call('v1_analytics_template_analytics_retrieve', createCallArgs<'v1_analytics_template_analytics_retrieve'>(payload));
     },
     ...options,
   });
@@ -79,7 +79,7 @@ export const useV1AnalyticsTrackCreateMutation = (
   return useMutation<OperationResponse<'v1_analytics_track_create'>, ApiError, V1AnalyticsTrackCreateArgs>({
     mutationKey: ['v1_analytics_track_create'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v1_analytics_track_create>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v1_analytics_track_create'>>;
       return apiClient.call('v1_analytics_track_create', createCallArgs<'v1_analytics_track_create'>(payload));
     },
     ...options,
@@ -95,8 +95,8 @@ export const useV1AnalyticsUserInsightsRetrieveQuery = (
   return useQuery<OperationResponse<'v1_analytics_user_insights_retrieve'>, ApiError, OperationResponse<'v1_analytics_user_insights_retrieve'>, QueryKey>({
     queryKey: ['v1_analytics_user_insights_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_analytics_user_insights_retrieve>>;
-      return apiClient.call('v1_analytics_user_insights_retrieve', createCallArgs<'v1_analytics_user_insights_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v1_analytics_user_insights_retrieve'>>;
+      return apiClient.call('v1_analytics_user_insights_retrieve', createCallArgs<'v1_analytics_user_insights_retrieve'>(payload));
     },
     ...options,
   });
@@ -111,8 +111,8 @@ export const useV2AnalyticsAbTestsRetrieveQuery = (
   return useQuery<OperationResponse<'v2_analytics_ab_tests_retrieve'>, ApiError, OperationResponse<'v2_analytics_ab_tests_retrieve'>, QueryKey>({
     queryKey: ['v2_analytics_ab_tests_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_analytics_ab_tests_retrieve>>;
-      return apiClient.call('v2_analytics_ab_tests_retrieve', createCallArgs<'v2_analytics_ab_tests_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_analytics_ab_tests_retrieve'>>;
+      return apiClient.call('v2_analytics_ab_tests_retrieve', createCallArgs<'v2_analytics_ab_tests_retrieve'>(payload));
     },
     ...options,
   });
@@ -127,8 +127,8 @@ export const useV2AnalyticsDashboardRetrieveQuery = (
   return useQuery<OperationResponse<'v2_analytics_dashboard_retrieve'>, ApiError, OperationResponse<'v2_analytics_dashboard_retrieve'>, QueryKey>({
     queryKey: ['v2_analytics_dashboard_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_analytics_dashboard_retrieve>>;
-      return apiClient.call('v2_analytics_dashboard_retrieve', createCallArgs<'v2_analytics_dashboard_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_analytics_dashboard_retrieve'>>;
+      return apiClient.call('v2_analytics_dashboard_retrieve', createCallArgs<'v2_analytics_dashboard_retrieve'>(payload));
     },
     ...options,
   });
@@ -143,8 +143,8 @@ export const useV2AnalyticsRecommendationsRetrieveQuery = (
   return useQuery<OperationResponse<'v2_analytics_recommendations_retrieve'>, ApiError, OperationResponse<'v2_analytics_recommendations_retrieve'>, QueryKey>({
     queryKey: ['v2_analytics_recommendations_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_analytics_recommendations_retrieve>>;
-      return apiClient.call('v2_analytics_recommendations_retrieve', createCallArgs<'v2_analytics_recommendations_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_analytics_recommendations_retrieve'>>;
+      return apiClient.call('v2_analytics_recommendations_retrieve', createCallArgs<'v2_analytics_recommendations_retrieve'>(payload));
     },
     ...options,
   });
@@ -159,8 +159,8 @@ export const useV2AnalyticsTemplateAnalyticsRetrieveQuery = (
   return useQuery<OperationResponse<'v2_analytics_template_analytics_retrieve'>, ApiError, OperationResponse<'v2_analytics_template_analytics_retrieve'>, QueryKey>({
     queryKey: ['v2_analytics_template_analytics_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_analytics_template_analytics_retrieve>>;
-      return apiClient.call('v2_analytics_template_analytics_retrieve', createCallArgs<'v2_analytics_template_analytics_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_analytics_template_analytics_retrieve'>>;
+      return apiClient.call('v2_analytics_template_analytics_retrieve', createCallArgs<'v2_analytics_template_analytics_retrieve'>(payload));
     },
     ...options,
   });
@@ -174,7 +174,7 @@ export const useV2AnalyticsTrackCreateMutation = (
   return useMutation<OperationResponse<'v2_analytics_track_create'>, ApiError, V2AnalyticsTrackCreateArgs>({
     mutationKey: ['v2_analytics_track_create'],
     mutationFn: async (variables) => {
-      const payload = { ...variables } as Partial<OperationCallArgs<'v2_analytics_track_create>>;
+      const payload = { ...variables } as Partial<OperationCallArgs<'v2_analytics_track_create'>>;
       return apiClient.call('v2_analytics_track_create', createCallArgs<'v2_analytics_track_create'>(payload));
     },
     ...options,
@@ -190,8 +190,8 @@ export const useV2AnalyticsUserInsightsRetrieveQuery = (
   return useQuery<OperationResponse<'v2_analytics_user_insights_retrieve'>, ApiError, OperationResponse<'v2_analytics_user_insights_retrieve'>, QueryKey>({
     queryKey: ['v2_analytics_user_insights_retrieve', (args ?? null)],
     queryFn: ({ signal }) => {
-      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_analytics_user_insights_retrieve>>;
-      return apiClient.call('v2_analytics_user_insights_retrieve', createCallArgs<'v2_analytics_user_insights_retrieve>(payload));
+      const payload = { ...(args ?? {}), signal } as Partial<OperationCallArgs<'v2_analytics_user_insights_retrieve'>>;
+      return apiClient.call('v2_analytics_user_insights_retrieve', createCallArgs<'v2_analytics_user_insights_retrieve'>(payload));
     },
     ...options,
   });

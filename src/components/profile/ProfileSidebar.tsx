@@ -15,7 +15,8 @@ import {
 } from 'lucide-react';
 import { PasswordChangeModal } from './PasswordChangeModal';
 import { DeleteAccountModal } from './DeleteAccountModal';
-import { ExportDataButton } from './ExportDataButton';
+import { ExportDataButton } from './ExportDate';
+
 
 interface ProfileSidebarProps {
   profile: any;
