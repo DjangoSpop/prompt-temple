@@ -86,6 +86,24 @@ export interface SlashCommand {
 
 export const SLASH_COMMANDS: SlashCommand[] = [
   {
+    command: '/intent',
+    description: 'Analyze intent and suggest improvements',
+    category: 'Analysis',
+    template: 'Please analyze the intent of the following and suggest improvements:'
+  },
+  {
+    command: '/optimize',
+    description: 'Optimize prompt for better AI responses',
+    category: 'Optimization',
+    template: 'Please optimize the following prompt for clarity, specificity, and effectiveness:'
+  },
+  {
+    command: '/rewrite',
+    description: 'Rewrite and improve text',
+    category: 'Writing',
+    template: 'Please rewrite and improve the following text:'
+  },
+  {
     command: '/summarize',
     description: 'Summarize the provided text',
     category: 'Analysis',
@@ -96,17 +114,5 @@ export const SLASH_COMMANDS: SlashCommand[] = [
     description: 'Generate or explain code',
     category: 'Development',
     template: 'Please help me with the following code task:'
-  },
-  {
-    command: '/rewrite',
-    description: 'Rewrite and improve text',
-    category: 'Writing',
-    template: 'Please rewrite and improve the following text:'
-  },
-  {
-    command: '/intent',
-    description: 'Analyze intent and suggest improvements',
-    category: 'Analysis',
-    template: 'Please analyze the intent of the following and suggest improvements:'
   }
 ];

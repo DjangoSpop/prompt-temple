@@ -5,48 +5,52 @@
 /* Pharaonic Temple Design Tokens */
 @layer base {
   :root {
-    /* Light mode (default) - Pharaonic Temple Theme */
-    --bg: 47 60% 96%;           /* #FBF6E9 - Papyrus */
+    /* Light mode (default) - Pharaonic Sahara Theme */
+    --bg: 42 68% 96%;           /* #FBF7E9 - Sand lightest */
     --bg-elev: 0 0% 100%;       /* #FFFFFF - Pure white */
-    --fg: 210 40% 10%;          /* #0E1B2A - Deep ink */
-    --muted: 220 13% 46%;       /* #5B6472 - Stone gray */
-    --primary: 220 85% 30%;     /* #0E3A8C - Egyptian Blue */
-    --primary-fg: 0 0% 100%;    /* #FFFFFF */
-    --accent: 45 80% 45%;       /* #C9A227 - Gold */
-    --accent-fg: 0 0% 0%;       /* #000000 */
-    --border: 40 30% 85%;       /* #E6DEC9 - Sand line */
-    --ring: 45 80% 45%;         /* #C9A227 - Gold focus ring */
+    --fg: 210 53% 22%;          /* #1D3557 - Nile dark */
+    --muted: 30 15% 51%;        /* #8A7A5C - Stone */
+    --primary: 210 53% 22%;     /* #1D3557 - Nile (contrast) */
+    --primary-fg: 42 68% 96%;   /* #FBF7E9 - Sand on Nile */
+    --accent: 22 100% 63%;      /* #FF8C42 - Sun */
+    --accent-fg: 0 0% 100%;     /* #FFFFFF */
+    --border: 39 48% 88%;       /* #F4E7C3 - Sand mid */
+    --ring: 22 100% 63%;        /* #FF8C42 - Sun focus ring */
     --card: 0 0% 100%;          /* #FFFFFF */
-    --card-fg: 210 40% 10%;     /* #0E1B2A */
+    --card-fg: 210 53% 22%;     /* #1D3557 */
     --popover: 0 0% 100%;       /* #FFFFFF */
-    --popover-fg: 210 40% 10%;  /* #0E1B2A */
-    --secondary: 45 50% 90%;    /* #F5E6C4 - Desert sand */
-    --secondary-fg: 210 40% 10%; /* #0E1B2A */
-    --muted-fg: 30 15% 45%;     /* Muted text */
+    --popover-fg: 210 53% 22%;  /* #1D3557 */
+    --secondary: 39 48% 88%;    /* #F4E7C3 - Sand mid */
+    --secondary-fg: 20 28% 29%; /* #5C4033 - Umber */
+    --muted-fg: 30 15% 51%;     /* #8A7A5C - Stone */
     --destructive: 15 85% 60%;  /* #E74C3C - Error red */
     --destructive-fg: 30 15% 95%;
-    --input: 45 50% 90%;        /* #F5E6C4 - Desert sand */
-    --radius: 0.5rem;
+    --input: 39 48% 88%;        /* #F4E7C3 - Sand mid */
+    --radius: 1rem;             /* 16px cartouche radius */
 
-    /* Pharaonic Brand Colors - Design Spec Palette */
-    --lapis-blue: 220 85% 30%;         /* #1E3A8A - Primary */
-    --nile-teal: 188 89% 32%;          /* #0E7490 - Interactive */
-    --desert-sand: 40 50% 90%;         /* #EBD5A7 - Background tint */
-    --royal-gold: 45 65% 50%;          /* #CBA135 - Accents/CTAs hover */
-    --obsidian: 240 10% 6%;            /* #0E0E10 - Text/contrast */
+    /* Sahara Brand Colors - "Made in Egypt" Palette */
+    --sand-50: 42 68% 96%;      /* #FBF7E9 - Lightest sand */
+    --sand-100: 39 48% 88%;     /* #F4E7C3 - Mid sand */
+    --sand-200: 38 39% 76%;     /* #E2C690 - Rich sand */
+    --stone: 30 15% 51%;        /* #8A7A5C - Stone gray */
+    --umber: 20 28% 29%;        /* #5C4033 - Umber brown */
+    --basalt: 20 14% 17%;       /* #2F2A24 - Basalt dark */
+    --sun: 22 100% 63%;         /* #FF8C42 - Sun accent */
+    --sun-hover: 22 93% 56%;    /* #E97A31 - Sun hover */
+    --nile: 210 53% 22%;        /* #1D3557 - Nile contrast */
 
-    /* Pharaonic specific tokens */
-    --hieroglyph-stone: 210 40% 10%;   /* #0E1B2A */
-    --pyramid-limestone: 35 45% 60%;   /* Limestone */
-    --oasis-blue: 220 85% 30%;         /* Egyptian Blue */
-    --pharaoh-gold: 45 80% 45%;        /* C9A227 */
-    --temple-shadow: 220 13% 46% / 0.1; /* Subtle shadows */
+    /* Legacy compatibility (mapped to Sahara) */
+    --hieroglyph-stone: 210 53% 22%;   /* Nile */
+    --pyramid-limestone: 38 39% 76%;   /* Sand 200 */
+    --oasis-blue: 210 53% 22%;         /* Nile */
+    --pharaoh-gold: 22 100% 63%;       /* Sun */
+    --temple-shadow: 30 15% 51% / 0.08; /* Stone with alpha */
     
-    /* Motion & Interaction tokens */
+    /* Motion & Interaction tokens - Sahara (no bouncy, smooth fades) */
     --motion-ease-temple: cubic-bezier(0.4, 0, 0.2, 1);
-    --motion-duration-quick: 120ms;
-    --motion-duration-medium: 220ms;
-    --motion-duration-slow: 700ms;
+    --motion-duration-quick: 150ms;
+    --motion-duration-medium: 200ms;
+    --motion-duration-slow: 350ms;
     
     /* Spacing tokens - 8pt base system */
     --space-1: 0.25rem;   /* 4px */
@@ -85,34 +89,37 @@
   }
 
   .dark {
-    /* Dark mode - Basalt Temple Theme */
-    --bg: 220 20% 7%;           /* #0E0F12 - Basalt */
-    --bg-elev: 220 15% 10%;     /* #14161B - Elevated basalt */
-    --fg: 215 20% 92%;          /* #EDEFF3 - Moonlight */
-    --muted: 220 15% 65%;       /* #9AA4B2 - Stone gray */
-    --primary: 220 85% 70%;     /* #6CA0FF - Lighter Egyptian Blue */
-    --primary-fg: 220 20% 7%;   /* #0B1020 - Dark contrast */
-    --accent: 45 70% 65%;       /* #E9C25A - Soft gold */
-    --accent-fg: 220 20% 7%;    /* #0B1020 */
-    --border: 220 13% 20%;      /* #2A2E38 - Dark border */
-    --ring: 45 70% 65%;         /* #E9C25A - Gold focus ring */
-    --card: 220 13% 15%;        /* #161A22 - Dark card */
-    --card-fg: 215 20% 92%;     /* #EDEFF3 */
-    --popover: 220 13% 15%;     /* #161A22 */
-    --popover-fg: 215 20% 92%;  /* #EDEFF3 */
-    --secondary: 220 13% 20%;   /* #2A2E38 - Dark secondary */
-    --secondary-fg: 215 20% 92%; /* #EDEFF3 */
-    --muted-fg: 220 15% 65%;    /* #9AA4B2 */
+    /* Dark mode - Basalt Sahara Theme */
+    --bg: 20 14% 17%;           /* #2F2A24 - Basalt */
+    --bg-elev: 20 14% 20%;      /* Slightly elevated basalt */
+    --fg: 42 68% 96%;           /* #FBF7E9 - Sand on dark */
+    --muted: 30 15% 51%;        /* #8A7A5C - Stone (same) */
+    --primary: 22 100% 70%;     /* Lighter Sun for dark mode */
+    --primary-fg: 20 14% 17%;   /* Basalt */
+    --accent: 22 100% 63%;      /* #FF8C42 - Sun */
+    --accent-fg: 20 14% 17%;    /* Basalt */
+    --border: 20 28% 29%;       /* #5C4033 - Umber border */
+    --ring: 22 100% 63%;        /* #FF8C42 - Sun focus ring */
+    --card: 20 14% 20%;         /* Elevated basalt */
+    --card-fg: 42 68% 96%;      /* Sand */
+    --popover: 20 14% 20%;      /* Elevated basalt */
+    --popover-fg: 42 68% 96%;   /* Sand */
+    --secondary: 20 28% 29%;    /* #5C4033 - Umber */
+    --secondary-fg: 39 48% 88%; /* Sand mid */
+    --muted-fg: 38 39% 76%;     /* Sand 200 */
     --destructive: 15 85% 60%;  /* #E74C3C */
     --destructive-fg: 30 15% 95%;
-    --input: 220 13% 20%;       /* #2A2E38 */
+    --input: 20 28% 29%;        /* Umber input */
 
-    /* Dark Pharaonic tokens */
-    --hieroglyph-stone: 215 20% 92%;   /* Light for dark bg */
-    --pyramid-limestone: 220 15% 45%;  /* Dark limestone */
-    --oasis-blue: 220 85% 70%;         /* Lighter blue */
-    --pharaoh-gold: 45 70% 65%;        /* Soft gold */
-    --temple-shadow: 0 0% 0% / 0.3;    /* Deeper shadows */
+    /* Dark Sahara tokens */
+    --sand-50: 20 14% 20%;      /* Basalt elevated */
+    --sand-100: 20 28% 29%;     /* Umber */
+    --sand-200: 30 15% 51%;     /* Stone */
+    --hieroglyph-stone: 42 68% 96%;    /* Sand light */
+    --pyramid-limestone: 38 39% 76%;   /* Sand 200 */
+    --oasis-blue: 210 53% 40%;         /* Lighter Nile */
+    --pharaoh-gold: 22 100% 63%;       /* Sun */
+    --temple-shadow: 0 0% 0% / 0.25;   /* Deeper shadows */
   }
 }
 

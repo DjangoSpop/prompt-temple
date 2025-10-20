@@ -24,10 +24,10 @@ export const LatencyBadge: React.FC<LatencyBadgeProps> = ({
   };
 
   const getStatusColor = () => {
-    if (wsStatus.offline) return 'text-red-500 bg-red-50';
-    if (wsStatus.reconnecting) return 'text-yellow-500 bg-yellow-50';
-    if (wsStatus.connected) return 'text-green-500 bg-green-50';
-    return 'text-gray-500 bg-gray-50';
+    if (wsStatus.offline) return 'text-red-600 bg-red-50 border-red-200';
+    if (wsStatus.reconnecting) return 'text-sun bg-sun/10 border-sun/30';
+    if (wsStatus.connected) return 'text-nile bg-sand-50 border-sand-100';
+    return 'text-stone bg-sand-50 border-sand-100';
   };
 
   const getStatusText = () => {
@@ -44,24 +44,24 @@ export const LatencyBadge: React.FC<LatencyBadgeProps> = ({
 
   return (
     <motion.div
-      className={`flex items-center space-x-2 px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor()} ${className}`}
+      className={`flex items-center space-x-2 px-3 py-1.5 rounded-cartouche text-xs font-ui font-medium border ${getStatusColor()} ${className}`}
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.2 }}
+      transition={{ duration: 0.15, ease: [0.4, 0, 0.2, 1] }}
     >
       {getStatusIcon()}
       <span>{getStatusText()}</span>
       
       {wsStatus.connected && latency.lastMeasured > 0 && (
         <>
-          <span className="text-gray-300">•</span>
-          <span>
+          <span className="text-stone/30">•</span>
+          <span className="text-stone">
             p50: {formatLatency(latency.p50)} | p95: {formatLatency(latency.p95)}
           </span>
           {latency.current && (
             <>
-              <span className="text-gray-300">•</span>
-              <span className="font-semibold">
+              <span className="text-stone/30">•</span>
+              <span className="font-semibold text-nile">
                 {formatLatency(latency.current)}
               </span>
             </>

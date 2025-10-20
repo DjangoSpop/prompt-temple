@@ -16,8 +16,8 @@ import "./globals.css";
 import '../styles/chat.css';
 
 export const metadata: Metadata = {
-  title: "Prompt Temple - The Ultimate AI Prompt Sanctuary",
-  description: "Discover, craft, and master AI prompt templates in our sacred digital sanctuary. Experience the power of professional prompt engineering with advanced analytics, collaboration, and gamification.",
+  title: "Prompt Teme — Made in Egypt",
+  description: "Craft exceptional AI prompts in the Pharaonic Sahara. Experience the power of prompt engineering with DeepSeek intelligence, credits-based access, and Egyptian-inspired design.",
   keywords: ["prompt temple", "AI prompts", "prompt engineering", "templates", "prompt sanctuary", "AI tools", "prompt library", "analytics", "collaboration", "gamification"],
 };
 
@@ -29,10 +29,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Font preconnects and Playfair + Inter preload for CLS stability */}
+        {/* Sahara font system: Cinzel (headings) + Cairo (UI) + Inter (fallback) */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cairo:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
       </head>
       <body className="font-sans antialiased min-h-screen overflow-x-hidden bg-background text-foreground" suppressHydrationWarning>
         <ThemeProvider

@@ -21,6 +21,8 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: ["Inter", "system-ui", "sans-serif"],
+        heading: ["Cinzel", "Georgia", "serif"],
+        ui: ["Cairo", "Inter", "system-ui", "sans-serif"],
         arabic: ["Cairo", "Arial", "sans-serif"],
       },
       colors: {
@@ -59,7 +61,20 @@ const config: Config = {
           foreground: "hsl(var(--card-fg))",
         },
         
-        // Pharaonic heritage colors (preserved for brand consistency)
+        // Sahara heritage colors - "Made in Egypt"
+        'sand': {
+          50: 'hsl(var(--sand-50))',
+          100: 'hsl(var(--sand-100))',
+          200: 'hsl(var(--sand-200))',
+        },
+        'stone': 'hsl(var(--stone))',
+        'umber': 'hsl(var(--umber))',
+        'basalt': 'hsl(var(--basalt))',
+        'sun': 'hsl(var(--sun))',
+        'sun-hover': 'hsl(var(--sun-hover))',
+        'nile': 'hsl(var(--nile))',
+
+        // Legacy compatibility
         'pharaoh-gold': 'hsl(var(--pharaoh-gold))',
         'hieroglyph-stone': 'hsl(var(--hieroglyph-stone))',
         'oasis-blue': 'hsl(var(--oasis-blue))',
@@ -145,8 +160,9 @@ const config: Config = {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
-        'temple': '16px',
-        'pyramid': '24px',
+        'cartouche': '1.25rem',  // 20px - Pharaonic rounded corners
+        'temple': '1rem',        // 16px - cards
+        'pyramid': '1.5rem',     // 24px - modals
       },
       spacing: {
         '18': '4.5rem',
