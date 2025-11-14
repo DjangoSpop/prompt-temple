@@ -46,17 +46,15 @@ export default function OnboardingTour() {
   const {
     onboarding,
     user,
-    startOnboarding,
     completeStep,
     nextStep,
     skipOnboarding,
-    resetOnboarding,
     getCurrentLevel,
     getProgressToNextLevel,
   } = useGameStore();
 
   const [showCelebration, setShowCelebration] = useState(false);
-  const [earnedPoints, setEarnedPoints] = useState(0);
+  const [earnedPoints, _setEarnedPoints] = useState(0);
 
   useEffect(() => {
     // Auto-complete step when user reaches the target page
@@ -64,7 +62,7 @@ export default function OnboardingTour() {
       const currentStepId = steps[onboarding.currentStep]?.id;
       if (currentStepId && !onboarding.completedSteps.includes(currentStepId)) {
         completeStep(currentStepId);
-        setEarnedPoints(steps[onboarding.currentStep].points);
+        _setEarnedPoints(steps[onboarding.currentStep].points);
         setShowCelebration(true);
         
         toast.success(

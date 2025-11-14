@@ -69,7 +69,7 @@ class HealthCheckService extends BaseApiClient {
   async checkRAGHealth(): Promise<{ status: string; index_status?: string; document_count?: number }> {
     try {
       return await this.request('/v1/ai-services/agent/health/');
-    } catch (error) {
+    } catch {
       return {
         status: 'down',
       };
@@ -115,7 +115,7 @@ export const useHealthCheck = (options?: {
     refetchInterval: enablePolling ? pollingInterval : false,
     refetchOnWindowFocus: true,
     staleTime: 10000, // 10 seconds
-    retry: (failureCount, error) => {
+    retry: (failureCount) => {
       // Only retry on network errors, not on 4xx/5xx responses
       return failureCount < 2;
     },
@@ -173,7 +173,6 @@ export const useHealthCheck = (options?: {
   const overallStatus = (() => {
     const chatStatus = healthQuery.data?.status || 'unknown';
     const systemStatus = systemHealthQuery.data?.status || 'unknown';
-    const ragStatus = ragHealthQuery.data?.status || 'unknown';
 
     if ([chatStatus, systemStatus].includes('down')) return 'down';
     if ([chatStatus, systemStatus].includes('degraded')) return 'degraded';

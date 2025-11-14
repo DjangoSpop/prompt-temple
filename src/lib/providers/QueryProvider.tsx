@@ -9,9 +9,10 @@ const queryClient = new QueryClient({
     queries: {
       staleTime: 5 * 60 * 1000, // 5 minutes
       gcTime: 10 * 60 * 1000, // 10 minutes (formerly cacheTime)
-      retry: (failureCount, error: any) => {
+      retry: (failureCount, error: unknown) => {
         // Don't retry on 4xx errors except 408, 429
-        if (error?.status >= 400 && error?.status < 500 && ![408, 429].includes(error?.status)) {
+        const httpError = error as { status?: number };
+        if (httpError?.status && httpError.status >= 400 && httpError.status < 500 && ![408, 429].includes(httpError.status)) {
           return false;
         }
         return failureCount < 3;
@@ -19,9 +20,10 @@ const queryClient = new QueryClient({
       retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
     },
     mutations: {
-      retry: (failureCount, error: any) => {
+      retry: (failureCount, error: unknown) => {
         // Don't retry mutations on client errors
-        if (error?.status >= 400 && error?.status < 500) {
+        const httpError = error as { status?: number };
+        if (httpError?.status && httpError.status >= 400 && httpError.status < 500) {
           return false;
         }
         return failureCount < 2;

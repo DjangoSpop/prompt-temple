@@ -103,7 +103,7 @@ const ragService = new RAGService();
 export const useRAGOptimize = () => {
   const optimizeMutation = useMutation({
     mutationFn: (request: RAGOptimizationRequest) => ragService.optimize(request),
-    onSuccess: (data) => {
+    onSuccess: () => {
       // Invalidate credits query to update remaining balance
       // queryClient.invalidateQueries({ queryKey: ['credits'] });
     },
@@ -176,7 +176,7 @@ export const useAgentStreaming = (traceId?: string) => {
         }
       };
 
-      ws.onerror = (event) => {
+      ws.onerror = () => {
         setError(new Error('WebSocket connection error'));
         setIsConnected(false);
       };

@@ -447,7 +447,7 @@ export const useI18nStore = create<I18nState & I18nActions>()(
         }
       },
 
-      loadTranslations: async (locale) => {
+      loadTranslations: async (_locale) => {
         set({ isLoading: true, error: null });
         
         try {
@@ -476,13 +476,13 @@ export const useI18nStore = create<I18nState & I18nActions>()(
           const currentTranslations = state.translations[locale] || {};
           const keys = key.split('.');
           const newTranslations = { ...currentTranslations };
-          
-          let current: any = newTranslations;
+
+          let current: Record<string, unknown> = newTranslations as Record<string, unknown>;
           for (let i = 0; i < keys.length - 1; i++) {
             if (!current[keys[i]]) {
               current[keys[i]] = {};
             }
-            current = current[keys[i]];
+            current = current[keys[i]] as Record<string, unknown>;
           }
           current[keys[keys.length - 1]] = value;
           
@@ -500,8 +500,8 @@ export const useI18nStore = create<I18nState & I18nActions>()(
         
         const getTranslation = (translations: Translation, key: string): string | undefined => {
           const keys = key.split('.');
-          let current: any = translations;
-          
+          let current: string | Translation | undefined = translations;
+
           for (const k of keys) {
             if (current && typeof current === 'object' && k in current) {
               current = current[k];
@@ -509,7 +509,7 @@ export const useI18nStore = create<I18nState & I18nActions>()(
               return undefined;
             }
           }
-          
+
           return typeof current === 'string' ? current : undefined;
         };
         
@@ -541,8 +541,8 @@ export const useI18nStore = create<I18nState & I18nActions>()(
         
         const checkTranslation = (translations: Translation, key: string): boolean => {
           const keys = key.split('.');
-          let current: any = translations;
-          
+          let current: string | Translation | undefined = translations;
+
           for (const k of keys) {
             if (current && typeof current === 'object' && k in current) {
               current = current[k];
@@ -550,7 +550,7 @@ export const useI18nStore = create<I18nState & I18nActions>()(
               return false;
             }
           }
-          
+
           return typeof current === 'string';
         };
         

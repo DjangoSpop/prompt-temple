@@ -26,11 +26,11 @@ export default function ApiTestPage() {
   } = usePromptTemple();
 
   const [testResults, setTestResults] = useState<Record<string, 'pending' | 'success' | 'error' | 'loading'>>({});
-  const [testOutputs, setTestOutputs] = useState<Record<string, any>>({});
+  const [testOutputs, setTestOutputs] = useState<Record<string, unknown>>({});
   const [promptText, setPromptText] = useState('Write a professional email to a client about project delays');
 
   // Test functions
-  const runTest = async (testName: string, testFn: () => Promise<any>) => {
+  const runTest = async (testName: string, testFn: () => Promise<unknown>) => {
     setTestResults(prev => ({ ...prev, [testName]: 'loading' }));
     try {
       const result = await testFn();
@@ -227,7 +227,7 @@ export default function ApiTestPage() {
               <Button onClick={testHealthCheck} size="sm" disabled={testResults.health === 'loading'}>
                 Test Health
               </Button>
-              {testOutputs.health && (
+              {Boolean(testOutputs.health) && (
                 <div className="mt-4">
                   <Badge className={getStatusColor(testResults.health || 'pending')}>
                     {testResults.health}
@@ -258,14 +258,14 @@ export default function ApiTestPage() {
               <Button onClick={testGetTemplates} size="sm" disabled={testResults.templates === 'loading'}>
                 Test Templates
               </Button>
-              {testOutputs.templates && (
+              {Boolean(testOutputs.templates) && (
                 <div className="mt-4">
                   <Badge className={getStatusColor(testResults.templates || 'pending')}>
                     {testResults.templates}
                   </Badge>
                   <div className="text-xs text-gray-600 mt-2">
-                    {testResults.templates === 'success' && testOutputs.templates.results
-                      ? `Found ${testOutputs.templates.results.length} templates`
+                    {testResults.templates === 'success' && (testOutputs.templates as Record<string, unknown>)?.results
+                      ? `Found ${((testOutputs.templates as Record<string, unknown>).results as unknown[]).length} templates`
                       : typeof testOutputs.templates === 'string'
                       ? testOutputs.templates
                       : 'Error occurred'
@@ -291,14 +291,14 @@ export default function ApiTestPage() {
               <Button onClick={testGetCategories} size="sm" disabled={testResults.categories === 'loading'}>
                 Test Categories
               </Button>
-              {testOutputs.categories && (
+              {Boolean(testOutputs.categories) && (
                 <div className="mt-4">
                   <Badge className={getStatusColor(testResults.categories || 'pending')}>
                     {testResults.categories}
                   </Badge>
                   <div className="text-xs text-gray-600 mt-2">
-                    {testResults.categories === 'success' && testOutputs.categories.results
-                      ? `Found ${testOutputs.categories.results.length} categories`
+                    {testResults.categories === 'success' && (testOutputs.categories as Record<string, unknown>)?.results
+                      ? `Found ${((testOutputs.categories as Record<string, unknown>).results as unknown[]).length} categories`
                       : typeof testOutputs.categories === 'string'
                       ? testOutputs.categories
                       : 'Error occurred'
@@ -324,7 +324,7 @@ export default function ApiTestPage() {
               <Button onClick={testAssessPrompt} size="sm" disabled={testResults.assess === 'loading'}>
                 Test Assessment
               </Button>
-              {testOutputs.assess && (
+              {Boolean(testOutputs.assess) && (
                 <div className="mt-4">
                   <Badge className={getStatusColor(testResults.assess || 'pending')}>
                     {testResults.assess}
@@ -357,7 +357,7 @@ export default function ApiTestPage() {
               <Button onClick={testOptimizePrompt} size="sm" disabled={testResults.optimize === 'loading'}>
                 Test Optimization
               </Button>
-              {testOutputs.optimize && (
+              {Boolean(testOutputs.optimize) && (
                 <div className="mt-4">
                   <Badge className={getStatusColor(testResults.optimize || 'pending')}>
                     {testResults.optimize}
@@ -390,14 +390,14 @@ export default function ApiTestPage() {
               <Button onClick={testRecommendations} size="sm" disabled={testResults.recommendations === 'loading'}>
                 Test Recommendations
               </Button>
-              {testOutputs.recommendations && (
+              {Boolean(testOutputs.recommendations) && (
                 <div className="mt-4">
                   <Badge className={getStatusColor(testResults.recommendations || 'pending')}>
                     {testResults.recommendations}
                   </Badge>
                   <div className="text-xs text-gray-600 mt-2">
                     {testResults.recommendations === 'success' && Array.isArray(testOutputs.recommendations)
-                      ? `Found ${testOutputs.recommendations.length} recommendations`
+                      ? `Found ${(testOutputs.recommendations as unknown[]).length} recommendations`
                       : typeof testOutputs.recommendations === 'string'
                       ? testOutputs.recommendations
                       : 'Error occurred'

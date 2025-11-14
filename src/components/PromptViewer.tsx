@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Copy, Check, Eye, EyeOff, RotateCcw, Download } from 'lucide-react';
+import { Copy, Check, Eye, EyeOff, Download } from 'lucide-react';
 import type { RenderResponse } from '@/lib/types';
 
 interface PromptViewerProps {

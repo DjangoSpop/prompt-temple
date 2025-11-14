@@ -40,11 +40,10 @@ export const HealthBadge: React.FC<HealthBadgeProps> = ({
   showResponseTime = true,
   variant = 'badge'
 }) => {
-  const { 
-    status, 
-    isAvailable, 
-    responseTime, 
-    lastCheck, 
+  const {
+    status,
+    responseTime,
+    lastCheck,
     isLoading,
   } = useHealthBadge();
 

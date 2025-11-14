@@ -129,7 +129,7 @@ function EnhancedChatInterface() {
       }
       if (Array.isArray(parsed.messages)) {
         // Restore timestamps to Date objects
-        const restored = parsed.messages.map((m: any) => ({
+        const restored = parsed.messages.map((m: Record<string, unknown>) => ({
           ...m,
           timestamp: m.timestamp ? new Date(m.timestamp) : new Date(),
         }));
@@ -142,6 +142,7 @@ function EnhancedChatInterface() {
     } catch (e) {
       console.warn('Failed to load chat cache', e);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const clearCache = useCallback(() => {
@@ -327,6 +328,7 @@ function EnhancedChatInterface() {
           timestamp: m.timestamp,
         }));
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         await service.sendMessage(content, payloadMessages as any);
       } catch (error) {
         console.error('Failed to send message:', error);

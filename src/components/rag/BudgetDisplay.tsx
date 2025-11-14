@@ -52,11 +52,6 @@ export const BudgetDisplay: React.FC<BudgetDisplayProps> = ({
     return 'text-green-600 bg-green-100';
   };
 
-  const getProgressColor = (percentage: number) => {
-    if (percentage >= 90) return 'bg-red-500';
-    if (percentage >= 70) return 'bg-yellow-500';
-    return 'bg-green-500';
-  };
 
   const getRemainingTimeEstimate = () => {
     if (!credits) return null;

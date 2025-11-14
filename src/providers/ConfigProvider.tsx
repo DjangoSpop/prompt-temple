@@ -11,7 +11,7 @@ interface ConfigContextType {
   refreshConfig: () => Promise<void>;
   getFeature: (featureName: string) => boolean;
   getLimit: (limitName: string) => number;
-  getSetting: (settingPath: string) => any;
+  getSetting: (settingPath: string) => unknown;
 }
 
 const ConfigContext = createContext<ConfigContextType | undefined>(undefined);
@@ -85,6 +85,7 @@ export function ConfigProvider({ children }: ConfigProviderProps) {
 
   useEffect(() => {
     loadConfig();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const refreshConfig = async () => {
@@ -99,20 +100,20 @@ export function ConfigProvider({ children }: ConfigProviderProps) {
     return config?.limits?.[limitName] ?? 0;
   };
 
-  const getSetting = (settingPath: string): any => {
+  const getSetting = (settingPath: string): unknown => {
     if (!config?.ui_settings) return null;
-    
+
     const keys = settingPath.split('.');
-    let current = config.ui_settings;
-    
+    let current: unknown = config.ui_settings;
+
     for (const key of keys) {
       if (current && typeof current === 'object' && key in current) {
-        current = current[key];
+        current = (current as Record<string, unknown>)[key];
       } else {
         return null;
       }
     }
-    
+
     return current;
   };
 
@@ -146,7 +147,7 @@ export function useLimit(limitName: string): number {
 }
 
 // Hook for UI settings
-export function useSetting(settingPath: string): any {
+export function useSetting(settingPath: string): unknown {
   const { getSetting } = useConfig();
   return getSetting(settingPath);
 }

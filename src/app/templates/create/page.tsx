@@ -44,7 +44,7 @@ export default function CreateTemplatePage() {
   });
 
   const [fields, setFields] = useState<PromptField[]>([]);
-  const [categories, setCategories] = useState<any[]>([]);
+  const [categories, setCategories] = useState<Array<{ id: number; name: string }>>([]);
   const [tagInput, setTagInput] = useState('');
 
   // Load categories on component mount
@@ -60,7 +60,7 @@ export default function CreateTemplatePage() {
     loadCategories();
   });
 
-  const handleInputChange = (field: string, value: any) => {
+  const handleInputChange = (field: string, value: unknown) => {
     setFormData(prev => ({
       ...prev,
       [field]: value
@@ -80,8 +80,8 @@ export default function CreateTemplatePage() {
     setFields(prev => [...prev, newField]);
   };
 
-  const updateField = (index: number, field: string, value: any) => {
-    setFields(prev => prev.map((f, i) => 
+  const updateField = (index: number, field: string, value: unknown) => {
+    setFields(prev => prev.map((f, i) =>
       i === index ? { ...f, [field]: value } : f
     ));
   };
@@ -183,40 +183,45 @@ export default function CreateTemplatePage() {
         }, 2000);
       }
 
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Failed to create template:', error);
-      
+
       // Provide more detailed error information
       let errorMessage = 'Failed to create template. Please try again.';
-      
-      if (error.response?.data) {
-        const errorData = error.response.data;
+
+      if (error && typeof error === 'object' && 'response' in error) {
+        const errorResponse = error.response as { data?: unknown };
+        const errorData = errorResponse.data;
+
         if (typeof errorData === 'string') {
           errorMessage = errorData;
-        } else if (errorData.detail) {
-          errorMessage = errorData.detail;
-        } else if (errorData.message) {
-          errorMessage = errorData.message;
-        } else if (errorData.non_field_errors) {
-          errorMessage = Array.isArray(errorData.non_field_errors) 
-            ? errorData.non_field_errors.join(', ') 
-            : errorData.non_field_errors;
-        } else {
-          // Check for field-specific errors
-          const fieldErrors = Object.entries(errorData)
-            .map(([field, errors]) => {
-              if (Array.isArray(errors)) {
-                return `${field}: ${errors.join(', ')}`;
-              }
-              return `${field}: ${errors}`;
-            })
-            .join('; ');
-          
-          if (fieldErrors) {
-            errorMessage = fieldErrors;
+        } else if (errorData && typeof errorData === 'object') {
+          if ('detail' in errorData && typeof errorData.detail === 'string') {
+            errorMessage = errorData.detail;
+          } else if ('message' in errorData && typeof errorData.message === 'string') {
+            errorMessage = errorData.message;
+          } else if ('non_field_errors' in errorData) {
+            const nonFieldErrors = errorData.non_field_errors;
+            errorMessage = Array.isArray(nonFieldErrors)
+              ? nonFieldErrors.join(', ')
+              : String(nonFieldErrors);
+          } else {
+            // Check for field-specific errors
+            const fieldErrors = Object.entries(errorData)
+              .map(([field, errors]) => {
+                if (Array.isArray(errors)) {
+                  return `${field}: ${errors.join(', ')}`;
+                }
+                return `${field}: ${String(errors)}`;
+              })
+              .join('; ');
+
+            if (fieldErrors) {
+              errorMessage = fieldErrors;
+            }
           }
         }
-      } else if (error.message) {
+      } else if (error && typeof error === 'object' && 'message' in error && typeof error.message === 'string') {
         errorMessage = error.message;
       }
       

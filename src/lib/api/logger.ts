@@ -171,7 +171,7 @@ class Logger {
     });
   }
 
-  private sendToExternalService(level: LogLevel, message: string, context?: LogContext): void {
+  private sendToExternalService(_level: LogLevel, _message: string, _context?: LogContext): void {
     // Implement external logging service integration
     // Examples: Sentry, DataDog, CloudWatch, etc.
     if (env.SENTRY_DSN) {

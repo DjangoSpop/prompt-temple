@@ -9,8 +9,7 @@ import { Input } from './input';
 import { Badge } from './badge';
 import { Checkbox } from './checkbox';
 import { Popover, PopoverContent, PopoverTrigger } from './popover';
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from './command';
-import { Separator } from './separator';
+import { Command, CommandEmpty, CommandGroup, CommandList } from './command';
 import { useI18nStore } from '@/store/i18nStore';
 
 export interface FilterOption {
@@ -61,14 +60,6 @@ const FacetedFilter: React.FC<FacetedFilterProps> = ({
   const totalSelected = useMemo(() => {
     return Object.values(selectedValues).reduce((total, values) => total + values.length, 0);
   }, [selectedValues]);
-
-  // Toggle group popover
-  const toggleGroup = (groupId: string) => {
-    setOpenGroups(prev => ({
-      ...prev,
-      [groupId]: !prev[groupId],
-    }));
-  };
 
   // Handle option selection
   const handleOptionSelect = (groupId: string, value: string, multiSelect: boolean = true) => {

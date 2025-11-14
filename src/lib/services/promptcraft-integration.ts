@@ -266,7 +266,7 @@ export class PromptCraftIntegrationService {
     }
 
     try {
-      const [profileResponse, _statsResponse, _gamificationResponse] = await Promise.all([
+      const [profileResponse] = await Promise.all([
         promptTempleApi.getProfile(),
         promptTempleApi.getAnalytics(),
         this.config.enableGamification 

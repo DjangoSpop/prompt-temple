@@ -2,8 +2,6 @@ import { useQuery, useMutation, useQueryClient, useInfiniteQuery } from '@tansta
 import { templatesService } from '../api/templates';
 import type { components } from '../../types/api';
 
-type TemplateList = components['schemas']['TemplateList'];
-type TemplateDetail = components['schemas']['TemplateDetail'];
 type TemplateCreateUpdate = components['schemas']['TemplateCreateUpdateRequest'];
 type PatchedTemplateUpdate = components['schemas']['PatchedTemplateCreateUpdateRequest'];
 

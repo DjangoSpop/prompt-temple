@@ -77,12 +77,6 @@ export const DiffSummary: React.FC<DiffSummaryProps> = ({
     return 'text-red-600 bg-red-100 border-red-200';
   };
 
-  const getQualityScoreLabel = (score: number) => {
-    if (score >= 80) return 'Excellent';
-    if (score >= 60) return 'Good';
-    if (score >= 40) return 'Fair';
-    return 'Needs Work';
-  };
 
   return (
     <Card className={cn("w-full", className)}>

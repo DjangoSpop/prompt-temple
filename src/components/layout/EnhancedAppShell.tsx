@@ -4,11 +4,11 @@ import { ReactNode, useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Library, 
-  Zap, 
-  BarChart3, 
-  Settings, 
+import {
+  Library,
+  Zap,
+  BarChart3,
+  Settings,
   Hash,
   Star,
   TrendingUp,
@@ -21,7 +21,6 @@ import {
   Settings2,
   CreditCard,
   ChevronLeft,
-  ChevronRight,
   Layers,
   Sparkles,
   Globe

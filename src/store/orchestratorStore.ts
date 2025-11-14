@@ -34,7 +34,7 @@ export interface OrchestratorResult {
   type: 'best' | 'variant' | 'critique' | 'comparison';
   content: string;
   score?: number;
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
   createdAt: Date;
 }
 
@@ -611,8 +611,8 @@ export const useOrchestratorStore = create<OrchestratorState & OrchestratorActio
 
         // Apply sorting
         filteredResults.sort((a, b) => {
-          let aValue: any;
-          let bValue: any;
+          let aValue: number | Date;
+          let bValue: number | Date;
 
           switch (outputFilters.sortBy) {
             case 'score':

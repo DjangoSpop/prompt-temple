@@ -1,6 +1,5 @@
 import { useState, useCallback } from 'react'
 import { useLocale } from '@/providers/LocaleProvider'
-import { LanguagesIcon } from 'lucide-react'
 import {
   DropdownMenu,
   DropdownMenuContent,

@@ -27,7 +27,7 @@ export interface ConversationMessage {
   type: 'user' | 'assistant' | 'system';
   content: string;
   timestamp: string;
-  metadata?: any;
+  metadata?: Record<string, unknown>;
 }
 
 export interface SavedPrompt {
@@ -256,7 +256,7 @@ export const useUpdateConversation = () => {
       workspaceService.updateConversation(id, data),
     onSuccess: (data, variables) => {
       // Update conversation list cache
-      queryClient.setQueryData(['conversations'], (old: any) => {
+      queryClient.setQueryData(['conversations'], (old: unknown) => {
         if (!old) return old;
         return {
           ...old,
@@ -318,7 +318,7 @@ export const useToggleFavorite = () => {
       // Update relevant cache
       if (variables.type === 'conversation') {
         queryClient.invalidateQueries({ queryKey: ['conversations'] });
-        queryClient.setQueryData(['conversation', variables.id], (old: any) => ({
+        queryClient.setQueryData(['conversation', variables.id], (old: unknown) => ({
           ...old,
           is_favorite: data.is_favorite,
         }));

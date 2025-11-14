@@ -1,46 +1,32 @@
 'use client';
 
-import { useState, useCallback, useRef, useEffect } from 'react';
-import { motion, AnimatePresence, useDragControls, Reorder } from 'framer-motion';
+import { useState, useCallback } from 'react';
+import { motion, AnimatePresence, Reorder, useDragControls } from 'framer-motion';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
 import { Slider } from '@/components/ui/slider';
-import { Separator } from '@/components/ui/separator';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { PyramidGrid } from '@/components/pharaonic/PyramidGrid';
-import { 
-  Zap,
-  Settings,
+import {
   Play,
-  Pause,
   Square,
   RotateCcw,
-  Copy,
   Download,
-  Save,
-  Trash2,
-  Plus,
   GripVertical,
   ChevronDown,
   ChevronUp,
   Clock,
-  Cpu,
-  Gauge,
-  AlertTriangle,
   CheckCircle,
   XCircle,
   Loader2,
   ArrowRight,
-  Target,
   Filter,
   BarChart3,
   GitBranch,
   Star,
   Sparkles,
-  Thermometer,
   Hash,
   DollarSign
 } from 'lucide-react';
@@ -50,13 +36,13 @@ interface PipelineStage {
   name: string;
   type: 'expand' | 'constrain' | 'evaluate' | 'compare';
   description: string;
-  icon: any;
+  icon: React.ComponentType<{ className?: string }>;
   color: string;
   isEnabled: boolean;
   isExpanded: boolean;
   status: 'idle' | 'running' | 'success' | 'error' | 'warning';
-  settings: Record<string, any>;
-  results?: any;
+  settings: Record<string, unknown>;
+  results?: unknown;
   duration?: number;
   tokens_used?: number;
 }
@@ -172,7 +158,7 @@ export function OrchestrationPipeline({
   initialPrompt = '' 
 }: OrchestrationPipelineProps) {
   const [stages, setStages] = useState<PipelineStage[]>(DEFAULT_STAGES);
-  const [settings, setSettings] = useState<OrchestrationSettings>(DEFAULT_SETTINGS);
+  const [settings] = useState<OrchestrationSettings>(DEFAULT_SETTINGS);
   const [inputPrompt, setInputPrompt] = useState(initialPrompt);
   const [isRunning, setIsRunning] = useState(false);
   const [currentStage, setCurrentStage] = useState<string | null>(null);
@@ -182,7 +168,7 @@ export function OrchestrationPipeline({
     message: string;
     type: 'info' | 'success' | 'error' | 'warning';
   }>>([]);
-  const [results, setResults] = useState<Record<string, any>>({});
+  const [results, setResults] = useState<Record<string, unknown>>({});
   const [totalCost, setTotalCost] = useState(0);
   const [totalTokens, setTotalTokens] = useState(0);
   const [totalDuration, setTotalDuration] = useState(0);
@@ -198,7 +184,7 @@ export function OrchestrationPipeline({
     }]);
   }, []);
 
-  const updateStageStatus = useCallback((stageId: string, status: PipelineStage['status'], results?: any) => {
+  const updateStageStatus = useCallback((stageId: string, status: PipelineStage['status'], results?: unknown) => {
     setStages(prev => prev.map(stage => 
       stage.id === stageId 
         ? { ...stage, status, results, duration: status === 'success' ? Math.random() * 3000 + 1000 : undefined }
@@ -218,7 +204,7 @@ export function OrchestrationPipeline({
     ));
   }, []);
 
-  const updateStageSetting = useCallback((stageId: string, key: string, value: any) => {
+  const updateStageSetting = useCallback((stageId: string, key: string, value: unknown) => {
     setStages(prev => prev.map(stage =>
       stage.id === stageId 
         ? { ...stage, settings: { ...stage.settings, [key]: value } }
@@ -747,7 +733,7 @@ ${Object.entries(results).map(([key, value]) => `### ${key}\n\`\`\`json\n${JSON.
                                     <div>
                                       <label className="text-sm font-medium mb-2 block">Evaluation Criteria</label>
                                       <div className="space-y-2">
-                                        {stage.settings.criteria.map((criterion: any, idx: number) => (
+                                        {(stage.settings.criteria as Array<{ name: string; weight: number }>).map((criterion, idx: number) => (
                                           <div key={idx} className="flex items-center space-x-4 p-2 border border-border rounded">
                                             <span className="font-medium min-w-24">{criterion.name}</span>
                                             <span className="text-sm text-muted-foreground">Weight:</span>
@@ -856,7 +842,7 @@ ${Object.entries(results).map(([key, value]) => `### ${key}\n\`\`\`json\n${JSON.
                                       <div>
                                         <h4 className="font-medium mb-3">Variant Comparison</h4>
                                         <div className="space-y-3">
-                                          {stage.results.variants?.map((variant: any) => (
+                                          {(stage.results as { variants?: Array<{ id: string; content: string; score: number }>; best_variant?: string }).variants?.map((variant) => (
                                             <Card
                                               key={variant.id}
                                               className={`p-3 ${

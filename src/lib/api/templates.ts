@@ -1,6 +1,6 @@
 import { BaseApiClient } from './base';
 import type { components } from '../../types/api';
-import { TypeAdapters, type AppTemplate, type PaginatedResponse, type AppCategory } from '../types/adapters';
+import { TypeAdapters, type AppTemplate, type PaginatedResponse } from '../types/adapters';
 
 type TemplateList = components['schemas']['TemplateList'];
 type TemplateDetail = components['schemas']['TemplateDetail'];

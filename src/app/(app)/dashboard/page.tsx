@@ -304,7 +304,7 @@ export default function TempleDashboard() {
                 <CardContent>
                   <div className="space-y-4">
                     {recentNotifications.length > 0 ? (
-                      recentNotifications.map((notification, _) => (
+                      recentNotifications.map((notification, index) => (
                         <motion.div
                           key={notification.id}
                           initial={{ opacity: 0, x: -20 }}

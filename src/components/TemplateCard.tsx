@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Star, Crown, Users, Eye, Copy, ExternalLink, FileJson } from 'lucide-react';
+import { Star, Crown, Users, Eye, ExternalLink, Copy } from 'lucide-react';
 import type { AppTemplate } from '@/lib/types/adapters';
 
 interface TemplateCardProps {

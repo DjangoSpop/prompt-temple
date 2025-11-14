@@ -9,7 +9,6 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { AlertTriangle, Zap, Brain, Rocket, Coins, Clock, AlertCircle } from 'lucide-react';
 import { useRAGMode } from '@/lib/hooks/useRAG';
 import { cn } from '@/lib/utils';

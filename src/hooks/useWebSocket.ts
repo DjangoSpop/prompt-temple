@@ -78,7 +78,6 @@ export const useWebSocket = ({
         if (pingInterval.current) clearInterval(pingInterval.current);
         pingInterval.current = setInterval(() => {
           if (ws.readyState === WebSocket.OPEN) {
-            const timestamp = Date.now();
             ws.send(JSON.stringify({
               type: 'ping',
               timestamp: new Date().toISOString()

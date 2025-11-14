@@ -147,6 +147,7 @@ export default function TemplatesPage() {
 
   useEffect(() => {
     loadTemplates(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSearch, selectedCategory, sortBy, showFeaturedOnly]);
 
   const getOrderingString = (sort: SortOption): string => {

@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { apiClient } from '@/lib/api-client';
 
 export interface Achievement {
   id: string;
@@ -259,7 +258,7 @@ export const useGameStore = create<GameState & GameActions>()(
       addExperience: (amount) =>
         set((state) => {
           const newExperience = state.user.experience + amount;
-          const currentLevel = get().getCurrentLevel();
+          get().getCurrentLevel(); // Check current level
           const nextLevel = get().getNextLevel();
           
           let newLevel = state.user.level;
@@ -402,7 +401,7 @@ export const useGameStore = create<GameState & GameActions>()(
         })),
 
       resetOnboarding: () =>
-        set((state) => ({
+        set(() => ({
           onboarding: {
             ...initialState.onboarding,
             isActive: true,
@@ -492,7 +491,7 @@ export const useGameStore = create<GameState & GameActions>()(
         })),
 
       clearNotifications: () =>
-        set((state) => ({
+        set(() => ({
           notifications: [],
         })),
 
@@ -609,15 +608,15 @@ export const useGameStore = create<GameState & GameActions>()(
           
           // Convert notification timestamps back to Date objects
           if (parsed.state?.notifications) {
-            parsed.state.notifications = parsed.state.notifications.map((notification: any) => ({
+            parsed.state.notifications = parsed.state.notifications.map((notification: { timestamp: string | Date; id: string; type: string; title: string; description: string; icon: string }) => ({
               ...notification,
               timestamp: new Date(notification.timestamp)
             }));
           }
-          
+
           // Convert daily challenge expiry dates
           if (parsed.state?.dailyChallenges) {
-            parsed.state.dailyChallenges = parsed.state.dailyChallenges.map((challenge: any) => ({
+            parsed.state.dailyChallenges = parsed.state.dailyChallenges.map((challenge: { expiresAt: string | Date; id: string; title: string; description: string; progress: number; maxProgress: number; points: number; completed: boolean }) => ({
               ...challenge,
               expiresAt: new Date(challenge.expiresAt)
             }));

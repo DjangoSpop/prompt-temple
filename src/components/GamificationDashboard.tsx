@@ -2,15 +2,12 @@
 
 import { useGamification } from '@/providers/AnalyticsProvider';
 import { useAuth } from '@/providers/AuthProvider';
-import { 
-  Trophy, 
-  Star, 
-  Target, 
-  Flame, 
+import {
+  Trophy,
+  Target,
+  Flame,
   Award,
   TrendingUp,
-  Crown,
-  Medal,
   Zap
 } from 'lucide-react';
 import { Card } from '@/components/ui/card';
@@ -46,13 +43,6 @@ export function GamificationDashboard() {
       case 'legendary': return 'text-yellow-600 bg-yellow-100';
       default: return 'text-gray-500 bg-gray-100';
     }
-  };
-
-  const getRankIcon = (rank: string) => {
-    if (rank.toLowerCase().includes('legend')) return Crown;
-    if (rank.toLowerCase().includes('master') || rank.toLowerCase().includes('expert')) return Trophy;
-    if (rank.toLowerCase().includes('advanced')) return Medal;
-    return Star;
   };
 
   return (

@@ -9,26 +9,19 @@ import { ThemeToggle } from '@/components/ThemeToggle';
 import { OnboardingTrigger } from '@/components/onboarding';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 import { HealthBadge } from '@/components/health/HealthBadge';
-import { BudgetDisplay } from '@/components/rag/BudgetDisplay';
-import { 
-  Crown, 
-  BookOpen, 
-  Zap, 
-  BarChart3, 
-  Settings, 
-  LogOut, 
-  Menu, 
+import {
+  Crown,
+  BookOpen,
+  Zap,
+  BarChart3,
+  LogOut,
+  Menu,
   X,
-  Sparkles,
   MessageSquare,
-  Bot,
-  TrendingUp,
-  HelpCircle,
   Activity,
   User,
   FolderOpen,
   Trophy,
-  Coins
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';

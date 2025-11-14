@@ -4,7 +4,7 @@ import { Template, TemplateVariable } from './templatesStore';
 
 export interface VariableValue {
   id: string;
-  value: any;
+  value: string | number | boolean | string[];
   isValid: boolean;
   error?: string;
 }
@@ -42,7 +42,7 @@ export interface BuilderState {
   buildHistory: {
     id: string;
     template: Template;
-    variables: Record<string, any>;
+    variables: Record<string, string | number | boolean | string[]>;
     generatedPrompt: string;
     createdAt: Date;
   }[];
@@ -57,10 +57,10 @@ export interface BuilderActions {
   selectTemplate: (template: Template | null) => void;
   
   // Variable management
-  setVariableValue: (variableId: string, value: any) => void;
-  setVariableValues: (values: Record<string, any>) => void;
+  setVariableValue: (variableId: string, value: string | number | boolean | string[]) => void;
+  setVariableValues: (values: Record<string, string | number | boolean | string[]>) => void;
   resetVariables: () => void;
-  validateVariable: (variable: TemplateVariable, value: any) => { isValid: boolean; error?: string };
+  validateVariable: (variable: TemplateVariable, value: string | number | boolean | string[]) => { isValid: boolean; error?: string };
   validateAllVariables: () => boolean;
   
   // Content generation

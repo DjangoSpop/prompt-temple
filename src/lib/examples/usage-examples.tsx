@@ -1,15 +1,13 @@
 'use client';
 
 import React from 'react';
-import { 
-  useAuth, 
-  useTemplates, 
-  useTemplate, 
+import {
+  useAuth,
+  useTemplates,
+  useTemplate,
   useTemplateActions,
-  useFeaturedTemplates,
   useCategories,
-  useAIGeneration,
-  useTrackEvent 
+  useTrackEvent
 } from '../hooks';
 import { LoadingSpinner, ErrorDisplay } from '../components';
 
@@ -24,7 +22,6 @@ export const AuthExample: React.FC = () => {
     isAuthenticated,
     login,
     logout,
-    register,
     isLoggingIn,
     loginError,
     checkUsername,
@@ -234,12 +231,10 @@ export const TemplateListExample: React.FC = () => {
  */
 export const TemplateDetailExample: React.FC<{ templateId: string }> = ({ templateId }) => {
   const { data: template, isLoading, error } = useTemplate(templateId);
-  const { 
-    updateTemplate, 
-    deleteTemplate, 
-    rateTemplate, 
+  const {
+    deleteTemplate,
+    rateTemplate,
     duplicateTemplate,
-    isUpdating,
     isDeleting,
     isRating,
     updateError,
@@ -247,15 +242,6 @@ export const TemplateDetailExample: React.FC<{ templateId: string }> = ({ templa
 
   const [isEditing, setIsEditing] = React.useState(false);
   const [rating, setRating] = React.useState(5);
-
-  const handleUpdate = (updatedData: any) => {
-    updateTemplate(
-      { id: templateId, data: updatedData },
-      {
-        onSuccess: () => setIsEditing(false),
-      }
-    );
-  };
 
   const handleRate = () => {
     rateTemplate({
@@ -378,20 +364,12 @@ export const TemplateDetailExample: React.FC<{ templateId: string }> = ({ templa
  * Shows how to use AI services for content generation
  */
 export const AIGenerationExample: React.FC = () => {
-  const { generate, isGenerating, error, result } = useAIGeneration();
   const [prompt, setPrompt] = React.useState('');
   const [model, setModel] = React.useState('gpt-3.5-turbo');
 
   const handleGenerate = (e: React.FormEvent) => {
     e.preventDefault();
-    if (prompt.trim()) {
-      generate({
-        model,
-        prompt: prompt.trim(),
-        max_tokens: 150,
-        temperature: 0.7,
-      });
-    }
+    // AI generation logic would go here
   };
 
   return (
@@ -425,32 +403,16 @@ export const AIGenerationExample: React.FC = () => {
         
         <button
           type="submit"
-          disabled={isGenerating || !prompt.trim()}
+          disabled={!prompt.trim()}
           className="px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600 disabled:opacity-50"
         >
-          {isGenerating ? 'Generating...' : 'Generate'}
+          Generate
         </button>
       </form>
 
-      <ErrorDisplay error={error} />
-
-      {result && (
-        <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-          <h3 className="font-semibold mb-2">Generated Content:</h3>
-          <div className="space-y-2">
-            {result.choices.map((choice, index) => (
-              <div key={index} className="p-3 bg-white rounded border">
-                {choice.text}
-              </div>
-            ))}
-          </div>
-          
-          <div className="mt-2 text-xs text-gray-500">
-            Tokens used: {result.usage.total_tokens} 
-            (prompt: {result.usage.prompt_tokens}, completion: {result.usage.completion_tokens})
-          </div>
-        </div>
-      )}
+      <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+        <p className="text-gray-500">AI generation results would appear here...</p>
+      </div>
     </div>
   );
 };

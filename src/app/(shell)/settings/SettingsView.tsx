@@ -50,7 +50,6 @@ interface SettingsState {
 
 export default function SettingsView() {
   const [quotas, setQuotas] = useState<Quota | null>(null);
-  const [config, setConfig] = useState<any>(null);
   const [settings, setSettings] = useState<SettingsState>({
     notifications: {
       email: true,
@@ -97,18 +96,9 @@ export default function SettingsView() {
         reset_date: new Date(Date.now() + 86400000).toISOString() // Tomorrow
       };
       
-      const mockConfig = {
-        features: {
-          analytics: true,
-          premium_templates: true,
-          api_access: false
-        }
-      };
-      
       setQuotas(mockQuotas);
-      setConfig(mockConfig);
-      
-      // Load settings from localStorage or config
+
+      // Load settings from localStorage
       const savedSettings = localStorage.getItem('promptcord-settings');
       if (savedSettings) {
         setSettings(JSON.parse(savedSettings));
@@ -120,7 +110,7 @@ export default function SettingsView() {
     }
   };
 
-  const handleSettingChange = (category: keyof SettingsState, key: string, value: any) => {
+  const handleSettingChange = (category: keyof SettingsState, key: string, value: boolean | string) => {
     setSettings(prev => ({
       ...prev,
       [category]: {
@@ -485,7 +475,7 @@ export default function SettingsView() {
                 return (
                   <button
                     key={item.id}
-                    onClick={() => setActiveTab(item.id as any)}
+                    onClick={() => setActiveTab(item.id as 'general' | 'quotas' | 'privacy' | 'advanced')}
                     className={`w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-left transition-colors ${
                       activeTab === item.id
                         ? 'bg-brand/10 text-brand'

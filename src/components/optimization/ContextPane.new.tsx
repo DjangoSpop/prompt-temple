@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useState } from 'react'
-import { motion } from 'framer-motion'
 import {
   Copy,
   Download,
@@ -27,7 +26,7 @@ const BestPromptCard: React.FC<{
   onCopy: () => void
   onExport: (format: 'json' | 'md') => void
   onOpenBuilder: () => void
-}> = ({ prompt, _rubric, onCopy, onExport, onOpenBuilder }) => {
+}> = ({ prompt, rubric: _rubric, onCopy, onExport, onOpenBuilder }) => {
   const [copied, setCopied] = useState(false)
   const { dir } = useDirectionAwareContent(prompt)
 

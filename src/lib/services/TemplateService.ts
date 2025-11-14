@@ -70,7 +70,7 @@ export class TemplateService {
   }
 
   // Complete template usage
-  static async completeTemplateUsage(id: string, usageData: any): Promise<TemplateDetail> {
+  static async completeTemplateUsage(id: string, usageData: { duration: number; completed: boolean; variables?: Record<string, unknown> }): Promise<TemplateDetail> {
     return apiClient.completeTemplateUsage(id, usageData);
   }
 
@@ -80,7 +80,7 @@ export class TemplateService {
   }
 
   // Get template analytics
-  static async getTemplateAnalytics(id: string): Promise<any> {
+  static async getTemplateAnalytics(id: string): Promise<{ views: number; uses: number; ratings: number; averageRating: number }> {
     return apiClient.getTemplateAnalytics(id);
   }
 
@@ -100,7 +100,7 @@ export class TemplateService {
   }
 
   // Render a template with variables
-  static async renderTemplate(templateId: string, variables: Record<string, string>): Promise<any> {
+  static async renderTemplate(templateId: string, variables: Record<string, string>): Promise<{ renderedContent: string; tokenCount: number }> {
     return apiClient.renderTemplate(templateId, variables);
   }
 
@@ -142,7 +142,7 @@ export class TemplateService {
         isValid = false;
       }
 
-    } catch (error) {
+    } catch {
       errors.push('Template validation failed.');
       isValid = false;
     }

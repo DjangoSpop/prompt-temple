@@ -1,14 +1,4 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios';
-import { BaseApiClient } from './api/base';
-
-// Default configuration
-const DEFAULT_CONFIG = {
-  baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://api.prompt-temple.com',
-  timeout: 30000,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-};
 
 // Token management - Simple interface to get tokens from localStorage
 // This syncs with BaseApiClient's shared token system
@@ -88,7 +78,6 @@ interface AnalyticsEvent {
 }
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.prompt-temple.com';
-const USE_MOCK_DATA = process.env.NEXT_PUBLIC_USE_MOCK_DATA === 'true';
 
 class ApiError extends Error {
   constructor(
@@ -207,7 +196,7 @@ class ApiClient {
       const currentTime = Math.floor(Date.now() / 1000);
       // Add 30 seconds buffer
       return payload.exp < (currentTime + 30);
-    } catch (error) {
+    } catch {
       return true;
     }
   }

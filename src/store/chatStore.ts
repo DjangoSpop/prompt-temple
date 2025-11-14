@@ -7,7 +7,13 @@ export interface ChatMessage {
   role: 'user' | 'assistant' | 'system';
   timestamp: Date | string;
   processingTime?: number;
-  optimizationResult?: any;
+  optimizationResult?: {
+    original_prompt: string;
+    optimized_prompt: string;
+    improvements: string[];
+    confidence: number;
+    processing_time_ms: number;
+  };
 }
 
 interface ChatState {
@@ -24,8 +30,8 @@ interface ChatState {
   setConnectionStatus: (status: 'connected' | 'disconnected' | 'connecting') => void;
   updateLastHeartbeat: () => void;
   updateLatency: (latencyMs: number) => void;
-  addOptimizationResult: (result: any) => void;
-  addIntentResult: (result: any) => void;
+  addOptimizationResult: (result: { message_id: string; original_prompt: string; optimized_prompt: string; improvements: string[]; confidence: number; processing_time_ms: number }) => void;
+  addIntentResult: (result: { category: string; confidence: number; suggestions?: string[]; processing_time_ms?: number }) => void;
   clearMessages: () => void;
   showError: (message: string) => void;
 }

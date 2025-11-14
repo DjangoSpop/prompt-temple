@@ -104,7 +104,9 @@ function EnhancedChatInterface() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputMessage, setInputMessage] = useState('');
   const [optimizationResult, setOptimizationResult] = useState<OptimizationResult | null>(null);
-  const [templateOpportunity, setTemplateOpportunity] = useState<TemplateOpportunity | null>(null);
+  // Reserved for future template suggestion feature
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_templateOpportunity, setTemplateOpportunity] = useState<TemplateOpportunity | null>(null);
   const [isThinking, setIsThinking] = useState(false);
 
   // WebSocket connection with the new hook
@@ -121,7 +123,7 @@ function EnhancedChatInterface() {
     };
   }, [sessionId]);
 
-  const handleWebSocketMessage = useCallback((data: any) => {
+  const handleWebSocketMessage = useCallback((data: Record<string, unknown>) => {
     switch (data.type) {
       case 'connection_ack':
         // acknowledged
@@ -141,30 +143,30 @@ function EnhancedChatInterface() {
         setMessages((prev) => [
           ...prev,
           {
-            id: data.message_id,
-            content: data.content,
-            role: data.role === 'assistant' ? 'assistant' : 'assistant',
-            timestamp: new Date(data.timestamp || Date.now()),
-            processingTime: data.processing_time_ms,
-            templateSuggestions: data.template_suggestions || [],
-          },
+            id: data.message_id as string,
+            content: data.content as string,
+            role: 'assistant' as const,
+            timestamp: new Date((data.timestamp as string | number) || Date.now()),
+            processingTime: data.processing_time_ms as number,
+            templateSuggestions: (data.template_suggestions || []) as unknown[],
+          } as ChatMessage,
         ]);
         setIsAITyping(false);
         setIsThinking(false);
-        if (data.template_suggestions?.length) {
+        if (Array.isArray(data.template_suggestions) && data.template_suggestions.length > 0) {
           toast.success(`Template suggestions: ${data.template_suggestions.length}`);
         }
         break;
 
       case 'optimization_result':
         // Set optimization result for side panel display
-        setOptimizationResult(data);
+        setOptimizationResult(data as unknown as OptimizationResult);
         setIsAITyping(false);
         setIsThinking(false);
         toast.success(
           <div className="flex items-center gap-2">
             <Zap className="h-4 w-4 text-sun" />
-            <span>Prompt optimized ({Math.round(data.confidence * 100)}%)</span>
+            <span>Prompt optimized ({Math.round((data.confidence as number) * 100)}%)</span>
           </div>
         );
         break;
@@ -238,6 +240,7 @@ function EnhancedChatInterface() {
       default:
         console.log('Unknown message type:', data.type, data);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const { isConnected, latency, sendMessage } = useWebSocketConnection(

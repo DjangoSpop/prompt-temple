@@ -64,7 +64,7 @@ export const GET = withErrorHandling(async (request: NextRequest) => {
     WHERE 1=1
   `;
 
-  const queryParams_db: any[] = [];
+  const queryParams_db: (string | number | boolean)[] = [];
   let paramIndex = 1;
 
   // Add filters
@@ -124,7 +124,7 @@ export const GET = withErrorHandling(async (request: NextRequest) => {
   `;
 
   // Re-apply filters for count (without the joins that don't affect count)
-  const countParams: any[] = [];
+  const countParams: (string | number | boolean)[] = [];
   let countParamIndex = 1;
 
   if (q) {
@@ -219,8 +219,10 @@ export const POST = withErrorHandling(async (request: NextRequest) => {
 
   // Extract user ID from auth token (this would typically come from middleware)
   const authHeader = request.headers.get('authorization');
+  // TODO: Decode JWT token to extract user ID
   const token = authHeader?.replace('Bearer ', '');
-  
+  console.log('Auth token present:', !!token);
+
   // You would decode the JWT token here to get user ID
   // For now, we'll assume it's available
   const userId = 'current-user-id'; // This should come from JWT decoding

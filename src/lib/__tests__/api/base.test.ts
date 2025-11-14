@@ -37,7 +37,7 @@ describe('BaseApiClient', () => {
 
   describe('constructor', () => {
     it('should create instance with default URL', () => {
-      const defaultClient = new BaseApiClient();
+      new BaseApiClient();
       expect(mockedAxios.create).toHaveBeenCalled();
     });
 

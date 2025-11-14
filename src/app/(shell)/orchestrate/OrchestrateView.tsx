@@ -6,7 +6,7 @@ import TemplateCard from '@/components/TemplateCard';
 import VariableForm from '@/components/VariableForm';
 import PromptViewer from '@/components/PromptViewer';
 import { mockGetIntentCandidates, mockRenderTemplate, mockAssessResponse } from '@/lib/mock-data';
-import type { IntentResponse, RenderResponse, AssessmentResponse, Template as MockTemplate } from '@/lib/types';
+import type { RenderResponse, AssessmentResponse, Template as MockTemplate } from '@/lib/types';
 import type { AppTemplate, AppCategory } from '@/lib/types/adapters';
 
 interface Session {
@@ -52,7 +52,7 @@ export default function OrchestrateView() {
     is_premium: t.is_premium,
     tags: [],
     fields: [],
-    variables: t.variables,
+    variables: {}, // Convert Variable[] to Record later if needed
     created_at: t.created_at,
     updated_at: t.updated_at,
     is_public: true,

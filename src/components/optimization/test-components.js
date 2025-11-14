@@ -1,5 +1,8 @@
 // Simple test to verify our Chat Optimizer components work
+// React and render are used in tests but may appear unused in static analysis
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React from 'react';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { render } from '@testing-library/react';
 
 // Mock the store

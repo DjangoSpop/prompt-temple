@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import { authService } from '../api/auth';
 import type { components } from '../../types/api';
 
-type UserProfile = components['schemas']['UserProfile'];
 type UserRegistration = components['schemas']['UserRegistrationRequest'];
 type UserUpdate = components['schemas']['UserUpdateRequest'];
 

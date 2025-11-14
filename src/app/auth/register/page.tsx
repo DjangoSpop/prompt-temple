@@ -64,9 +64,9 @@ function RegisterContent() {
 
       // Redirect to login (or target) after successful registration
       router.push(redirectTo);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Register error:', err);
-      setError(err.message || 'Registration failed.');
+      setError(err instanceof Error ? err.message : 'Registration failed.');
     } finally {
       setIsLoading(false);
     }

@@ -1,15 +1,13 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { 
-  BarChart3, 
-  TrendingUp, 
-  Users, 
-  Target, 
-  Calendar,
+import {
+  BarChart3,
+  TrendingUp,
+  Users,
+  Target,
   Download,
   RefreshCw,
-  Filter,
   PieChart,
   Activity,
   Clock
@@ -66,6 +64,7 @@ export default function AnalyticsView() {
     if (dateRange) {
       refreshData();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dateRange]);
 
   const loadAnalyticsData = async () => {
@@ -389,7 +388,7 @@ export default function AnalyticsView() {
           </div>
           <div className="p-6">
             <div className="space-y-4">
-              {userInsights.most_used_templates.map((template, index) => (
+              {userInsights.most_used_templates.map((template) => (
                 <div key={template.template_id} className="flex items-center justify-between">
                   <div>
                     <p className="text-text-primary font-medium">{template.template_name}</p>
@@ -514,7 +513,7 @@ export default function AnalyticsView() {
             return (
               <button
                 key={tab.id}
-                onClick={() => setActiveTab(tab.id as any)}
+                onClick={() => setActiveTab(tab.id as 'overview' | 'insights' | 'templates')}
                 className={`flex items-center space-x-2 px-4 py-3 border-b-2 transition-colors ${
                   activeTab === tab.id
                     ? 'border-brand text-brand'

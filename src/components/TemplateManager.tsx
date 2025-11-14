@@ -3,15 +3,16 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
+// Dialog components reserved for future template creation feature
+// import {
+//   Dialog,
+//   DialogContent,
+//   DialogDescription,
+//   DialogFooter,
+//   DialogHeader,
+//   DialogTitle,
+//   DialogTrigger,
+// } from '@/components/ui/dialog';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -32,7 +33,6 @@ import {
   Copy,
   Trash2,
   Star,
-  TrendingUp,
   Eye,
   ThumbsUp,
   Calendar,
@@ -40,7 +40,6 @@ import {
   Tag,
   Loader2,
   AlertCircle,
-  CheckCircle,
 } from 'lucide-react';
 import {
   useTemplates,
@@ -50,7 +49,6 @@ import {
   useDeleteTemplate,
   useDuplicateTemplate,
   useRateTemplate,
-  templateKeys,
 } from '@/lib/hooks/useTemplates';
 import { TemplateDetail, TemplateSearch } from '@/lib/types';
 import { useAuth } from '@/lib/auth';
@@ -62,14 +60,17 @@ interface TemplateManagerProps {
   initialFilters?: TemplateSearch;
 }
 
-export default function TemplateManager({ 
-  view = 'all', 
-  categoryId, 
-  initialFilters = {} 
+export default function TemplateManager({
+  view = 'all',
+  categoryId: _categoryId,
+  initialFilters = {}
 }: TemplateManagerProps) {
   const [filters, setFilters] = useState<TemplateSearch>(initialFilters);
-  const [selectedTemplate, setSelectedTemplate] = useState<TemplateDetail | null>(null);
-  const [showCreateDialog, setShowCreateDialog] = useState(false);
+  // Reserved for future template detail modal
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_selectedTemplate, setSelectedTemplate] = useState<TemplateDetail | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_showCreateDialog, setShowCreateDialog] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [showFilters, setShowFilters] = useState(false);
 
@@ -146,7 +147,9 @@ export default function TemplateManager({
     }
   };
 
-  const handleRateTemplate = async (templateId: string, rating: number) => {
+  // Reserved for future rating functionality
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _handleRateTemplate = async (templateId: string, rating: number) => {
     try {
       await rateTemplateMutation.mutateAsync({ id: templateId, rating });
     } catch (error) {
@@ -162,7 +165,9 @@ export default function TemplateManager({
     });
   };
 
-  const getComplexityColor = (complexity: string) => {
+  // Reserved for future complexity badge coloring
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _getComplexityColor = (complexity: string) => {
     switch (complexity) {
       case 'simple':
         return 'text-green-600 bg-green-100';

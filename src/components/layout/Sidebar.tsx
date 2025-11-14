@@ -3,14 +3,14 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useGameStore } from "@/lib/stores/gameStore";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Tooltip,
   TooltipContent,
@@ -37,10 +37,8 @@ import {
   ChevronLeft,
   ChevronRight,
   ChevronDown,
-  Bell,
   Gift,
   Brain,
-  MessageSquare,
 } from "lucide-react";
 
 interface NavItem {
@@ -115,7 +113,6 @@ export default function Sidebar() {
     getCurrentLevel,
     getNextLevel,
     getProgressToNextLevel,
-    onboarding,
     resetOnboarding,
   } = useGameStore();
 

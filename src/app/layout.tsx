@@ -7,7 +7,6 @@ import { ThemeProvider } from "@/providers/ThemeProvider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { HealthBanner } from "@/components/HealthBanner";
 import { TempleNavbar } from "@/components/TempleNavbar";
-import { AppShell } from "@/components/layout/AppShell";
 import { ClientOnly } from "@/components/ClientOnly";
 import { HydrationGuard } from "@/components/HydrationGuard";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
@@ -30,6 +29,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         {/* Font preconnects and Playfair + Inter preload for CLS stability */}
+        {/* Intentionally using anonymous crossOrigin for font loading optimization */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet" />

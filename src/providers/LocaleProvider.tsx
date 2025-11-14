@@ -18,7 +18,7 @@ const LocaleContext = createContext<LocaleContextType>({
 
 export function LocaleProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter()
-  const [translations, setTranslations] = useState<Record<string, any>>({})
+  const [translations, setTranslations] = useState<Record<string, unknown>>({})
   const [locale, setLocaleState] = useState(getCookie('NEXT_LOCALE') as string || 'en')
   const dir = locale === 'ar' ? 'rtl' : 'ltr'
 
@@ -43,7 +43,7 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
     router.push(router.pathname, router.asPath, { locale: newLocale })
   }
 
-  const t = (key: string, namespace = 'common') => {
+  const t = (key: string, _namespace = 'common') => {
     const keys = key.split('.')
     let current = translations
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -18,10 +18,8 @@ import {
   Zap,
   Eye,
   EyeOff,
-  Settings,
   FileText,
   Calculator,
-  Hash,
   Type,
   ToggleLeft,
   ToggleRight,
@@ -55,7 +53,7 @@ interface Variable {
   required: boolean;
   description?: string;
   options?: string[];
-  default_value?: any;
+  default_value?: string | number | boolean;
   placeholder?: string;
 }
 
@@ -143,7 +141,7 @@ Please ensure the documentation is:
 
 export function PromptBuilder({ className = '' }: PromptBuilderProps) {
   const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
-  const [variables, setVariables] = useState<Record<string, any>>({});
+  const [variables, setVariables] = useState<Record<string, string | number | boolean | string[]>>({});
   const [searchQuery, setSearchQuery] = useState('');
   const [showPreview, setShowPreview] = useState(true);
   const [isLeftPaneCollapsed, setIsLeftPaneCollapsed] = useState(false);
@@ -198,14 +196,14 @@ export function PromptBuilder({ className = '' }: PromptBuilderProps) {
     return { isValid: errors.length === 0, errors };
   }, [selectedTemplate, variables]);
 
-  const handleVariableChange = (key: string, value: any) => {
+  const handleVariableChange = (key: string, value: string | number | boolean) => {
     setVariables(prev => ({ ...prev, [key]: value }));
   };
 
   const handleTemplateSelect = (template: Template) => {
     setSelectedTemplate(template);
     // Initialize variables with defaults
-    const initialVariables: Record<string, any> = {};
+    const initialVariables: Record<string, string | number | boolean> = {};
     template.variables.forEach(variable => {
       initialVariables[variable.key] = variable.default_value || '';
     });
@@ -346,7 +344,7 @@ ${previewText}
                         key={tab.id}
                         variant={activeTab === tab.id ? 'default' : 'ghost'}
                         size="sm"
-                        onClick={() => setActiveTab(tab.id as any)}
+                        onClick={() => setActiveTab(tab.id as 'template' | 'variables' | 'preview')}
                         className="flex-1 text-xs"
                       >
                         <tab.icon className="w-3 h-3 mr-1" />

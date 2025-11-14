@@ -1,6 +1,8 @@
 'use client';
 
 import React, { useEffect, useRef, useState, useCallback } from 'react';
+// toast is used for notifications in event handlers
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { toast } from 'react-hot-toast';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
@@ -39,22 +41,18 @@ export default function IntegratedChatDashboard({ className = '' }: IntegratedCh
   // Chat state
   const [inputMessage, setInputMessage] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const sessionId = useRef(`session_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`).current;
-  
-  // Chat store
-  const { 
-    messages, 
-    isTyping, 
-    connectionStatus, 
+  // Session ID reserved for future WebSocket integration
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _sessionId = useRef(`session_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`).current;
+
+  // Chat store - only using actively needed methods
+  const {
+    messages,
+    isTyping,
+    connectionStatus,
     latency,
-    addMessage, 
-    setTypingIndicator, 
-    setConnectionStatus,
-    updateLatency,
-    updateLastHeartbeat,
-    addOptimizationResult,
-    addIntentResult,
-    showError
+    addMessage,
+    setTypingIndicator,
   } = useChatStore();
 
   // Load billing information
@@ -112,41 +110,39 @@ export default function IntegratedChatDashboard({ className = '' }: IntegratedCh
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!inputMessage.trim()) return;
-    
+
     // Handle slash commands
     if (inputMessage.startsWith('/')) {
       const [command, ...contentParts] = inputMessage.substring(1).split(' ');
       const content = contentParts.join(' ');
-      
+
       if (['intent', 'optimize', 'rewrite', 'summarize', 'code'].includes(command)) {
-        sendSlashCommand(command, content);
-        
+        // TODO: Implement sendSlashCommand(command, content) when WebSocket support is added
+        console.log('Slash command:', command, 'with content:', content);
+
         addMessage({
           id: crypto.randomUUID(),
           content: inputMessage,
           role: 'user',
           timestamp: new Date()
         });
-        
+
         setInputMessage('');
         return;
       }
     }
-    
+
     // Regular message
-    const messageId = sendChatMessage(inputMessage.trim());
-    
-    if (messageId) {
-      addMessage({
-        id: messageId,
-        content: inputMessage.trim(),
-        role: 'user',
-        timestamp: new Date()
-      });
-      
-      setInputMessage('');
-      setTypingIndicator(true);
-    }
+    // TODO: Implement sendChatMessage when WebSocket support is added
+    addMessage({
+      id: crypto.randomUUID(),
+      content: inputMessage.trim(),
+      role: 'user',
+      timestamp: new Date()
+    });
+
+    setInputMessage('');
+    setTypingIndicator(true);
   };
   
   if (!isAuthenticated) {

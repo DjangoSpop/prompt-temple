@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   try {
     // Check if we can reach the backend
     const backendUrl = process.env.BACKEND_URL || 'http://localhost:8000';
@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
       
       clearTimeout(timeoutId);
       backendStatus = response.ok ? 'healthy' : 'unhealthy';
-    } catch (error) {
+    } catch {
       backendStatus = 'unhealthy';
     }
 
@@ -38,7 +38,7 @@ export async function GET(request: NextRequest) {
         'Cache-Control': 'no-cache, no-store, must-revalidate',
       }
     });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       {
         status: 'unhealthy',

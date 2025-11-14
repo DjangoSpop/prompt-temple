@@ -184,7 +184,7 @@ const useOptimizationStore = create<OptimizationStore>()(
         connectionError: error || null
       }),
       setPrompt: (prompt) => set({ prompt }),
-      setStreamingOutput: (output: any) => set((state) => ({ streamingOutput: typeof output === 'function' ? output(state.streamingOutput) : output })),
+      setStreamingOutput: (output: string | ((prev: string) => string)) => set((state) => ({ streamingOutput: typeof output === 'function' ? output(state.streamingOutput) : output })),
       setIsStreaming: (streaming) => set({ isStreaming: streaming }),
       setSearchQuery: (query) => set({ searchQuery: query }),
       setSelectedCategory: (category) => set({ selectedCategory: category }),
@@ -217,10 +217,10 @@ class ChatSSEClient {
   private reconnectAttempts = 0;
   private maxReconnectAttempts = 3;
   
-  onStreamStart?: (data: any) => void;
+  onStreamStart?: (data: unknown) => void;
   onStreamToken?: (data: StreamingChunk) => void;
-  onStreamComplete?: (data: any) => void;
-  onError?: (error: any) => void;
+  onStreamComplete?: (data: unknown) => void;
+  onError?: (error: unknown) => void;
   onTemplateOpportunity?: (data: TemplateOpportunity) => void;
   onOptimizationResult?: (data: OptimizationResult) => void;
 
@@ -320,8 +320,8 @@ class ChatSSEClient {
           }
         }
       }
-    } catch (error: any) {
-      if (error.name !== 'AbortError') {
+    } catch (error: unknown) {
+      if (error instanceof Error && error.name !== 'AbortError') {
         this.onError?.(error);
       }
     }
@@ -411,16 +411,16 @@ class ChatSSEClient {
 // ===== WEB SOCKET CLIENT =====
 class PromptCraftWebSocket {
   private socket: WebSocket | null = null;
-  private messageQueue: any[] = [];
+  private messageQueue: unknown[] = [];
   private isConnected = false;
   private reconnectAttempts = 0;
   private maxReconnectAttempts = 5;
   private reconnectDelay = 1000;
-  
-  onMessage?: (data: any) => void;
+
+  onMessage?: (data: unknown) => void;
   onOptimizationResult?: (data: OptimizationResult) => void;
   onTemplateOpportunity?: (data: TemplateOpportunity) => void;
-  onError?: (error: any) => void;
+  onError?: (error: unknown) => void;
   onConnectionChange?: (connected: boolean) => void;
 
   connect(sessionId: string): Promise<boolean> {
@@ -485,25 +485,26 @@ class PromptCraftWebSocket {
     }, this.reconnectDelay * Math.pow(2, this.reconnectAttempts - 1));
   }
 
-  private handleMessage(message: any) {
-    switch (message.type) {
+  private handleMessage(message: unknown) {
+    const msg = message as Record<string, unknown>;
+    switch (msg.type) {
       case 'connection_ack':
         console.log('✅ Connection acknowledged');
         break;
       case 'message':
-        this.onMessage?.(message);
+        this.onMessage?.(msg);
         break;
       case 'optimization_result':
-        this.onOptimizationResult?.(message);
+        this.onOptimizationResult?.(msg as OptimizationResult);
         break;
       case 'template_opportunity':
-        this.onTemplateOpportunity?.(message);
+        this.onTemplateOpportunity?.(msg as TemplateOpportunity);
         break;
       case 'template_created':
-        toast.success(message.message || 'Template created successfully!');
+        toast.success((msg.message as string) || 'Template created successfully!');
         break;
       case 'error':
-        this.onError?.(message);
+        this.onError?.(msg);
         break;
       case 'pong':
         // Handle ping/pong for latency measurement
@@ -511,7 +512,7 @@ class PromptCraftWebSocket {
     }
   }
 
-  send(message: any): boolean {
+  send(message: unknown): boolean {
     if (!this.isConnected) {
       this.messageQueue.push(message);
       return false;
@@ -1287,6 +1288,7 @@ export default function OptimizationPlayground() {
       sseClient.current?.disconnect();
       wsClient.current?.disconnect();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Generate inline suggestions based on prompt
@@ -1318,6 +1320,7 @@ export default function OptimizationPlayground() {
     } else {
       store.setInlineSuggestions([]);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [store.prompt]);
 
   // Search templates

@@ -1,6 +1,5 @@
 import { authService } from './api/auth';
 import type { components } from '../types/api';
-import { TypeAdapters } from './types/adapters';
 
 // Use the generated API types directly
 type UserProfile = components['schemas']['UserProfile'];
@@ -21,9 +20,6 @@ type TokenPair = {
   access: string;
   refresh: string;
 };
-
-type AuthEventType = 'login' | 'logout' | 'token_refresh' | 'unauthorized';
-type AuthEventListener = (data?: unknown) => void;
 
 /**
  * Comprehensive auth adapter that integrates with the generated API client

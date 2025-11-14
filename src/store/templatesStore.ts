@@ -40,7 +40,7 @@ export interface TemplateVariable {
   type: 'text' | 'textarea' | 'select' | 'multi-select' | 'number' | 'slider' | 'toggle';
   description: string;
   required: boolean;
-  defaultValue?: any;
+  defaultValue?: string | number | boolean | string[];
   options?: string[]; // For select/multi-select
   min?: number; // For number/slider
   max?: number; // For number/slider
@@ -252,7 +252,7 @@ export const useTemplatesStore = create<TemplatesState & TemplatesActions>()(
       },
 
       applyFilters: () => {
-        const { templates, filters, currentPage, itemsPerPage } = get();
+        const { templates, filters, itemsPerPage } = get();
         
         let filtered = [...templates];
 
@@ -407,7 +407,7 @@ export const useTemplatesStore = create<TemplatesState & TemplatesActions>()(
         }
       },
 
-      fetchTemplate: async (id) => {
+      fetchTemplate: async (_id) => {
         try {
           set({ loading: true, error: null });
           // TODO: Replace with actual API call

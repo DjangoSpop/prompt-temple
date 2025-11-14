@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Plus, Edit, Trash2, Copy, Save, X, Search, Eye, EyeOff, Code, Type, Hash, Calendar } from 'lucide-react';
+import { Plus, Save, X, Eye, EyeOff, Code, Type, Hash, Calendar } from 'lucide-react';
 import { apiClient } from '@/lib/api-client';
 import type { TemplateDetail, TemplateCreateUpdate, TemplateCategory } from '@/lib/types';
 import { Button } from '@/components/ui/button';
@@ -11,6 +11,7 @@ interface TemplateEditorProps {
   onClose?: () => void;
   templateId?: string; // For editing existing template
   onSave?: (template: TemplateDetail) => void;
+  _categoryId?: number; // Reserved for future category filtering
 }
 
 export default function TemplateEditor({ onClose, templateId, onSave }: TemplateEditorProps) {
@@ -128,7 +129,7 @@ export default function TemplateEditor({ onClose, templateId, onSave }: Template
     }
   };
 
-  const handleInputChange = (field: keyof TemplateCreateUpdate, value: any) => {
+  const handleInputChange = (field: keyof TemplateCreateUpdate, value: unknown) => {
     setTemplate(prev => ({ ...prev, [field]: value }));
     // Clear error when user starts typing
     if (error) setError(null);

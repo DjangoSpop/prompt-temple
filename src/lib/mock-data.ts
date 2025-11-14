@@ -459,7 +459,7 @@ export const mockRenderTemplate = async (templateId: string, variables: Record<s
   };
 };
 
-export const mockAssessResponse = async (originalPrompt: string, llmResponse: string) => {
+export const mockAssessResponse = async (_originalPrompt: string, _llmResponse: string) => {
   // Simulate processing delay
   await new Promise(resolve => setTimeout(resolve, 800));
   

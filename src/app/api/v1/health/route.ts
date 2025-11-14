@@ -32,7 +32,7 @@ interface HealthCheck {
 
 const startTime = Date.now();
 
-export const GET = withErrorHandling(async (request: NextRequest) => {
+export const GET = withErrorHandling(async (_request: NextRequest) => {
   const checkStart = Date.now();
   
   // Database health check
@@ -92,7 +92,7 @@ export const GET = withErrorHandling(async (request: NextRequest) => {
 });
 
 // Simple readiness check
-export const HEAD = withErrorHandling(async (request: NextRequest) => {
+export const HEAD = withErrorHandling(async (_request: NextRequest) => {
   // Quick database connectivity check
   const dbHealth = await db.getHealthCheck();
   

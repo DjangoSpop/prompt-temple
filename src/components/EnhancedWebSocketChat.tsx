@@ -36,7 +36,9 @@ export default function EnhancedWebSocketChat() {
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const [isSending, setIsSending] = useState(false);
-  const [entitlements, setEntitlements] = useState<UserEntitlements | null>(null);
+  // Entitlements loaded but reserved for future premium features
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_entitlements, setEntitlements] = useState<UserEntitlements | null>(null);
   const [creditsRemaining, setCreditsRemaining] = useState<number>(0);
   const [templateOpportunity, setTemplateOpportunity] = useState<TemplateOpportunity | null>(null);
   const [showSaveTemplate, setShowSaveTemplate] = useState(false);

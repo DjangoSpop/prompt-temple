@@ -1,5 +1,5 @@
 import { BaseApiClient } from './base';
-import type { paths, components } from '../types/api';
+import type { components } from '../types/api';
 
 // Type-safe API client for Prompt Temple endpoints
 export class PromptTempleApiClient extends BaseApiClient {

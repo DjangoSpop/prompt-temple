@@ -1,5 +1,4 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosError } from 'axios';
-import type { components } from '../../types/api';
 import { env, apiConfig } from '../config/env';
 import { logger, monitor } from './logger';
 
@@ -195,7 +194,7 @@ export class BaseApiClient {
       const payload = JSON.parse(atob(token.split('.')[1]));
       const currentTime = Math.floor(Date.now() / 1000);
       return payload.exp < (currentTime + 30);
-    } catch (error) {
+    } catch {
       return true;
     }
   }

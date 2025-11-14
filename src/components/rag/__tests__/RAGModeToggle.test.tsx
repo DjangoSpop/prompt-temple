@@ -198,9 +198,7 @@ describe('RAGModeToggle', () => {
     // RAG Deep should show unavailable
     const ragDeepCard = screen.getByText('RAG Deep').closest('.cursor-pointer');
     expect(ragDeepCard).toHaveClass('opacity-50');
-    
-    // Should show unavailable text within RAG Deep card
-    const unavailableText = ragDeepCard?.querySelector('text-red-500');
+
     // Note: This is a simplified check - in reality you'd use a more specific selector
   });
 

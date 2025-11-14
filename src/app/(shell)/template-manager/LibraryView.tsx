@@ -15,8 +15,10 @@ export default function LibraryView() {
   const { templates, isLoading: templatesLoading, refetch } = useTemplates();
   const { data: categoriesData, isLoading: categoriesLoading } = useCategories();
   const templateManagement = useTemplateActions();
-  
-  const [featuredTemplates, setFeaturedTemplates] = useState<AppTemplate[]>([]);
+
+  // Reserved for future featured templates display
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_featuredTemplates, setFeaturedTemplates] = useState<AppTemplate[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -68,7 +70,9 @@ export default function LibraryView() {
     setEditingTemplate(undefined);
   };
 
-  const handleTemplateAction = async (action: string, template: AppTemplate) => {
+  // Reserved for future template context menu actions
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _handleTemplateAction = async (action: string, template: AppTemplate) => {
     try {
       switch (action) {
         case 'edit':
@@ -108,12 +112,14 @@ export default function LibraryView() {
 
   const handleSaveTemplate = (template: AppTemplate) => {
     // TODO: Save template to user's collection
-    console.log('Saving template:', template.name || (template as any).title);
+    console.log('Saving template:', template.name || template.title);
   };
 
-  const handleRateTemplate = (templateId: string, rating: number) => {
+  // Reserved for future rating functionality
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _handleRateTemplate = (_templateId: string, _rating: number) => {
     // TODO: Submit rating to API
-    console.log('Rating template:', templateId, 'with', rating, 'stars');
+    console.log('Rating template:', _templateId, 'with', _rating, 'stars');
   };
 
   const loading = templatesLoading || categoriesLoading;

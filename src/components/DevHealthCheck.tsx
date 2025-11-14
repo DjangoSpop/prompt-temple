@@ -53,7 +53,7 @@ export function DevHealthCheck() {
             message: response.ok ? `Connected (${response.status})` : `Failed (${response.status})`,
             url: '/api/health',
           });
-        } catch (error) {
+        } catch {
           serviceChecks.push({
             name: 'API Server',
             status: 'unhealthy',
